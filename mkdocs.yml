@@ -3,6 +3,8 @@ site_url: https://pycontrol.readthedocs.io/
 site_description: Controlling behavioural experiments with pyBoard
 site_author: Champalimaud Foundation
 
+theme: mkdocs
+
 repo_url: https://bitbucket.org/fchampalimaud/pycontrol-docs
 
 pages:
