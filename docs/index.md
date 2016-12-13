@@ -27,15 +27,15 @@ Controlling behavioural experiments using Micropython.
 
 |Name|Description|
 |---|---|
-|[pyControl framework](https://readthedocs.org/projects/pycontrol-framework)| CLI and framework|
+|[pyControl framework](https://pycontrol-framework.readthedocs.org/)| CLI and framework|
 
 ### Graphical User Interface (GUI)
 
 |Name|Description|
 |---|---|
-|[pyControl GUI](https://readthedocs.org/projects/pycontrol-gui)|Main graphical user interface package|
-|[pyControl API](https://bitbucket.org/fchampalimaud/pycontrol-api)| pyControl API|
-|[pyBoard communication API](https://readthedocs.org/projects/pyboard-communication/)| Communication with pyBoard |
+|[pyControl GUI](https://pycontrol-gui.readthedocs.org/)|Main graphical user interface package|
+|[pyControl API](https://pycontrol-api.readthedocs.org/)| pyControl API|
+|[pyBoard communication API](https://pyboard-communication.readthedocs.org/)| Communication with pyBoard |
 
 ### GUI Plugins
 
