@@ -74,8 +74,7 @@ pyControl is composed of several independent packages in order to achieve better
 |pycontrol-gui-plugin-export-code [src](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-export-code)|Generate code to the API automatically.| https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-export-code.git |
 |pycontrol-gui-plugin-remote-project [src](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-remote-project)|Control a project running on a remote host.| https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-remote-project.git |
 
-### Step-by-step installation
-
+### Step-by-step installation for running GUI
 
 #### Install python3 and PyQt (with QScintilla2) environments
 
@@ -101,15 +100,43 @@ To install requirements, run pip as this:
     cd pycontrol-gui
     pip3 install -r requirements.txt --upgrade
     
-**!!Warning!! this file assumes that "pyboard-communication" and "pycontrol-api" sources are on the parent folder.**
+This file assumes that "pyboard-communication" and "pycontrol-api" sources are on the parent folder. You should expect the following directory structure:
+
+    | pyboard-communication
+       | pyboard-communication
+       | ...
+    | pycontrol-api
+       | pycontrolapi
+       | ...
+    | pycontrol-gui
+       | pycontrolgui
+       | requirements.txt
+       | ...
 
 #### Download and configure pycontrol framework
 
-1. Download pycontrol-framework source code from [here](https://bitbucket.org/takam/pycontrol/get/37fd9d1d22fd.zip).
+1. Download pycontrol-framework source code from [here](https://bitbucket.org/takam/pycontrol/get/37fd9d1d22fd.zip) and unzip it (you should see a pyControl folder).
 2. Inside the pycontrol-gui folder, locate the file "user_settings.py.template". Make a copy and change the name for "user_settings.py".
 3. Open the file "user_settings.py".
 4. Change the variable value **PYCONTROLAPI_PYCONTROL_PATH** to point to the folder "pyControl" inside the pycontrol-framework project just downloaded
 5. Change the variable value **PYCONTROLAPI_DEVICES_PATH** to point to the folder "devices" inside the pycontrol-framework project just downloaded
+
+Folder structure should look like these:
+
+    | pycontrol-gui
+       | pycontrolgui
+       | requirements.txt
+       | user_settings.py.template
+       | user_settings.py
+       | ...
+       
+    | pyControl
+       | devices
+       | examples
+       | host
+       | license
+       | pyControl
+       | ...
 
 
 ### Run project
