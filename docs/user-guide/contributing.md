@@ -43,9 +43,9 @@ In order to make changes, you should fork and download all pyControl family pack
 
 ### Framework and Command Line Interface (CLI)
 
-|Name|Description|
-|---|---|
-|[pyControl framework](https://bitbucket.org/takam/pycontrol/wiki/Home)| CLI and framework|
+|Library name|Description| mercurial link |
+|---|---|---|
+|pyControl framework [wiki](https://bitbucket.org/takam/pycontrol/wiki/Home) [bitbucket](https://bitbucket.org/takam/pycontrol/wiki/Home)| CLI and framework| https://bitbucket.org/takam/pycontrol |
 
 <!---
 |[pyControl framework](https://pycontrol-framework.readthedocs.org/)| CLI and framework|
@@ -53,35 +53,34 @@ In order to make changes, you should fork and download all pyControl family pack
 
 ### Graphical User Interface (GUI)
 
-|Name|Description|
-|---|---|
-|[pyControl GUI](https://pycontrol-gui.readthedocs.org/)|Main graphical user interface package|
-|[pyControl API](https://pycontrol-api.readthedocs.org/)| pyControl API|
-|[pyBoard communication API](https://pyboard-communication.readthedocs.org/)| Communication with pyBoard |
+|Library name|Description| git link |
+|---|---|---|
+|pycontrol-gui [readthedocs](https://pycontrol-gui.readthedocs.org/) [bitbucket](https://bitbucket.org/fchampalimaud/pycontrol-gui)|Main graphical user interface package| https://bitbucket.org/fchampalimaud/pycontrol-gui.git |
+|pycontrol-api [readthedocs](https://pycontrol-api.readthedocs.org/) [bitbucket](https://bitbucket.org/fchampalimaud/pycontrol-api)| pyControl API| https://bitbucket.org/fchampalimaud/pycontrol-api.git |
+|pyboard-communication [readthedocs](https://pyboard-communication.readthedocs.org/) [bitbucket](https://bitbucket.org/fchampalimaud/pyboard-communication)| Communication with pyBoard | https://bitbucket.org/fchampalimaud/pyboard-communication.git |
 
 ### GUI Plugins
 
-|Name|Description|
-|---|---|
-|[Welcome window](https://readthedocs.org/projects/pycontrol-gui-welcome)|Show a welcome window at startup|
-|[Session log](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-session-log)|Window to visualise the session log.|
-|[Session TPC/IP Broadcast](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-session-broadcast)|Broadcast all states and events to an external application (check Cube app in the Other examples section)|
-|[Terminal](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-terminal)|Control the GUI interface using terminal commands.|
-|[Session timeline](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-timeline)|Visualise in a timeline the sequence of states that are happening in the moment.|
-|[Experiment macros](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-export-code)|Execute macros if an state occurs.|
-|[Project 2 code](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-export-code)|Generate code to the API automatically.|
-|[Remote project](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-remote-project)|Control a project running on a remote host.|
+|Library name|Description| git link |
+|---|---|---|
+|pycontrol-gui-welcome [src](https://readthedocs.org/projects/pycontrol-gui-plugin-welcome)|Show a welcome window at startup| https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-welcome.git |
+|pycontrol-gui-plugin-session-log [src](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-session-log)|Window to visualise the session log.| https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-session-log.git |
+|pycontrol-gui-plugin-session-broadcast [src](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-session-broadcast)|Broadcast all states and events to an external application (check Cube app in the Other examples section)| https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-session-broadcast.git |
+|pycontrol-gui-plugin-terminal [src](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-terminal)|Control the GUI interface using terminal commands.| https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-welcome.git |
+|pycontrol-gui-plugin-timeline [src](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-timeline)|Visualise in a timeline the sequence of states that are happening in the moment.| https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-timeline.git |
+|pycontrol-gui-plugin-experiment-macros [src](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-experiment-macros)|Execute macros if an state occurs.| https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-experiment-macros.git |
+|pycontrol-gui-plugin-export-code [src](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-export-code)|Generate code to the API automatically.| https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-export-code.git |
+|pycontrol-gui-plugin-remote-project [src](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-remote-project)|Control a project running on a remote host.| https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin-remote-project.git |
 
 ### Other libraries
 
-|Name|Description|
-|---|---|
-|[pysettings](http://pyforms.readthedocs.io/en/latest/)| pysettings|
-|[pyForms](http://pyforms.readthedocs.io/en/latest/)|pyForms|
-|[pyforms-generic-editor](http://pyforms-generic-editor.readthedocs.io/en/latest/)| pyforms-generic-editor |
-|[pyserial](http://pyserial.readthedocs.io/en/latest/)| pyserial |
-|[Send2Trash](http://Send2Trash.readthedocs.io/en/latest/)| Send2Trash |
-
+|Name|Description| git link |
+|---|---|---|
+|pysettings [readthedocs](http://pyforms.readthedocs.io/en/latest/) [github](https://github.com/UmSenhorQualquer/pyforms)| pysettings|
+|pyForms [readthedocs] (http://pyforms.readthedocs.io/en/latest/) [github](https://github.com/UmSenhorQualquer/pyforms)|pyForms|
+|pyforms-generic-editor [readthedocs](http://pyforms-generic-editor.readthedocs.io/en/latest/)| pyforms-generic-editor |
+|pyserial [readthedocs](http://pyserial.readthedocs.io/en/latest/)| pyserial |
+|Send2Trash [readthedocs](http://Send2Trash.readthedocs.io/en/latest/)| Send2Trash |
 
 
 ## Submitting Pull Requests
