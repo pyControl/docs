@@ -11,11 +11,11 @@ repo_url: https://bitbucket.org/fchampalimaud/pycontrol-docs
 pages:
 - Home: index.md
 - User Guide:
-    - Basic concepts: user-guide/basic-concepts.md 
-    - Source code installation: user-guide/souce-code-installation.md
+    - Basic concepts: user-guide/basic-concepts.md
+    - Source code installation: user-guide/source-code-installation.md
+    - Contributing: user-guide/contributing.md
 - About:
     - Release Notes: about/release-notes.md
-    - Contributing: about/contributing.md
     - License: about/license.md
 
 #extra_css:
