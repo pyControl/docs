@@ -14,12 +14,15 @@ Controlling behavioural experiments using Micropython.
 
 ## Download
 
-**PyControlGUI** is distributed as a standalone executable for Mac and Windows but source code installation is also possible under Linux.
+**pyControl** is both available as a Graphical User Interface (GUI) and as a Command Line Interface (CLI). 
+
+The GUI is distributed as a standalone executable for Mac and Windows. Source code installation is also possible under Linux.
 
 | Type | Description |
 |---|---|
-|[Binaries](https://bitbucket.org/fchampalimaud/pycontrol-gui/downloads)| Download binaries for Mac OS and Windows (**recommended**)
-|[Source code installation](user-guide/contributing/) | Source code installation step by step instructions are available on the contributing page
+|[pycontrolGUI installer](https://bitbucket.org/fchampalimaud/pycontrol-gui/downloads)| Download binaries for Mac OS and Windows (**recommended**)|
+|[Source code installation (GUI)](http://pycontrol-gui.readthedocs.io/en/latest/) | Refer to the pycontrol-gui documentation. |
+|[Source code installation (CLI)](http://pycontrol-framework.readthedocs.io/en/latest/) | Refer to the pycontrol-framework documentation. |
 
 ## Configuration
 
