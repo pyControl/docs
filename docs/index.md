@@ -8,7 +8,7 @@ Controlling behavioural experiments using Micropython.
 
 **pyControl** is a system of software and hardware for controlling behavioural experiments based around the Micropython microcontroller.
 
-![pyControlGUI frontpage](https://bytebucket.org/fchampalimaud/pycontrol-gui/wiki/media/pycontrol-gui-frontpage.png)
+![pyControlGUI frontpage](media/pycontrol-gui-frontpage.png)
 
 ---
 
