@@ -32,3 +32,6 @@ The GUI is distributed as a standalone executable for Mac and Windows. Source co
 ## Configuration
 
 Will be implemented soon.
+
+## Developer's guide
+Do you want to contribute for the pyControl project? You can find more information [here](/contributing).

@@ -16,7 +16,7 @@ pages:
     - Programming tasks: user-guide/programming-tasks.md
     - Hardware: user-guide/hardware.md
 #    - Source code installation: user-guide/source-code-installation.md
-    - Contributing: user-guide/contributing.md
+- Contributing: contributing.md
 
 - About:
     - Release Notes: about/release-notes.md
