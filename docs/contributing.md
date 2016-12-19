@@ -22,11 +22,14 @@ version. If the problem is visual (for example a theme or design issue) please
 add a screenshot and if you get an error please include the full error and
 traceback.
 
-## Installing for Development (GUI version)
+## Developer's guide (CLI version)
+Will be implemented soon.
 
-**pyControl** is composed of several independent packages in order to achieve better flexibility and maintenance.
+## Developer's guide (GUI version)
 
-For detailed information on source code step-by-step installation and source code documentation please refer to [pycontrol-gui documentation](https://pycontrol-gui.readthedocs.org/).
+**pyControl GUI** is composed of several independent packages in order to achieve better flexibility and maintenance.
+
+For detailed information on source code step-by-step installation and source code documentation please refer to the [pycontrol-gui documentation](https://pycontrol-gui.readthedocs.org/).
 
 ## Submitting Pull Requests
 
