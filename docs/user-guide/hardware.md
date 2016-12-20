@@ -8,7 +8,8 @@ A typical pyControl hardware setup consists of one or more breakout boards conne
 
 ## Specifying hardware
 
-Although it is possible to instantiate hardware objects directly in a state machine definition file (as in the [button](https://bitbucket.org/takam/pycontrol/src/default/examples/button.py) example), the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is that the same hardware setup is  typically used for many different tasks so seperating out the hardware definition and task definition into seperate files avoids repeating the hardware definition code in each task file.
+Although it is possible to instantiate hardware objects directly in a state machine definition file (as in the [button](https://bitbucket.org/takam/pycontrol/src/default/examples/button.py) example), the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is  typically used for many different tasks so seperating out the hardware definition and task definition into seperate files avoids repeating hardware definition code in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are 
+specified in the setups hardware definitions.
 
 The hardware definition tells the pyControl system what inputs and outputs are available for use by state machines.  A simple hardware definition file might read:
 
