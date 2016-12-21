@@ -2,7 +2,7 @@
 
 ## Overview
 
-Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a state machine description file written in python.  There are example tasks in the [examples](https://bitbucket.org/takam/pycontrol/src/default/examples/?at=default) folder.
+Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a state machine description file written in python.  There are example tasks in the command line interface [tasks](https://bitbucket.org/takam/pycontrol/src/default/tasks/?at=default) folder - looking at these examples and reading this guide should give a good sense of how to define task behaviour.
 
 Every state machine description file starts by importing some utility functions and constants:
 
@@ -75,7 +75,7 @@ def state_A(event):
 
 ### Time dependent behaviour.
 
-The simplest way to implement time dependent state machine behaviour is using the `timed_goto_state` function.  This tells the state machine to transition to a specified state after a specified interval has elapsed.
+The simplest way to implement time dependent behaviour is using the `timed_goto_state` function.  This tells the state machine to transition to a specified state after a specified interval has elapsed.
 
 ```python
 timed_goto_state('state_C', 10*second) # Transition to state 'state_C' after 10 seconds.
@@ -104,8 +104,7 @@ disarm_timer('event_A')
 
 The function `reset_timer` disarms all active timers due to generate the specified event and sets a new timer to generate the specified event after the specified duration.
 
-```
-python
+```python
 reset_timer('event_A', 50 * minute)
 ```
 
@@ -213,12 +212,12 @@ goto_state('state_A') # Transition to state 'state_A'
 timed_goto_state(next_state, interval)
 ```
 
-Transition to state `next state` after `interval` milliseconds have elapsed.  The current state will behave as normal till the state transition occurs.  `'entry'` and  `'exit'`  actions will be processed when the state transition occurs as with `goto_state`.  If a state transition occurs for any reason before the `timed_goto_state` triggers, the  `timed_goto_state` is canceled and will have no effect.  Constants `second`, `minute` and  `hour` can be used in specifying the interval as shown in an example below.
+Transition to state `next state` after `interval` milliseconds have elapsed.  The current state will behave as normal till the state transition occurs.  `'entry'` and  `'exit'`  actions will be processed when the state transition occurs as with `goto_state`.  If a state transition occurs for any reason before the `timed_goto_state` triggers, the  `timed_goto_state` is canceled and will have no effect.  Constants `ms`, `second`, `minute` and  `hour` can be used in specifying the interval as shown in an example below.
 
 *Example usage:*  
 
 ```python
-timed_goto_state('state_B', 100)       # Transition to state 'state_B' after 100 ms
+timed_goto_state('state_B', 100*ms)    # Transition to state 'state_B' after 100 ms
 
 timed_goto_state('state_C', 10*second) # Transition to state 'state_C' after 10 seconds.
 ```

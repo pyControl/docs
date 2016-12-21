@@ -28,6 +28,8 @@ The pyControl CLI has the following dependcies:
 
 You may also need to install the micropython USB drivers to ensure your operating system recognises the board and can open a serial connection to it, see [micropython windows setup](http://micropython.org/resources/Micro-Python-Windows-setup.pdf) or the micropython [docs](http://docs.micropython.org/en/latest/pyboard/).
 
+
+
 ### Updating 
 
 To update the pyControl CLI, download the latest version from the download page, unzip it, and copy accros the *config* and *tasks* directories from your old installation to keep you configuration setttings and tasks.
@@ -78,7 +80,7 @@ from cli import run_experiment # Import run_experiment function.
 run_experiment() # Run an experiment, alternatively just double click run_experiment.py
 ```
 
-If you are having trouble opening a serial connection to a board, check that you have specified the serial port correctly (on windons look in the device manager under *Ports (COM and LTP)*).  If you still cannot open a connection try closing the python interpreter, resetting the pyboard with the reset button and trying again.
+If you are having trouble opening a serial connection to a board, check that you have specified the serial port correctly (on windows look in the device manager under *Ports (COM and LTP)*).  If you still cannot open a connection try closing the python interpreter, resetting the pyboard with the reset button and trying again.
 
 ## Pycboard class
 
@@ -212,7 +214,7 @@ or you can just double click the file run_experiment.py in the *cli* folder.
 
 You will be presented with a numbered list of experiments which correspond to those you have created in the file *host/config/experiments.py*.  Enter the number for the experiment you want to run.  
 
-You will be asked whether you want to run a hardware test.  If you select yes the state machine *hardware_test* from the *tasks* folder will be run on the setups. The point of the running a hardware test is to check that all the experimental hardware is working before starting the days experiments.  If you want to use it you will need to create an appropriate hardware test task for your setups.
+You will be asked whether you want to run a hardware test.  If you select yes the state machine *hardware_test* from the *tasks* folder will be run on the setups. Running a hardware test allows you to to check that all the experimental hardware is working before starting the days experiments.  If you want to use it you will need to create an appropriate hardware test for your setups.
 
 When the hardware test is complete (or skipped), the program uploads the task state machine to all the setups, sets variables as specified in the experiment definition and waits for the user to start the experiment by pressing enter.  While the experiment is running, the data output from the setups is displayed on the screen and written to seperate files for each setups.  The files are saved in the data folder *pyControl/data/start_date-experiment_name* .  The data file names are the subject ID and date.
 
