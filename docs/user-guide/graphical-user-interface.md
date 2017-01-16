@@ -2,6 +2,11 @@
 
 **PyControlGUI** is a *Graphical User Interface (GUI)* for the [PyControl framework](https://bitbucket.org/takam/pycontrol/wiki/Home). It is written in Python3 and built on top of [PyForms](https://github.com/UmSenhorQualquer/pyforms) and [PyControlAPI](https://bitbucket.org/fchampalimaud/pycontrolapi) libraries.
 
+
+**Watch a demonstration video!!**
+
+[![3 Pokes Task Demonstration ](https://img.youtube.com/vi/EfAPGMoATjQ/hqdefault.jpg)](https://www.youtube.com/watch?v=EfAPGMoATjQ&t=3s "3 Pokes Task Demonstration ")
+
 ## Interface organization
 
 The GUI is roughly divided in 3 main sections:
