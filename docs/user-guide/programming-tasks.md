@@ -2,7 +2,7 @@
 
 ## Overview
 
-Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a state machine description file written in python.  There are example tasks in the command line interface [tasks](https://bitbucket.org/takam/pycontrol/src/default/tasks/?at=default) folder - looking at these examples and reading this guide should give a good sense of how to define task behaviour.
+Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a state machine description file written in python.  There are example tasks in the command line interface [tasks](https://bitbucket.org/takam/pycontrol/src/default/tasks/?at=default) folder.
 
 Every state machine description file starts by importing some utility functions and constants:
 
@@ -111,6 +111,13 @@ reset_timer('event_A', 50 * minute)
 ```
 
 The constants `ms`, `second`, `minute`, and `hour` can be used as in the examples above.
+
+You can also get the current time using the `get_current_time` function which returns the number of milliseconds since the framework started running.
+
+
+```python
+x = get_current_time()
+```
 
 ### Run start and end behaviour
 
@@ -272,6 +279,16 @@ Disable any active timers due to trigger specified `event` and set new timer to 
 reset_timer('event_X', 5*minute) # Disable any timers due to trigger event 'event_X' and
                                  # set a timer to trigger 'event_X' in 5 minutes.
 ```
+
+---
+
+**get_current_time**
+
+```python
+get_current_time()
+```
+
+Returns the number of milliseconds since the framework started running.
 
 ---
 

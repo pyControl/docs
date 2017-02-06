@@ -8,7 +8,7 @@ A typical pyControl hardware setup consists of one or more breakout boards conne
 
 ## Specifying hardware
 
-Although it is possible to instantiate hardware objects directly in a state machine definition file (as in the [button](https://bitbucket.org/takam/pycontrol/src/default/examples/button.py) example), the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is  typically used for many different tasks so seperating out the hardware definition and task definition into seperate files avoids repeating hardware definition code in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are 
+Although it is possible to instantiate hardware objects directly in a state machine definition file (as in the [button](https://bitbucket.org/takam/pycontrol/src/default/tasks/button.py) example), the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is  typically used for many different tasks so seperating out the hardware definition and task definition into seperate files avoids repeating hardware definition code in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are 
 specified in the setups hardware definitions.
 
 The hardware definition tells the pyControl system what inputs and outputs are available for use by state machines.  A simple hardware definition file might read:
@@ -92,7 +92,7 @@ These classes control the behaviour of a single pin on the micropython.  See als
 
 The digital input class generates pyControl framework events when a specified pin on the Micropython board changes state. Seperate events can be specified for rising and falling edges. 
 
-By defalt debouncing is used to prevent multiple events being triggered very close together in time if the edges are ragged.  The debouncing method used ensures that transient inputs shorter than the debounce duration still generate rising and faling edges.  Debouncing incurs some overheads so should be turned off for inputs with clean edges and high event rates.
+By defalt debouncing is used to prevent multiple events being triggered very close together in time if the edges are not clean.  The debouncing method used ensures that transient inputs shorter than the debounce duration still generate rising and faling edges.  Debouncing incurs some overheads so should be turned off for inputs with clean edges and high event rates.
 
 Setting the decimate argument to an integer N causes only every N'th input pulse to generate an event.  Input pulses that are ignored due to decimation incur minimal overheads.  Decimation is designed for inputs like camera sync pulses where the input occurs at a high rate and recording 1 out of every N pulses is sufficent. Decimate can be used only with debouncing off and an event specified for a single edge.  
 
@@ -301,6 +301,8 @@ class Audio_board(port)
 
 `Audio_board.noise(freq=10000)` Play white(ish) noise with specified maximum frequency.
 
+`Audio_board.click()` Play a single click.
+
 `Audio_board.clicks(rate)` Play clicks at specified rate.
 
 `Audio_board.pulsed_sine(freq, pulse_rate)` 
@@ -322,6 +324,12 @@ Play a series of sine waves whose frequency is stepped from `start_freq` to `end
 `Audio_board.stepped_square(start_freq, end_freq, n_steps, step_rate)`
 
 Play a series of square waves whose frequency is stepped from `start_freq` to `end_freq` in `n_steps` steps at the specifed step rate.
+
+`Audio_board.play_wav(self, file_name, gc_collect=True)`
+
+Play audio from specified .wav file.  File must be a mono 8 bit wav.  RAM limitations mean that only short .wav files can be played.
+By default a garbage collection is performed after playing the file to free up the memory used to load it, this can be disabled by setting the 
+gc_collect argument to False. 
 
 *Example usage:*
 
