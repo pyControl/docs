@@ -6,7 +6,7 @@ In addition to these scripts, the CLI provides a python class called *Pycboard* 
 
 ## Installation
 
-The recommended way of installing the pyControl CLI is to download the latest version as a zip file from the repository's [downloads](https://bitbucket.org/takam/pycontrol/downloads) page. Unzip the folder on your computers filesystem, in the following documentation we will assume that the root directory of the repository is located at `C:\pyControl-cli`.
+The recommended way of installing the pyControl CLI is to download the latest version as a zip file from the repository's [downloads](https://bitbucket.org/takam/pycontrol/downloads/) page. Unzip the folder on your computers filesystem, in the following documentation we will assume that the root directory of the repository is located at `C:\pyControl-cli`.
 
 When you unpack the repository you will have the following folder structure:
 
