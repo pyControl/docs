@@ -279,7 +279,7 @@ left_poke.SOL.off() # Turn off the solenoid.
 
 **Audio board**
 
-Audio amplifier board for driving speaker using micropython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 support the audio board.
+Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the micropython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.  Up to two audio boards can be used with a single breakout board allowing two speakers to be driven independently.
 
 [Schematic (pdf)](../media/hardware/audio-board-1-0-sch.pdf) 
 

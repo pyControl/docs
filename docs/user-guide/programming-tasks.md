@@ -2,9 +2,9 @@
 
 ## Overview
 
-Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a state machine description file written in python.  There are example tasks in the command line interface [tasks](https://bitbucket.org/takam/pycontrol/src/default/tasks/?at=default) folder.
+Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a *task definition file* written in python.  To get a sense for what task definition files look like, take a look at the [examples](https://bitbucket.org/takam/pycontrol/src/default/tasks/?at=default).
 
-Every state machine description file starts by importing some utility functions and constants:
+Every task definition file starts by importing some utility functions and constants:
 
 ```python
 from pyControl.utility import *
@@ -191,7 +191,7 @@ Various random number generation and math functions are provided which are detai
 
 Whenever an event occurs it is output to the serial line along with a timestamp. Whenever a state transition occurs the state that is entered is output to the serial line with a timestamp.  
 
-The `print()` function has modified behavour when called within the context of a state machine definition file: a timestamp is prefixed to the string provided as an argument before it is printed to the serial line.  The print function can therefore be used to output arbitrary data with timestamps consistent with those of events and state transitions.
+The `print()` function has modified behavour when called within the context of a task definition file - a timestamp is prefixed to the string provided as an argument before it is printed to the serial line.  The print function can therefore be used to output arbitrary data with timestamps consistent with those of events and state transitions.
 
 ## Function reference
 
