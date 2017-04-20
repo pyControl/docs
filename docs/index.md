@@ -26,7 +26,7 @@ The CLI is downloaded as a zip file, setup instructions are provided in the user
 
 | Type | Description |
 |---|---|
-|[pycontrolGUI installer](https://bitbucket.org/fchampalimaud/pycontrol-gui/downloads)| Download binaries for Mac OS and Windows (**recommended**)|
+|[pycontrolGUI installer](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin/downloads/)| Download binaries for Mac OS and Windows (**recommended**)|
 |[Source code installation (GUI)](http://pycontrol-gui.readthedocs.io/en/latest/)  | Refer to the pycontrol-gui documentation. |
 |[Download zip (CLI)](https://bitbucket.org/takam/pycontrol/downloads/) | Refer to the [CLI user guide](user-guide/command-line-interface.md). |
 
