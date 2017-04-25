@@ -237,9 +237,15 @@ Nosepoke port with infra-red beam, stimulus LED and socket to connect solenoid v
 
 [Schematic (pdf)](../media/hardware/poke-2-3-sch.pdf) 
 
-|**Front**|**Side**|
+|**Front**|**Side - solenoid attached**|
 |---|---|
 |![Poke front](../media/hardware/poke-front.jpg)|![Poke side](../media/hardware/poke-side.jpg)
+
+Mounted Front
+![Poke front mounted](../media/hardware/poke-front-mounted.jpg)
+
+Mounted Back
+![Poke back mounted](../media/hardware/poke-back-mounted.jpg)
 
 ```python
 class Poke(port, rising_event=None, falling_event=None, debounce=5)
