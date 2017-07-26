@@ -12,6 +12,8 @@ pyControl makes it easy to program complex behavioural tasks using a clean, intu
 
 pyControl is available both as a [Graphical User Interface](user-guide/graphical-user-interface.md) (GUI) and as a [Command Line Interface](user-guide/command-line-interface.md) (CLI). 
 
+Tools for importing pyControl data into Python for analysis are provided in the [data_import](user-guide/importing-data.md) module.
+
 The pyControl [google group](https://groups.google.com/forum/#!forum/pycontrol) is a email list for pyControl users.
 
 ![pyControlGUI frontpage](media/pycontrol-gui-frontpage.png)

@@ -15,6 +15,7 @@ pages:
     - Command line interface (CLI): user-guide/command-line-interface.md
     - Programming tasks: user-guide/programming-tasks.md
     - Hardware: user-guide/hardware.md
+    - Importing data: user-guide/importing-data.md
 #    - Source code installation: user-guide/source-code-installation.md
 - Contributing: contributing.md
 

@@ -73,6 +73,8 @@ def state_A(event):
         # Code here executes when state_A is exited.
 ```
 
+Calling `goto_state` in response to an `'entry'` or  `'exit'` event will cause an error because the state machine is already in transition to a new state when these events occur.
+
 It is recomended not to put any code in a state behaviour function after a `goto_state` because it will be executed following the state transition when the task is in the subsequent state, potentially causing hard to identify bugs.
 
 ### Time dependent behaviour.
@@ -359,6 +361,18 @@ Return a shuffled copy of list `L`.
 
 ---
 
+**choice**
+
+
+```python
+choice(L)
+```
+
+Return a randomly selected element from list `L`.
+
+---
+
+
 **randint**
 
 ```python
@@ -368,6 +382,27 @@ randint(a,b)
 Return a random integer `N` such that `a` <= `N` <= `b`.
 
 ---
+
+**exp_rand**
+
+```python
+exp_rand(m)
+```
+
+Return a random number drawn from an exponential distribution with mean `m`.
+
+---
+
+**gauss_rand**
+
+```python
+gauss_rand(m,s)
+```
+
+Return a random number drawn from a gaussian distribution with mean `m` and standard deviation `s`.
+
+---
+
 
 **sample_without_replacement**
 

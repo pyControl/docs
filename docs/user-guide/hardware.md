@@ -271,7 +271,7 @@ class Poke(port, rising_event=None, falling_event=None, debounce=5)
 
 `Poke.LED` Stimulus LED
 
-`POKE.SOL` Solenoid output.
+`Poke.SOL` Solenoid output.
 
 *Methods:*
 
@@ -338,12 +338,6 @@ Play a series of sine waves whose frequency is stepped from `start_freq` to `end
 `Audio_board.stepped_square(start_freq, end_freq, n_steps, step_rate)`
 
 Play a series of square waves whose frequency is stepped from `start_freq` to `end_freq` in `n_steps` steps at the specifed step rate.
-
-`Audio_board.play_wav(self, file_name, gc_collect=True)`
-
-Play audio from specified .wav file.  File must be a mono 8 bit wav.  RAM limitations mean that only short .wav files can be played.
-By default a garbage collection is performed after playing the file to free up the memory used to load it, this can be disabled by setting the 
-gc_collect argument to False. 
 
 *Example usage:*
 
