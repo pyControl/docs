@@ -1,6 +1,6 @@
 # Importing data
 
-The module [data_import.py]() contains tools for importing and representing pyControl sessions and experiments in Python.  
+The module [data_import.py](https://bitbucket.org/takam/pycontrol/src/default/tools/data_import.py) contains tools for importing and representing pyControl sessions and experiments in Python.  
 
 The data import module has the following dependencies:
 
