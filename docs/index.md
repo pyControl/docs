@@ -10,7 +10,7 @@ Open source, Python based, behavioural experiment control.
 
 pyControl makes it easy to program complex behavioural tasks using a clean, intuitive, and flexible syntax for specifying tasks as state machines. The user created task definition files, written in Python, run directly on the microcontroller, supported by pyControl framework code.  This gives users the power and simplicity of Python for specifying task behaviour, while allowing advanced users low-level access to the microcontroller hardware.  For more information see [programming tasks](user-guide/programming-tasks.md).  
 
-pyControl is available both as a [Graphical User Interface](user-guide/graphical-user-interface.md) (GUI) and as a [Command Line Interface](user-guide/command-line-interface.md) (CLI). 
+The recommended way of using pyControl is the [Command Line Interface](user-guide/command-line-interface.md) (CLI).  A [Graphical User Interface](user-guide/graphical-user-interface.md) (GUI) is under development but is not currently stable and fully featured enough for running experiments.
 
 Tools for importing pyControl data into Python for analysis are provided in the [data_import](user-guide/importing-data.md) module.
 
@@ -22,15 +22,15 @@ The pyControl [google group](https://groups.google.com/forum/#!forum/pycontrol) 
 
 ## Download
 
-The GUI is distributed as a standalone executable for Mac and Windows. Source code installation is also possible under Linux.  
-
 The CLI is downloaded as a zip file, setup instructions are provided in the user guide.
+
+The GUI is distributed as a standalone executable for Mac and Windows. Source code installation is also possible under Linux.  
 
 | Type | Description |
 |---|---|
+|[Download zip (CLI)](https://bitbucket.org/takam/pycontrol/downloads/) | Refer to the [CLI user guide](user-guide/command-line-interface.md). |
 |[pycontrolGUI installer](https://bitbucket.org/fchampalimaud/pycontrol-gui-plugin/downloads/)| Download binaries for Mac OS and Windows (**recommended**)|
 |[Source code installation (GUI)](http://pycontrol-gui.readthedocs.io/en/latest/)  | Refer to the pycontrol-gui documentation. |
-|[Download zip (CLI)](https://bitbucket.org/takam/pycontrol/downloads/) | Refer to the [CLI user guide](user-guide/command-line-interface.md). |
 
 ## Developer's guide
 

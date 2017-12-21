@@ -30,7 +30,7 @@ The pyControl CLI has the following dependencies:
 
 The CLI has been tested on Windows 7 and 10 but in principle should be cross platform. You may need to install the micropython USB drivers to ensure your operating system recognizes the board and can open a serial connection to it, see [micropython windows setup](http://micropython.org/resources/Micro-Python-Windows-setup.pdf) or the micropython [docs](http://docs.micropython.org/en/latest/pyboard/).
 
-Crashes have been observed when using pyControl with pyboards that are running old versions of the Micropython firmware (version < 1.6).  When you connect to a board with the CLI the micropython version running on the board is displayed.  Instructions for updating the micropython firmware can be found [here](http://micropython.org/download).  Note, you can put a pyboard into device firmware update (DFU) mode using the board config menu in *run_task*, this is easier than using a hardware jumper as suggested in the instructions.
+Crashes have been observed when using pyControl with pyboards that are running old versions of the Micropython firmware (version < 1.6).  When you connect to a board with the CLI the micropython version running on the board is displayed.  Instructions for updating the micropython firmware can be found [here](http://micropython.org/download).  The instructions say to put the board into device firmware update (DFU) mode by physically connecting two pins together while you press reset - an easier way to do this is using the board config menu in the *run_task* script.
 
 ### Updating 
 

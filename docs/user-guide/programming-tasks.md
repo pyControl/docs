@@ -100,6 +100,8 @@ set_timer('event_C', 1 * second)
 set_timer('event_C', 3 * second)
 ```
 
+The constants `ms`, `second`, `minute`, and `hour` can be used as in the examples above.
+
 The function `disarm_timer` disarms all active timers which are due to generate the specified event.  
 
 ```python
@@ -120,7 +122,12 @@ pause_timer('event_A')
 unpause_timer('event_A')
 ```
 
-The constants `ms`, `second`, `minute`, and `hour` can be used as in the examples above.
+The function `timer_remaining` returns the time in ms until a timer set for the specified event elapses, returns 0 if no timer is set for that event.
+
+```python
+timer_remaining('event_A')
+```
+
 
 You can also get the current time using the `get_current_time` function which returns the number of milliseconds since the framework started running.
 
@@ -308,6 +315,16 @@ unpause_timer(event)
 ```
 
 Unpause any timers due to trigger specified `event`.  When a timer is unpaused it restarts with the same time remaining as when it was paused.
+
+---
+
+**timer_remaining**
+
+```python
+timer_remaining(event)
+```
+
+Return the time in ms until a timer set to trigger the specified `event` elapses, returns 0 if no timer is set for `event`.
 
 ---
 

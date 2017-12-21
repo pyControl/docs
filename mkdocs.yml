@@ -1,6 +1,6 @@
 site_name: pyControl
 site_url: https://pycontrol.readthedocs.io/
-site_description: Controlling behavioural experiments with pyBoard
+site_description: Open source, Python based, behavioural experiment control.
 site_author: Champalimaud Foundation
 
 #theme: cinder
