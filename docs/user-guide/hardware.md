@@ -2,7 +2,9 @@
 
 ## Overview
 
-A typical pyControl hardware setup consists of one or more breakout boards connected to a computer by USB, each of which runs a single behavioural setup.  The breakout board connects to a set of devices such as nosepokes, audio boards and LED drivers which make up the setup.
+A typical pyControl hardware setup consists of one or more breakout boards connected to a computer by USB, each of which runs a single behavioural setup.  The breakout board connects to a set of devices such as nosepokes, audio boards and LED drivers which make up the setup.  
+
+All pyControl hardware is open source and design files for the hardware detailed below are available in the [pyControl hardware repository](https://bitbucket.org/takam/pycontrol_hardware).
 
 ![Hardware overview](../media/hardware/hardware-overview.jpg)
 
@@ -59,7 +61,7 @@ Typically when pyControl is used to run a behavioural experiment, the micropytho
 
 Each port is an 8 pin RJ45 connector which provides power (GND, 5V and 12V), two general purpose digital input/output (DIO) lines, and two driver lines which can be used for switching higher power loads such as solenoids or LEDs. pyControl hardware uses standard network cables for connecting hardware devices to the breakout board as they are cheap, readily available and reliable.
 
-The DIO lines connect directly to pins on the micropython microcontroller. The microcontroller uses 3.3V logic so when these pins are used as outputs they switch from 0 to 3.3V in the off and on states respectively. The DIO lines are 5V tolerant and can recieve 5V logic signals as inputs.
+The DIO lines connect directly to pins on the micropython microcontroller. The microcontroller uses 3.3V logic so when these pins are used as outputs they switch from 0 to 3.3V in the off and on states respectively. The DIO lines are 5V tolerant and can recieve 5V logic signals as inputs.  
 
 The driver lines are low side drivers ([datasheet](https://toshiba.semicon-storage.com/info/docget.jsp?did=29893)) which connect the negative side of the load to ground when turned on:
 
@@ -171,7 +173,7 @@ Breakout boards interface the micropython board with RJ45 behaviour ports, BNC c
 
 **Breakout 1.2**
 
-Current version of the pyControl Breakout board with 6 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and user pushbutton. 
+Current version of the pyControl Breakout board with 6 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and user pushbutton. Ports 1 & 2 have an additional driver line.  Ports 3 and 4 have an additional DIO line which also supports analog output (DAC).  Ports 3 and 4 support I2C or UART serial communication over two of their DIO lines.
 
 [Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf) 
 
