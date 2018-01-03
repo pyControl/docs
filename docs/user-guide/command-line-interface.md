@@ -28,11 +28,11 @@ The pyControl CLI has the following dependencies:
 - pyserial
 - pyperclip (optional, used to copy summary data to clipboard)
 
-The CLI has been tested on Windows 7 and 10 but in principle should be cross platform. You may need to install the micropython USB drivers to ensure your operating system recognizes the board and can open a serial connection to it, see [micropython windows setup](http://micropython.org/resources/Micro-Python-Windows-setup.pdf) or the micropython [docs](http://docs.micropython.org/en/latest/pyboard/).
+The CLI has been tested primarily on Windows 7 and 10 but in principle should be cross platform and has been used on Apple and Linux systems.  You may need to install the micropython USB drivers to ensure your operating system recognizes the board and can open a serial connection to it, see [micropython windows setup](http://micropython.org/resources/Micro-Python-Windows-setup.pdf) and the micropython [docs](http://docs.micropython.org/en/latest/pyboard/pyboard/tutorial/repl.html).
 
 Crashes have been observed when using pyControl with pyboards that are running old versions of the Micropython firmware (version < 1.6).  When you connect to a board with the CLI the micropython version running on the board is displayed.  Instructions for updating the micropython firmware can be found [here](http://micropython.org/download).  The instructions say to put the board into device firmware update (DFU) mode by physically connecting two pins together while you press reset - an easier way to do this is using the board config menu in the *run_task* script.
 
-### Updating 
+### Updating
 
 To update the pyControl CLI, download the latest version from the download page, unzip it, and copy across the *config* and *tasks* directories from your old installation to keep you configuration settings and tasks.
 
@@ -40,7 +40,7 @@ Alternatively if you are familiar with version control software you can clone th
 
 ## Getting started
 
-Plug in your pyboard and find out what serial port it is on (on Windows it will appear in the device manager under *Ports (COM & LTP)* and the serial port will be e.g. `COM1`).
+Plug in your pyboard and find out what serial port it is on.  On Windows it will appear in the device manager under *Ports (COM & LTP)* and the serial port will be e.g. `COM1`.  On Linux the serial port will be e.g. `/dev/ttyACM0` and you may need to give yourself the correct permissions to access the device (e.g. use sudo).  On Apple the serial port will be e.g. `/dev/tty.usbmodem*`.
 
 Double click the file *run_task.py* in the folder *pyControl/cli*, you will be prompted to enter the serial port. The program will connect to the board and upload the pyControl framework if it is not already installed.  If you are having trouble opening a serial connection to a board, check that you have specified the serial port correctly.  If you still cannot open a connection reset the pyboard with the reset button and try again.
 
@@ -60,6 +60,8 @@ board_serials = {1:'COM1',    # Board numbers with respective serial port addres
                  3:'COM3',
                  4:'COM4'}
 ```
+
+Once you have specified the serial ports of your boards in the config file you can select them in *run_task.py* by just entering the board number rather than the serial port.
 
 The file *experiments.py* specifies the experiments available to be run using the script *run_experiment.py*, see below for more information.
 
