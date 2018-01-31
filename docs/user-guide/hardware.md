@@ -10,9 +10,7 @@ All pyControl hardware is open source and design files for the hardware detailed
 
 ## Hardware definitions
 
-
-Hardware objects can be instantiated directly in a state machine definition file (as in the [button](https://bitbucket.org/takam/pycontrol/src/default/tasks/button.py) example), however the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is  typically used for many different tasks so seperating out the hardware and task definition code into seperate files avoids repeating the hardware definition in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are 
-specified in the hardware definition.
+Hardware objects can be instantiated directly in a state machine definition file (as in the [button](https://bitbucket.org/takam/pycontrol/src/default/tasks/button.py) example), however the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is  typically used for many different tasks so seperating out the hardware and task definition code into seperate files avoids repeating the hardware definition in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are specified in the setups hardware definitions.
 
 The hardware definition tells the pyControl system what inputs and outputs are available for use by state machines.  A simple hardware definition file might read:
 
@@ -99,7 +97,7 @@ The following sections detail the Python classes used to specify and control pyC
 
 ## Inputs and outputs
 
-These classes control the behaviour of a single pin on the micropython.  See also the micropython [pyb](https://docs.micropython.org/en/latest/pyboard/library/pyb.html) module.
+These classes control the behaviour of a single pin on the micropython.
 
 ---
 
@@ -135,6 +133,41 @@ class Digital_input(pin, rising_event=None, falling_event=None, debounce=5, deci
 
 ---
 
+### Analog input
+
+The analog input class measures the voltage on a pin at a specified sampling rate, can stream these measurements to the host computer to be saved to disk, and can generate pyControl framework events when the voltage rises above or falls below a specified threshold.  
+
+The input voltage is measured with 12 bit resolution giving a number between 0 and 4095, corresponding to the voltage range 0 to 3.3V relative to the pyboard ground.
+
+Note; acquiring analog data and streaming it to the host computer uses pyboard processor and communication resources so attempting to acquire at too high sampling rates or from too many inputs simultaneously will overload the board. The maximum achievable sample rates have not been extensively tested, though two analog inputs aquiring at 1KHz each appears to work OK.
+
+
+```python
+class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, falling_event=None)
+```
+
+*Arguments:*
+
+`pin` Micropython pin to use. Only a subset of micropython pins support analog to digital conversion (ADC) (see pyboard [quickref](https://docs.micropython.org/en/latest/pyboard/pyboard/quickref.html)).
+
+`name` Name of the analog input, used to identify data files generated when input is recorded.
+
+`sampling_rate` The rate at which the pin voltage is sampled (Hz). 
+
+`threshold` Threshold against which voltage samples are compared for generating rising and falling events, must be an integer between 0 and 4095.
+
+`rising_event` Name of event triggered when voltage crosses threshold in rising direction.
+
+`falling_event` Name of event triggered when voltage crosses threshold in falling direction.
+
+*Methods:*
+
+`Analog_input.record()`  Start streaming analog input measurements to computer.  If the computer is logging pyControl data the analog data will be saved to disk.  Analog data is saved in seperate files from the main pyControl data log, with a seperate data file for each analog input.  Analog data is saved in binary files with a *.pca* file extension, for information on how to read these files see [Importing data](importing-data.md#analog-data).
+
+`Analog_input.stop()`  Stop streaming analog data to computer.  You can start and stop streaming analog data multples times in a framework run.  If rising or falling events are specified for the analog input these will be generated regardless of whether or not the input is streaming data to the computer.
+
+---
+
 ### Digital output
 
 The digital output class is used to control a pyboard pin used as a digital output.
@@ -159,7 +192,7 @@ class Digital_output(pin, inverted=False, pulse_enabled=False)
 
 `Digital_output.toggle()` Toggle output.
 
-`Digital_output.pulse(freq)` Turn on squarewave output with specified frequency.
+`Digital_output.pulse(freq, duty_cycle=50, n_pulses=False)` Turn on a pulse train with specified frequency (Hz). The duty cycle (percentage of the period for which the signal is high) can be specified as 10, 25, 50 or 75.  If the n_pulses argument is set to an integer the pulse train will stop after this number of pulses has been delivered.
 
 `Digital_output.enable_pulse()` Setup output to support pulsed output.
 
@@ -372,3 +405,71 @@ class LED_driver(port)
 `LED_driver.on()` Turn on LED
 
 `LED_driver.off()` Turn off LED
+
+`LED_driver.pulse(freq, duty_cycle=50, n_pulses=False)` Turn on a pulse train with specified frequency (Hz). The duty cycle (percentage of the period for which the signal is high) can be specified as 10, 25, 50 or 75.  If the n_pulses argument is set to an integer the pulse train will stop after this number of pulses has been delivered.
+
+---
+
+### Stepper motor
+
+Class for controlling a stepper motor.  Requires a stepper motor driver that is controlled using a *direction* and a *step* pin, for example the [EasyDriver](http://www.schmalzhaus.com/EasyDriver/).
+
+```python 
+class Stepper_motor(direction_pin, step_pin)
+```
+
+*Arguments:* 
+
+`direction_pin` The micropython pin connected to the direction control pin of the stepper motor driver.
+
+`step_pin` The micropython pin connected to the step pin of the stepper motor driver.
+
+*Methods:*
+
+`Stepper_motor.forward(step_rate, n_pulses=False)` Turn the motor forward at the specified step rate (Hz).  If the n_pulses argument is set to an integer the motor will move that many steps at the specified rate and then stop.
+
+`Stepper_motor.backwards(step_rate, n_pulses=False)` Turn the motor backwards.
+
+`Stepper_motor.stop()` Stop the stepper motor.
+
+---
+
+### Rotary encoder
+
+Class for acquiring data from a rotary encoder, used e.g. to measure the speed of a running wheel.  The encoder must be an incremental rotary encoder that outputs a quadrature signal. The rotary encoder class can stream the position or velocity of the encoder to the computer at a specified sampling rate, and generate framework events when the position/velocity goes above/below a specified threshold.  Currently the rotary encoder class expects the two lines carrying the quadrature signal to be connected to micropython pins 'X1' and 'X2' (Port 1 DIO_A and DIO_B on breakout board 1.2).
+
+```python 
+class Rotary_encoder(name, sampling_rate, output='velocity', threshold=None,
+                     rising_event=None, falling_event=None, bytes_per_sample=2,
+                     reverse=False)
+```
+
+*Arguments:*
+
+`name` Name of the rotatory encoder, used to identify data files generated when input is recorded.
+
+`sampling_rate` The rate at which encoder position/velocity is sampled.
+
+`output` Whether to stream encoder position or velocity to computer.  Valid values are *'position'* or *'velocity'*.  Also determines whether a position or velocity threshold is used for event generation.  Velocity signals are in units of encoder counts per second, so an encoder with a resolution of 100 counts per revolution turning at 2 revolution per second would output a velocity of 200. Position signals are in units of encoder counts.
+
+`threshold` Threshold against which the position or velocity (as specified by the `output` argument) is compared for generating rising and falling events, must be an integer.
+
+`rising_event` Name of event triggered when position/velocity crosses threshold in rising direction.
+
+`falling_event` Name of event triggered when position/velocity crosses threshold in falling direction.
+
+`bytes_per_sample` Number of bytes used per sample when data is sent to the computer.  Valid values are 2 or 4.  Only set to 4 if your signals are likely to go outside the range covered by 2 byte signed integers (-32748 to 32748).
+
+`reverse` Set to *True* to reverse the direction of rotation which is considered a positive velocity.
+
+*Methods:*
+
+`Rotary_encoder.record()`  Start streaming position/velocity measurements to computer. Data is saved in the same file format as data generated by [analog inputs](#analog-input).
+
+`Rotary_encoder.stop()`  Stop streaming data to computer. If rising or falling events are specified for the rotary encoder these will be generated regardless of whether or not the encoder is streaming data to the computer.
+
+*Attributes:*
+
+`Rotary_encoder.velocity` The current velocity of the encoder.
+
+`Rotary_encoder.position` The current position of the encoder.
