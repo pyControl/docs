@@ -66,7 +66,7 @@ board_serials = {1:'COM1',    # Board numbers with respective serial port addres
 
 Once you have specified the serial ports of your boards in the config file you can select them in *run_task.py* by just entering the board number rather than the serial port.
 
-The file *experiments.py* specifies the experiments available to be run using the script *run_experiment.py*, see below for more information.
+The file *experiments.py* specifies the experiments available to run using the script *run_experiment.py*, see below for more information.
 
 ## Running tasks
 
@@ -127,7 +127,9 @@ example_exp = Experiment(
                                'n_trials'])
 ```
 
-`set_variables` allows the value of specified variables to be set at runtime.  It must be a dictionary with keys corresponding to the names of the variables to be set, each with a corresponding value for the variable.  To set the value of a variable separately for each setup, you can supply a dictionary with keys which match the setup numbers. The above example sets the variable *session_duration* to 2 hours for all the setups, and the variable *reward_durations* to [80,90] for setup 1 and [75,85] for setup 2.
+`set_variables` allows the value of specified variables to be set at runtime.  Must be a dictionary with keys corresponding to the names of the variables to be set, each with a corresponding value for the variable.  To set the value of a variable separately for each setup, you can supply a dictionary with keys which match the setup numbers used in the experiment.  The above example sets the variable *session_duration* to 2 hours for all the setups, and the variable *reward_durations* to [80,90] for setup 1 and [75,85] for setup 2.  
+
+Note, setting variables to invalid values due to typo's or mistakes in the set_variables argument is a common cause of crashes in pyControl experiments (e.g. setting a variable that needs to be a number to a list). If you have a task that runs fine normally but is giving errors when you run it with set variables, double check that the set variables arguement is correct.
 
 `persistent_variables` is used to make the values of specified variables persistent across sessions. The values of persistent variables are read from each setup at the end of the session and stored in text files in the data folder for the experiment.  The above example makes the variable *state* persistent across sessions.
 

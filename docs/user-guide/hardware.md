@@ -10,7 +10,7 @@ All pyControl hardware is open source and design files for the hardware detailed
 
 ## Hardware definitions
 
-Hardware objects can be instantiated directly in a state machine definition file (as in the [button](https://bitbucket.org/takam/pycontrol/src/default/tasks/button.py) example), however the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is  typically used for many different tasks so seperating out the hardware and task definition code into seperate files avoids repeating the hardware definition in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are specified in the setups hardware definitions.
+Hardware objects can be instantiated directly in a state machine definition file (as in the [button](https://bitbucket.org/takam/pycontrol/src/default/tasks/button.py) example), however the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is  typically used for many different tasks so seperating out the hardware and task definition code into seperate files avoids repeating the hardware definition in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are specified in the setup's hardware definitions.
 
 The hardware definition tells the pyControl system what inputs and outputs are available for use by state machines.  A simple hardware definition file might read:
 
@@ -53,51 +53,9 @@ You can turn off all outputs (for example at the end of a session) using the com
 hw.off()  # Turn off all outputs.
 ```
 
-### Behaviour ports
-
-Typically when pyControl is used to run a behavioural experiment, the micropython board is mounted on a [breakout board](#breakout-boards) which provides a set of *behaviour ports* which hardware like nose pokes or levers are connected to.  
-
-Each port is an 8 pin RJ45 connector which provides power (GND, 5V and 12V), two general purpose digital input/output (DIO) lines, and two driver lines which can be used for switching higher power loads such as solenoids or LEDs. pyControl hardware uses standard network cables for connecting hardware devices to the breakout board as they are cheap, readily available and reliable.
-
-The DIO lines connect directly to pins on the micropython microcontroller. The microcontroller uses 3.3V logic so when these pins are used as outputs they switch from 0 to 3.3V in the off and on states respectively. The DIO lines are 5V tolerant and can recieve 5V logic signals as inputs.  
-
-The driver lines are low side drivers ([datasheet](https://toshiba.semicon-storage.com/info/docget.jsp?did=29893)) which connect the negative side of the load to ground when turned on:
-
-![Driver diagram](../media/hardware/driver-diagram.jpg)
-
-The positive side of the load can be connected to any voltage up to 12V.  Each driver line can sink up to 150mA of current. Putting more current through the driver lines can damage the driver IC, and in extreme cases could pose a fire risk.  The driver ICs are mounted in sockets and can be easily replaced if damaged.
-
-Some ports have additional functionality such as an extra driver line, digital to analog (DAC), analog to digital (ADC) or serial communication (I2C/UART).
-
-Typically devices which plug into a behaviour port have several inputs and outputs, for example the [poke](#poke) device comprises an IR beam, stimulus LED and solenoid output. Rather than having to specify each input and output on a hardware device seperately, each device has its own Python class, allowing it to be instantiated with a single command.  For example the hardware definition below specifies that 3 nose pokes are plugged into ports 1-3 of pyControl Breakout board 1.2.
-
-```python
-from devices import *
-
-board = Breakout_1_2()  # Instantiate the breakout board object.
-
-# Instantiate the poke objects.
-left_poke   = Poke(port=board.port_1, rising_event='left_poke'  , falling_event='left_poke_out' )
-centre_poke = Poke(port=board.port_2, rising_event='centre_poke', falling_event='centre_poke_out')
-right_poke  = Poke(port=board.port_3, rising_event='right_poke' , falling_event='right_poke_out')
-```
-
-When a Poke object is instantiated, it creates a digital input which will generate the specified rising and falling events when the pokes IR beam is broken, and two digital outpts corresponding to the LED and solenoid.  These can be controlled from within a state machine definition as:
-
-
-```python
-hw.left_poke.LED.on() # Turn on the LED on the left poke.
-
-hw.right_poke.SOL.off() # Turn off the solenoid on the right poke.
-```
-
-# Hardware classes
-
-The following sections detail the Python classes used to specify and control pyControl hardware.
-
 ## Inputs and outputs
 
-These classes control the behaviour of a single pin on the micropython.
+The following hardware classes control the behaviour of a single pin on the micropython microcontroller.
 
 ---
 
@@ -200,13 +158,71 @@ class Digital_output(pin, inverted=False, pulse_enabled=False)
 
 ## Breakout boards
 
-Breakout boards interface the micropython board with RJ45 behaviour ports, BNC connectors, indicator LEDs and user pushbuttons.  The breakout board classes specify the pin mappings for the boards.
+Typically when pyControl is used to run a behavioural experiment, the micropython microcontroller is mounted on a breakout board, which interfaces it with *behaviour ports*, BNC connectors, indicator LEDs and user pushbuttons. 
+
+### Behaviour ports
+
+Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 or 6 network cables), with the following set of lines:
+
+| Function                     | RJ45 connector pin # |
+| ---------------------------- | -------------------- |
+| Ground                       | 2                    |
+| +5V                          | 6                    |
+| +12V                         | 8                    |
+| Digital input/output (DIO) A | 1                    |
+| Digital input/output (DIO) B | 4                    |
+| Power driver (POW) A         | 3                    |
+| Power driver (POW) B         | 7                    |
+| Special function             | 5                    |
+
+The digital input/output (DIO) lines connect directly to pins on the micropython microcontroller. The microcontroller uses 3.3V logic so when these pins are used as outputs they switch from 0 to 3.3V in the off and on states respectively. The DIO lines are 5V tolerant and can recieve 5V logic signals as inputs.  Some DIO lines have additional functionality such as analog to digital conversion (ADC) or serial communication (I2C or UART).
+
+The power driver lines are for controlling loads that need higher currents or voltages than can be provided directly from a microcontroller pin.  These lines are connected to low side driver ICs ([datasheet](https://toshiba.semicon-storage.com/info/docget.jsp?did=29893)) on the breakout board, which are in turn controlled by pins on the microcontroller.  Low side drivers connect the negative side of the load to ground when turned on:
+
+![Driver diagram](../media/hardware/driver-diagram.jpg)
+
+The positive side of the load can be connected to any voltage up to +12V.  Each driver line can sink up to 150mA of current. Putting more current through the driver lines can damage the driver IC, and in extreme cases could pose a fire risk.  The driver ICs are mounted in sockets and can be easily replaced if damaged.  The driver ICs have built in clamp diodes connected to the +12V supply so can be used directly to drive inductive loads such as solenoids.
+
+The special function pin has different functions on different ports, for example it may be an extra driver line or a pin with digital to analog (DAC) functionality, see below for more information.
+
+Typically devices which plug into a behaviour port have several inputs and outputs, for example the [Poke](#poke) device comprises an IR beam, stimulus LED and solenoid. Rather than having to specify each input and output on a hardware device seperately, each device has its own Python class which takes a behaviour port as an argument, allowing it to be instantiated with a single command. For example the hardware definition below specifies that 3 nose pokes are plugged into ports 1-3 of Breakout board 1.2.
+
+```python
+from devices import *
+
+board = Breakout_1_2()  # Instantiate the breakout board object.
+
+# Instantiate the poke objects.
+left_poke   = Poke(port=board.port_1, rising_event='left_poke'  , falling_event='left_poke_out' )
+centre_poke = Poke(port=board.port_2, rising_event='centre_poke', falling_event='centre_poke_out')
+right_poke  = Poke(port=board.port_3, rising_event='right_poke' , falling_event='right_poke_out')
+```
+
+The IR beam and solenoids on the pokes can be controlled from within a state machine as:
+
+```python
+hw.left_poke.LED.on()   # Turn on the LED on the left poke.
+
+hw.right_poke.SOL.off() # Turn off the solenoid on the right poke.
+```
+
+If you want to refer to a single pin on a behaviour port in a hardware defintion, this can be done as in the examples below:
+
+```python
+# Instantiate line POW_A on port 4 as a digital output.
+house_light = Digital_output(pin=board.port_4.POW_A) 
+
+# Instantiate line DIO_B on port 5 as a digital input.
+sync_input = Digital_input(pin=board.port_5.DIO_B, rising_event='sync_pulse') 
+```
+
+
 
 ---
 
-**Breakout 1.2**
+### Breakout board 1.2
 
-Current version of the pyControl Breakout board with 6 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and user pushbutton. Ports 1 & 2 have an additional driver line.  Ports 3 and 4 have an additional DIO line which also supports analog output (DAC).  Ports 3 and 4 support I2C or UART serial communication over two of their DIO lines.
+The current version 1.2 of the pyControl Breakout board has 6 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and user pushbutton. Ports 1 & 2 have an additional driver line *POW_C*.  Ports 3 and 4 have an additional DIO line *DIO_C* which also supports analog output (DAC).  Ports 3 and 4 support I2C and ports 1,3 & 4 support UART serial communication over their DIO lines.
 
 [Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf) 
 
@@ -250,29 +266,9 @@ pushbutton = Digital_input(pin=board.button, falling_event='button', pull='up')
 
 ---
 
-**Breakout 1.0**
-
-Older version of the Breakout board with 4 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and two user pushbuttons.
-
-[Schematic (pdf)](../media/hardware/breakout-1-0-sch.pdf) 
-
-```python
-class Breakout_1_0()
-```
-
-*Atributes:*
-
-`Breakout_1_2.port_1`, ... , `Breakout_1_2.port_4`  
-
-`Breakout_1_2.BNC_1`, `Breakout_1_2.BNC_2`
-
-`Breakout_1_2.DAC_1`, `Breakout_1_2.DAC_2`
-
-`Breakout_1_2.button_1` , `Breakout_1_2.button_1`
-
----
-
 ## Devices
+
+The following Python classes define devices which plug into behaviour ports.
 
 ### Poke
 
@@ -284,10 +280,10 @@ Nosepoke port with infra-red beam, stimulus LED and socket to connect solenoid v
 |---|---|
 |![Poke front](../media/hardware/poke-front.jpg)|![Poke side](../media/hardware/poke-side.jpg)
 
-Mounted Front
+**Mounted Front**
 ![Poke front mounted](../media/hardware/poke-front-mounted.jpg)
 
-Mounted Back
+**Mounted Back**
 ![Poke back mounted](../media/hardware/poke-back-mounted.jpg)
 
 ```python
@@ -328,7 +324,7 @@ left_poke.SOL.off() # Turn off the solenoid.
 
 ### Audio board
 
-Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the micropython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.  Up to two audio boards can be used with a single breakout board allowing two speakers to be driven independently.
+Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the micropython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.
 
 [Schematic (pdf)](../media/hardware/audio-board-1-0-sch.pdf) 
 
