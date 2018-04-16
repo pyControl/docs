@@ -97,7 +97,7 @@ The analog input class measures the voltage on a pin at a specified sampling rat
 
 The input voltage is measured with 12 bit resolution giving a number between 0 and 4095, corresponding to the voltage range 0 to 3.3V relative to the pyboard ground.
 
-Note; acquiring analog data and streaming it to the host computer uses pyboard processor and communication resources so attempting to acquire at too high sampling rates or from too many inputs simultaneously will overload the board. The maximum achievable sample rates have not been extensively tested, though two analog inputs aquiring at 1KHz each appears to work OK.
+Acquiring analog data and streaming it to the host computer uses pyboard processor and communication resources so attempting to acquire at too high sampling rates or from too many inputs simultaneously will overload the board. The maximum achievable sample rates have not been extensively tested, though six analog inputs aquiring at 1KHz each appears to work.
 
 
 ```python
@@ -224,7 +224,7 @@ sync_input = Digital_input(pin=board.port_5.DIO_B, rising_event='sync_pulse')
 
 The current version 1.2 of the pyControl Breakout board has 6 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and user pushbutton. Ports 1 & 2 have an additional driver line *POW_C*.  Ports 3 and 4 have an additional DIO line *DIO_C* which also supports analog output (DAC).  Ports 3 and 4 support I2C and ports 1,3 & 4 support UART serial communication over their DIO lines.
 
-[Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf) 
+[Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Breakout/)
 
 **Front:**
 ![Breakout 1.2 front](../media/hardware/breakout-1-2-front.jpg)
@@ -274,7 +274,7 @@ The following Python classes define devices which plug into behaviour ports.
 
 Nosepoke port with infra-red beam, stimulus LED and socket to connect solenoid valve.
 
-[Schematic (pdf)](../media/hardware/poke-2-3-sch.pdf) 
+[Schematic (pdf)](../media/hardware/poke-2-3-sch.pdf)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Poke/)
 
 |**Front**|**Side - solenoid attached**|
 |---|---|
@@ -326,7 +326,7 @@ left_poke.SOL.off() # Turn off the solenoid.
 
 Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the micropython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.
 
-[Schematic (pdf)](../media/hardware/audio-board-1-0-sch.pdf) 
+[Schematic (pdf)](../media/hardware/audio-board-1-0-sch.pdf)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Audio_board/)
 
 ![Audio board](../media/hardware/audio-board.jpg)
 
@@ -388,7 +388,7 @@ speaker.off() # Turn off sound output.
 
 A constant current LED driver for optogenetic stimulation.
 
-[Schematic (pdf)](../media/hardware/LED-driver-1-1-sch.pdf) 
+[Schematic (pdf)](../media/hardware/LED-driver-1-1-sch.pdf)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/LED_driver/)
 
 ![LED driver](../media/hardware/LED-driver.jpg)
 
@@ -404,35 +404,70 @@ class LED_driver(port)
 
 `LED_driver.pulse(freq, duty_cycle=50, n_pulses=False)` Turn on a pulse train with specified frequency (Hz). The duty cycle (percentage of the period for which the signal is high) can be specified as 10, 25, 50 or 75.  If the n_pulses argument is set to an integer the pulse train will stop after this number of pulses has been delivered.
 
+
+*Example usage:*
+
+```python
+stim = LED_driver(board.port_1) # Instantiate LED driver
+
+stim.on() # Turn on continous.
+
+stim.off() # Turn off.
+
+stim.pulse(freq=20, duty_cycle=10, n_pulses=10) # Turn on 10 pulse train at 20Hz.
+```
+
 ---
 
 ### Stepper motor
 
-Class for controlling a stepper motor.  Requires a stepper motor driver that is controlled using a *direction* and a *step* pin, for example the [EasyDriver](http://www.schmalzhaus.com/EasyDriver/).
+Class for controlling an [EasyDriver](http://www.schmalzhaus.com/EasyDriver/) stepper motor driver or any driver which takes a *step* and *direction* pin as control inputs.
+
+The stepper motor adaptor board connects an Easydriver to a pyControl behaviour port.
+
+[Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Stepper_driver/)
+
+![Stepper driver](../media/hardware/stepper_driver.jpg)
 
 ```python 
-class Stepper_motor(direction_pin, step_pin)
+class Stepper_motor(port=None, direction_pin=None, step_pin=None)
 ```
-
-*Arguments:* 
-
-`direction_pin` The micropython pin connected to the direction control pin of the stepper motor driver.
-
-`step_pin` The micropython pin connected to the step pin of the stepper motor driver.
 
 *Methods:*
 
-`Stepper_motor.forward(step_rate, n_pulses=False)` Turn the motor forward at the specified step rate (Hz).  If the n_pulses argument is set to an integer the motor will move that many steps at the specified rate and then stop.
+`Stepper_motor.forward(step_rate, n_steps=False)` Turn the motor forward at the specified step rate (Hz).  If the n_pulses argument is set to an integer the motor will move that many steps at the specified rate and then stop.
 
-`Stepper_motor.backwards(step_rate, n_pulses=False)` Turn the motor backwards.
+`Stepper_motor.backward(step_rate, n_steps=False)` Turn the motor backwards.
 
 `Stepper_motor.stop()` Stop the stepper motor.
+
+*Example usage:*
+
+```python
+
+motor = Stepper_motor(board.port_1) # Instantiate stepper motor
+
+motor.forward(step_rate=100) # Move forward at 100 step/second.
+
+motor.stop() # Stop the motor.
+
+motor.backward(step_rate=50, n_steps=100) # Move backward for 100 steps at 50 step/second.
+
+motor_2 = Stepper_motor(step_pin='X1', direction_pin='X2') # Instantiating driver with step and direction pins rather than port.
+```
 
 ---
 
 ### Rotary encoder
 
 Class for acquiring data from a rotary encoder, used e.g. to measure the speed of a running wheel.  The encoder must be an incremental rotary encoder that outputs a quadrature signal. The rotary encoder class can stream the position or velocity of the encoder to the computer at a specified sampling rate, and generate framework events when the position/velocity goes above/below a specified threshold.  Currently the rotary encoder class expects the two lines carrying the quadrature signal to be connected to micropython pins 'X1' and 'X2' (Port 1 DIO_A and DIO_B on breakout board 1.2).
+
+The rotary encoder adaptor board connects an Avago HEDM-55xx series rotary encoder ([datasheet](https://docs.broadcom.com/docs/AV02-1046EN)) to a pyControl behaviour port.  Currently the board only works with port_1 on breakout board 1.2.
+
+[Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Rotary_encoder/)
+
+![Stepper driver](../media/hardware/rotary_encoder.jpg)
+
 
 ```python 
 class Rotary_encoder(name, sampling_rate, output='velocity', threshold=None,
@@ -462,10 +497,39 @@ class Rotary_encoder(name, sampling_rate, output='velocity', threshold=None,
 
 `Rotary_encoder.record()`  Start streaming position/velocity measurements to computer. Data is saved in the same file format as data generated by [analog inputs](#analog-input).
 
-`Rotary_encoder.stop()`  Stop streaming data to computer. If rising or falling events are specified for the rotary encoder these will be generated regardless of whether or not the encoder is streaming data to the computer.
+`Rotary_encoder.stop()`  Stop streaming data to computer. If rising or falling events are specified for the rotary en position of the encoder.coder these will be generated regardless of whether or not the encoder is streaming data to the computer.
 
 *Attributes:*
 
 `Rotary_encoder.velocity` The current velocity of the encoder.
 
-`Rotary_encoder.position` The current position of the encoder.
+`Rotary_encoder.position` The current
+
+---
+
+### Port expander
+
+The port expander board uses a serial to parallel IO expander IC ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) to run 8 behaviour ports from a single behaviour port on the breakout.  It must be connected to a behaviour port that supports I2C serial communication (ports 3 and 4 on breakout 1.2).
+
+Each port on the port expander works like a standard behaviour port and has 2 DIO lines, 2 driver lines for high current loads as well as ground, 5V and 12V lines.
+
+[Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Port_expander/)
+
+![Stepper driver](../media/hardware/port_expander_photo.png)
+
+```python 
+class Port_expander(port=None)
+```
+
+*Example usage:*
+
+```python
+
+port_ex = Port_expander(board.port_3) # Instantiate port expander.
+
+poke = Poke(port=port_ex.port_1) # Poke conencted to port expander port 1.
+
+solenoid = Digital_output(pin=port_ex.port_2.POW_A) # Solenoid connected to driver line A on expander port 2.
+
+button = Digital_input(pin=port_ex.port_3.DIO_B, rising_event='button_press') # Button connected to DIO line B on expander port 3 
+```
