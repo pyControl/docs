@@ -27,15 +27,12 @@ Will be implemented soon.
 
 ## Developer's guide (GUI version)
 
-**pyControl GUI** is composed of several independent packages in order to achieve better flexibility and maintenance.
-
-For detailed information on source code step-by-step installation and source code documentation please refer to the [pycontrol-gui documentation](https://pycontrol-gui.readthedocs.org/).
+Will be implemented soon.
 
 ## Submitting Pull Requests
 
 Once you are happy with your changes or you are ready for some feedback, push
-it to your fork and send a pull request. For a change to be accepted it will
-most likely need to have tests and documentation if it is a new feature.
+it to your fork and send a pull request.
 
 ## Final note
 This guide was based on the MKdocs project documentation.

@@ -10,7 +10,7 @@ Open source, Python based, behavioural experiment control.
 
 pyControl makes it easy to program complex behavioural tasks using a clean, intuitive, and flexible syntax for specifying tasks as state machines. User created task definition files, written in Python, run directly on the microcontroller, supported by pyControl framework code.  This gives users the power and simplicity of Python for specifying task behaviour, while allowing advanced users low-level access to the microcontroller hardware.  For more information see [programming tasks](user-guide/programming-tasks.md).  
 
-pyControl has a [Graphical User Interface](user-guide/graphical-user-interface.md) (GUI) and a [Command Line Interface](user-guide/command-line-interface.md) (CLI).   The GUI supports online visualization of task behaviour and and is the recommended way to get started with pyControl.  The command line interface provides tools for running tasks on many setups in parallel.
+pyControl has a [Graphical User Interface](user-guide/graphical-user-interface.md) (GUI) and a [Command Line Interface](user-guide/command-line-interface.md) (CLI).   The GUI is the recommended way to get started with pyControl.  The command line interface provides tools for running tasks on many setups in parallel.
 
 Tools for importing pyControl data into Python for analysis are provided in the [data_import](user-guide/importing-data.md) module.
 
@@ -58,7 +58,7 @@ Once you have Python 3 installed on your computer you can use [pip](https://pack
 
 pyControl has been tested primarily on Windows 7 and 10 but in principle should be cross platform and has been used on Mac and Linux.  You may need to install the micropython USB drivers to ensure your operating system recognizes the board and can open a serial connection to it, see [micropython windows setup](http://micropython.org/resources/Micro-Python-Windows-setup.pdf) and the micropython [docs](http://docs.micropython.org/en/latest/pyboard/pyboard/tutorial/repl.html).
 
-Micropython boards (pyboards) need to be running a fairly recent version of the Micropython firmware to work with pyControl (version < 1.9).  When you connect to a pyboard with the GUI, the micropython version running on the board is displayed.  Instructions for updating the micropython firmware can be found for windows [here](http://micropython.org/download) and for Linux/Mac [here](https://github.com/micropython/micropython/wiki/Pyboard-Firmware-Update). You can use the GUI's board config menu to put the pyboard into device firmware upgrade (DFU) mode rather than physically connecting the DFU pin to 3.3V.
+Micropython boards (pyboards) need to be running a fairly recent version of the Micropython firmware to work with pyControl (version >= 1.9).  When you connect to a pyboard with the GUI, the micropython version running on the board is displayed.  Instructions for updating the micropython firmware can be found for windows [here](http://micropython.org/download) and for Linux/Mac [here](https://github.com/micropython/micropython/wiki/Pyboard-Firmware-Update). You can use the GUI's board config menu to put the pyboard into device firmware upgrade (DFU) mode rather than physically connecting the DFU pin to 3.3V.
 
 ### Updating
 

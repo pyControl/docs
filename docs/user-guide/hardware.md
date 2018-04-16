@@ -507,11 +507,17 @@ class Rotary_encoder(name, sampling_rate, output='velocity', threshold=None,
 
 ---
 
+## More devices
+
+To save space on the pyboards file system and reduce framework loading times, the driver files for the following devices are not uploaded by default.  To use them copy the relevent driver file from *pyControl/devices/more devices* to *pycontrol/devices*, then reload the framework to the pyboard.
+
 ### Port expander
 
-The port expander board uses a serial to parallel IO expander IC ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) to run 8 behaviour ports from a single behaviour port on the breakout.  It must be connected to a behaviour port that supports I2C serial communication (ports 3 and 4 on breakout 1.2).
+The port expander board uses serial to parallel IO expander ICs ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) to run 8 behaviour ports from a single behaviour port on the breakout board.  The port expander must be connected to a behaviour port that supports I2C serial communication (ports 3 and 4 on breakout 1.2).
 
-Each port on the port expander works like a standard behaviour port and has 2 DIO lines, 2 driver lines for high current loads as well as ground, 5V and 12V lines.
+Each port on the port expander works like a standard behaviour port, with 2 DIO lines, 2 driver lines for high current loads, as well as ground, 5V and 12V lines.
+
+To use the port expander you need to upload both the driver file *_port_expander.py* for the board, and the driver file *_MCP.py* for the IO expander IC, see [More devices](hardware.md#More-devices). 
 
 [Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Port_expander/)
 
