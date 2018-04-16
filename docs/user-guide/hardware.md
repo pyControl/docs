@@ -515,7 +515,7 @@ Each port on the port expander works like a standard behaviour port and has 2 DI
 
 [Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Port_expander/)
 
-![Stepper driver](../media/hardware/port_expander_photo.png)
+![Stepper driver](../media/hardware/port_expander_photo.jpg)
 
 ```python 
 class Port_expander(port=None)
