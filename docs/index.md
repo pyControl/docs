@@ -54,8 +54,15 @@ pyControl has the following dependencies:
 - pyqtgraph (GUI only)
 - pyperclip (optional, used to copy summary data to clipboard)
 
-Once you have Python 3 installed on your computer you can use [pip](https://packaging.python.org/tutorials/installing-packages/), the package manager included with Python to install the other packages.
+The simplest way to install the required dependencies is to download and install the [Anaconda](https://www.anaconda.com/download/) Python distribution, then use the *conda* package management utility to install the other packages using the following commands in the *Anaconda Prompt*:
 
+```
+conda update conda
+conda install -c anaconda pyserial
+conda install -c anaconda numpy
+conda install -c anaconda pyqtgraph
+conda install -c conda-forge pyperclip
+```
 pyControl has been tested primarily on Windows 7 and 10 but in principle should be cross platform and has been used on Mac and Linux.  You may need to install the micropython USB drivers to ensure your operating system recognizes the board and can open a serial connection to it, see [micropython windows setup](http://micropython.org/resources/Micro-Python-Windows-setup.pdf) and the micropython [docs](http://docs.micropython.org/en/latest/pyboard/pyboard/tutorial/repl.html).
 
 Micropython boards (pyboards) need to be running a fairly recent version of the Micropython firmware to work with pyControl (version >= 1.9).  When you connect to a pyboard with the GUI, the micropython version running on the board is displayed.  Instructions for updating the micropython firmware can be found for windows [here](http://micropython.org/download) and for Linux/Mac [here](https://github.com/micropython/micropython/wiki/Pyboard-Firmware-Update). You can use the GUI's board config menu to put the pyboard into device firmware upgrade (DFU) mode rather than physically connecting the DFU pin to 3.3V.
