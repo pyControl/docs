@@ -4,8 +4,8 @@ site_description: Open source, Python based, behavioural experiment control.
 site_author: Champalimaud Foundation
 
 theme:
-    name: mkdocs
-    custom_dir: cinder
+    name: readthedocs
+    #custom_dir: cinder
 
 repo_url: https://bitbucket.org/fchampalimaud/pycontrol-docs
 

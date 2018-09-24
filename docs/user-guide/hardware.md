@@ -589,6 +589,8 @@ An electrical lickometer board which has two lick detection circuits and two sol
 
 [Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Lickometer/)
 
+![Five_poke mounted](../media/hardware/lickometer_photo.jpg)
+
 ```python 
 class Lickometer(port, rising_event_A='lick_1', falling_event_A='lick_1_off',
                        rising_event_B='lick_2', falling_event_B='lick_2_off', debounce=5)
@@ -622,6 +624,33 @@ LED = Analog_LED(port=board.port_3) # Instantiate LED driver
 
 LED.on(LED_current_mA=20) # Turn on the LED at 20mA current.
 LED.off()                 # Turn off the LED
+```
+
+---
+
+### Audio_player
+
+An audio board which uses the [DFPlayer](https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299) audio module to play .wav files from an SD card, allowing arbitrary audio stimuli to be presented.  The board has two speaker outputs allowing stereo audio files to be played. Mono files are played played from both outputs, but the amplifiers for each output can be independently enabled or disabled allowing files to be played from either or both speakers.  The DFPlayer module requires the SD card to be formated in FAT16 or FAT32 and expects a specific folder and file name structure - the folders must be named *01*, *02* etc, and the files in each folder *001.wav*, *002.wav* etc.  The Audio_player needs a behaviour port with UART serial connectivity so can be plugged into ports 1, 3 or 4 on *Breakout_1_2*.
+
+**Required driver files:** *_audio_player.py*
+
+```python 
+class Audio_player(port)
+```
+
+*Example usage:*
+
+```python
+player = Audio_player(port=board.port_1) # Instantiate Audio player
+
+player.play(folder_num=1, file_num=2) # Play file 2 from folder 1.
+
+player.stop() # Stop audio.
+
+player.set_volume(12) # Set the volume (range 1 - 30).
+
+player.set_enabled(left=True, right=False) # Enable left speaker output, disable right speaker output.
+
 ```
 
 ---
