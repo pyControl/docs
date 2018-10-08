@@ -10,7 +10,7 @@ Open source, Python based, behavioural experiment control.
 
 pyControl makes it easy to program complex behavioural tasks using a clean, intuitive, and flexible syntax for specifying tasks as state machines. User created task definition files, written in Python, run directly on the microcontroller, supported by pyControl framework code.  This gives users the power and simplicity of Python for specifying task behaviour, while allowing advanced users low-level access to the microcontroller hardware.  For more information see [programming tasks](user-guide/programming-tasks.md).
 
-pyControl [hardware](user-guide/hardware.md) consists of a breakout board that interfaces the microcontroller with a set of connectors, and a family of devices such as nose pokes, audio boards, LED drivers, rotary encoders and stepper motor controllers that can be used to create a wide variety of different behavioural setups.  Assembled pyControl hardware is available from the [OpenEphys webstore](http://www.open-ephys.org/store).
+pyControl [hardware](user-guide/hardware.md) consists of a breakout board that interfaces the microcontroller with a set of connectors, and a family of devices such as nose pokes, audio boards, LED drivers, rotary encoders and stepper motor controllers that can be used to create a wide variety of different behavioural setups.  Assembled pyControl hardware is available from the [OpenEphys store](http://www.open-ephys.org/store).
 
 pyControl has a [Graphical User Interface](user-guide/graphical-user-interface.md) (GUI) and a [Command Line Interface](user-guide/command-line-interface.md) (CLI).   The GUI is the recommended way to get started with pyControl.  The command line interface provides tools for running tasks on many setups in parallel.
 
@@ -22,7 +22,6 @@ The pyControl [google group](https://groups.google.com/forum/#!forum/pycontrol) 
 ![run_task_GUI.jpg](media/run_task_GUI.jpg)
 **Breakout board**
 ![Breakout 1.2 back](media/hardware/breakout-1-2-back.jpg)
-
 
 ---
 

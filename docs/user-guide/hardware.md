@@ -2,9 +2,9 @@
 
 ## Overview
 
-A typical pyControl hardware setup consists of one or more breakout boards connected to a computer by USB, each of which runs a single behavioural setup.  The breakout board connects to a set of devices such as nosepokes, audio boards and LED drivers which make up the setup.  
+A typical pyControl hardware setup consists of one or more breakout boards connected to a computer by USB, each of which runs a single behavioural setup.  The breakout board connects to a set of devices such as nosepokes, audio boards and LED drivers which make up the setup. USB hubs can be used between the computer and breakout boards such that many setups can be controlled from a single computer.
 
-All pyControl hardware is open source and design files for the hardware detailed below are available in the [pyControl hardware repository](https://bitbucket.org/takam/pycontrol_hardware).  The repository also has a list of [useful parts](https://bitbucket.org/takam/pycontrol_hardware/src/default/useful-parts-list.md) such as cables, solenoids, mounting hardware etc for building pyControl setups.  Assembled pyControl hardware is available from the [OpenEphys webstore](http://www.open-ephys.org/store).
+All pyControl hardware is open source and design files for the hardware detailed below are available in the [pyControl hardware repository](https://bitbucket.org/takam/pycontrol_hardware).  The repository also has a list of [useful parts](https://bitbucket.org/takam/pycontrol_hardware/src/default/useful-parts-list.md) such as cables, solenoids, mounting hardware etc for building pyControl setups.  Assembled pyControl hardware is available from the [OpenEphys store](http://www.open-ephys.org/store).
 
 ![Hardware overview](../media/hardware/hardware-overview.jpg)
 
