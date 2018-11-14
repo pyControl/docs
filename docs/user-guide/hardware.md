@@ -654,3 +654,31 @@ player.set_enabled(left=True, right=False) # Enable left speaker output, disable
 ```
 
 ---
+
+# MCP23017 
+
+The MCP23017 is a serial to parallel IO expander IC ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) which can be used to add additional digital input/output lines to the Micropython microcontroller. The IC must be connected to the Micropython via an I2C serial connection, which are available on the DIO pins of ports 3 and 4 of breakout board 1.2.  If you plan to use MCP23017 pins as pyControl digital inputs the INTA interrupt pin on the MCP23017 must be connected to a DIO pin on the Micropython. The pins on the MCP23017 can be used as standard pyControl Digital_input and Digital_output objects as shown in the usage example below.
+
+**Required driver files:** *_MCP.py*
+
+```python 
+class  MCP23017(I2C_bus=1, interrupt_pin='X5', addr=0x20)
+```
+
+*Example usage:*
+
+```python
+mcp = MCP23017(I2C_bus=1, interrupt_pin='X5', addr=0x20) # Instantiate MCP23017.
+
+mcp_output = Digital_output(pin=mcp.Pin('A0')) # Instantiate a Digital_output using pin A0 on the MCP23017.
+
+mcp_input = Digital_input(pin=mcp.Pin('A1'), rising_event='event_A') # Instantiate a Digital_input using pin A1 on the MCP23017.
+```
+
+The MCP23008 IC is also supported using the same syntax.  The MCP23017 has 16 DIO lines and the MCP23008 has 8 DIO lines. 
+
+```python 
+class  MCP23008(I2C_bus=1, interrupt_pin='X5', addr=0x20)
+```
+
+---
