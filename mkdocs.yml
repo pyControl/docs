@@ -9,13 +9,14 @@ theme:
 
 repo_url: https://bitbucket.org/fchampalimaud/pycontrol-docs
 
-pages:
+nav:
 - Home: index.md
 - User Guide:
     - Graphical user interface (GUI): user-guide/graphical-user-interface.md
     - Command line interface (CLI): user-guide/command-line-interface.md
     - Programming tasks: user-guide/programming-tasks.md
     - Hardware: user-guide/hardware.md
+    - Synchronisation: user-guide/synchronisation.md 
     - Importing data: user-guide/importing-data.md
 #    - Source code installation: user-guide/source-code-installation.md
 - Contributing: contributing.md

@@ -6,6 +6,8 @@ A typical pyControl hardware setup consists of one or more breakout boards conne
 
 All pyControl hardware is open source and design files for the hardware detailed below are available in the [pyControl hardware repository](https://bitbucket.org/takam/pycontrol_hardware).  The repository also has a list of [useful parts](https://bitbucket.org/takam/pycontrol_hardware/src/default/useful-parts-list.md) such as cables, solenoids, mounting hardware etc for building pyControl setups.  Assembled pyControl hardware is available from the [OpenEphys store](http://www.open-ephys.org/store).
 
+For information about synchronising pyControl with other hardware such as electrophysiology or video cameras see the [synchronisation](synchronisation.md) user guide.
+
 ![Hardware overview](../media/hardware/hardware-overview.jpg)
 
 ## Hardware definitions
@@ -320,13 +322,13 @@ left_poke.LED.on() # Turn on the stimulus LED.
 left_poke.SOL.off() # Turn off the solenoid.
 ```
 
----
+--- 
 
 ## Audio board
 
 Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the micropython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.
 
-[Schematic (pdf)](../media/hardware/audio-board-1-0-sch.pdf)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Audio_board/)
+[Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Audio_board/)
 
 ![Audio board](../media/hardware/audio-board.jpg)
 

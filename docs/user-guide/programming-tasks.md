@@ -90,14 +90,14 @@ If a state transition occurs for any reason before the `timed_goto_state` trigge
 Timers provide a more flexible way of implementing time dependent behaviour by allowing a specified event to be triggered after a specified time has elapsed.
 
 ```python
-set_timer('event_A', 100 * ms) # Trigger event 'event_A' after 100 ms.
+set_timer('event_A', 100*ms) # Trigger event 'event_A' after 100 ms.
 ```
 
 Timers generate the specified event regardless of whether the state machine has changed state since the timer was set.  You can set multiple timers for the same event, for example the following code will set two timers, causing *event_C* to occur twice, once after 1 second and once after 3 seconds have elapsed.
 
 ```python
-set_timer('event_C', 1 * second)
-set_timer('event_C', 3 * second)
+set_timer('event_C', 1*second)
+set_timer('event_C', 3*second)
 ```
 
 The constants `ms`, `second`, `minute`, and `hour` can be used as in the examples above.
@@ -111,7 +111,7 @@ disarm_timer('event_A')
 The function `reset_timer` disarms all active timers due to generate the specified event and sets a new timer to generate the specified event after the specified duration.
 
 ```python
-reset_timer('event_A', 50 * minute)
+reset_timer('event_A', 50*minute)
 ```
 
 The function `pause_timer` pauses, and the function `unpause_timer` unpauses, all timers set to generate the specified event.  When a timer is paused the time remaining untill the event is generated is stored, then when it is unpaused it is restarted with the remaining time.  For example if a timer is set for 5 seconds, then paused after 3 seconds, when it is unpaused it will have 2 seconds remaining till the event is generated.
@@ -202,7 +202,13 @@ Starting all variable names with `v.` makes all variables attributes of a single
 
 ## Data output
 
-Whenever an external event occurs it is output to the serial line along with a timestamp. Whenever a state transition occurs the state that is entered is output to the serial line with a timestamp.  Events triggered by timers are not logged in the data output but any state transitions they generate are logged as normal.
+Whenever an external event occurs it is output to the serial line along with a timestamp. Whenever a state transition occurs the state that is entered is output to the serial line with a timestamp.  Events triggered by timers are by default not logged in the data output, but any state transitions they generate are logged as normal.  If you want an event triggered by a timer to be recorded in the data output, set the `output_event` argument to `True` when setting the timer:
+
+```python
+set_timer('event_A', 3*second, output_event=True)
+
+reset_timer('event_B', 3*second, output_event=True)
+```
 
 The `print()` function has modified behavour when called within the context of a task definition file; a timestamp is prefixed to the string provided as an argument before it is printed to the serial line.  The print function can therefore be used to output arbitrary data with timestamps consistent with those of events and state transitions.  The [reversal_learning](https://bitbucket.org/takam/pycontrol/src/default/tasks/reversal_learning.py) example shows one approach to using print statements to output task data. One line is printed for each trial summarising what happened on that trial and the current state of the task.
 
@@ -253,10 +259,10 @@ timed_goto_state('state_C', 10*second) # Transition to state 'state_C' after 10 
 **set_timer**
 
 ```python
-set_timer(event, interval)
+set_timer(event, interval, output_event=False)
 ```
 
-Set a timer to trigger the specified `event` after `interval` milliseconds have elapsed.  When a timer is set it will trigger the specified event at the specified time irrespective of any state transitions that have occurred after it was set, unless it is disarmed or reset using `disarm_timer` or `reset_timer` (see below).
+Set a timer to trigger the specified `event` after `interval` milliseconds have elapsed.  When a timer is set it will trigger the specified event at the specified time irrespective of any state transitions that have occurred after it was set, unless it is disarmed or reset using `disarm_timer` or `reset_timer` (see below).  The event triggered by the timer is only recorded in the data output if the `output_event` argument is set to `True`.
 
 *Example usage:*  
 
@@ -285,10 +291,10 @@ disarm_timer('event_X') # Disarm all timers set to trigger event 'event_X'
 **reset_timer**
 
 ```python
-reset_timer(event, interval)
+reset_timer(event, interval, output_event=False)
 ```
 
-Disable any timers due to trigger specified `event` and set new timer to return specified event after `interval` milliseconds have elapsed.
+Disable any timers due to trigger specified `event` and set new timer to return specified event after `interval` milliseconds have elapsed.  The event triggered by the timer is only recorded in the data output if the `output_event` argument is set to `True`.
 
 *Example usage:*  
 
