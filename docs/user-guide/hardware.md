@@ -464,7 +464,7 @@ motor_2 = Stepper_motor(step_pin='X1', direction_pin='X2') # Instantiating drive
 
 Class for acquiring data from a rotary encoder, used e.g. to measure the speed of a running wheel.  The encoder must be an incremental rotary encoder that outputs a quadrature signal. The rotary encoder class can stream the position or velocity of the encoder to the computer at a specified sampling rate, and generate framework events when the position/velocity goes above/below a specified threshold.  Currently the rotary encoder class expects the two lines carrying the quadrature signal to be connected to micropython pins 'X1' and 'X2' (Port 1 DIO_A and DIO_B on breakout board 1.2).
 
-The rotary encoder adaptor board connects an Avago HEDM-55xx series rotary encoder ([datasheet](https://docs.broadcom.com/docs/AV02-1046EN)) to a pyControl behaviour port.  Currently the board only works with port_1 on breakout board 1.2.
+The rotary encoder adaptor board connects an Avago HEDM-55xx series rotary encoder ([datasheet](https://docs.broadcom.com/docs/AV02-1046EN)) to a pyControl behaviour port.  The rotary encoder adaptor must be plugged into port_1 on breakout board 1.2.
 
 [Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Rotary_encoder/)
 
@@ -505,7 +505,24 @@ class Rotary_encoder(name, sampling_rate, output='velocity', threshold=None,
 
 `Rotary_encoder.velocity` The current velocity of the encoder.
 
-`Rotary_encoder.position` The current
+`Rotary_encoder.position` The current position of the encoder.
+
+*Example usage:*
+
+```python
+
+# Instantiate rotary encoder.  Encoder must be plugged into Port 1 of breakout board 1.2.
+# Encoder is configured to report velocity at a 100Hz sampling rate and generate events
+# 'running_start' and 'running_stop' when the speed goes above/below a threshold of 
+# 200 encoder counts/second.
+
+running_wheel = Rotary_encoder(sampling_rate=100, output='velocity', threshold=200,
+                    rising_event='running_start', falling_event='running_stop') 
+
+running_wheel.record() # Start streaming running speed to computer.
+
+current_speed = running_wheel.velocity # Get the current speed of the encoder.
+```
 
 ---
 
