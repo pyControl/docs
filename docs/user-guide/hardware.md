@@ -1,14 +1,14 @@
 # Hardware
 
+![Hardware overview](../media/hardware/hardware-overview.png)
+
 ## Overview
 
 A typical pyControl hardware setup consists of one or more breakout boards connected to a computer by USB, each of which runs a single behavioural setup.  The breakout board connects to a set of devices such as nosepokes, audio boards and LED drivers which make up the setup. USB hubs can be used between the computer and breakout boards such that many setups can be controlled from a single computer.
 
-All pyControl hardware is open source and design files for the hardware detailed below are available in the [pyControl hardware repository](https://bitbucket.org/takam/pycontrol_hardware).  The repository also has a list of [useful parts](https://bitbucket.org/takam/pycontrol_hardware/src/default/useful-parts-list.md) such as cables, solenoids, mounting hardware etc for building pyControl setups.  Assembled pyControl hardware is available from the [OpenEphys store](http://www.open-ephys.org/store).
+All pyControl hardware is open source and design files for the hardware detailed below are available in the [pyControl hardware repository](https://bitbucket.org/takam/pycontrol_hardware).  The repository also has a list of [useful parts](https://bitbucket.org/takam/pycontrol_hardware/src/default/useful-parts-list.md) such as cables, solenoids, mounting hardware etc for building setups.  Assembled pyControl hardware is available from the [OpenEphys store](http://www.open-ephys.org/store).
 
 For information about synchronising pyControl with other hardware such as electrophysiology or video cameras see the [synchronisation](synchronisation.md) user guide.
-
-![Hardware overview](../media/hardware/hardware-overview.jpg)
 
 ## Hardware definitions
 
@@ -122,7 +122,7 @@ class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, 
 
 *Methods:*
 
-`Analog_input.record()`  Start streaming analog input measurements to computer.  If the computer is logging pyControl data the analog data will be saved to disk.  Analog data is saved in seperate files from the main pyControl data log, with a seperate data file for each analog input.  Analog data is saved in binary files with a *.pca* file extension, for information on how to read these files see [Importing data](importing-data.md#analog-data).
+`Analog_input.record()`  Start streaming analog input measurements to computer.  If the computer is logging pyControl data the analog data will be saved to disk.  Analog data is saved in seperate files from the main pyControl data log, with a seperate data file for each analog input.  Analog data is saved in binary files with a *.pca* file extension, for information on how to read these files see [pyControl data](pycontrol-data.md#analog-data).
 
 `Analog_input.stop()`  Stop streaming analog data to computer.  You can start and stop streaming analog data multples times in a framework run.  If rising or falling events are specified for the analog input these will be generated regardless of whether or not the input is streaming data to the computer.
 
@@ -465,6 +465,8 @@ motor_2 = Stepper_motor(step_pin='X1', direction_pin='X2') # Instantiating drive
 Class for acquiring data from a rotary encoder, used e.g. to measure the speed of a running wheel.  The encoder must be an incremental rotary encoder that outputs a quadrature signal. The rotary encoder class can stream the position or velocity of the encoder to the computer at a specified sampling rate, and generate framework events when the position/velocity goes above/below a specified threshold.  Currently the rotary encoder class expects the two lines carrying the quadrature signal to be connected to micropython pins 'X1' and 'X2' (Port 1 DIO_A and DIO_B on breakout board 1.2).
 
 The rotary encoder adaptor board connects an Avago HEDM-55xx series rotary encoder ([datasheet](https://docs.broadcom.com/docs/AV02-1046EN)) to a pyControl behaviour port.  The rotary encoder adaptor must be plugged into port_1 on breakout board 1.2.
+
+For an example task using a rotary encoder to measure running speed and trigger framework events when running starts and stops see [*running_wheel*](https://bitbucket.org/takam/pycontrol/src/default/tasks/running_wheel.py).
 
 [Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Rotary_encoder/)
 

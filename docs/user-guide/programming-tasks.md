@@ -2,7 +2,11 @@
 
 ## Overview
 
-Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a *task definition file* written in python.  To get a sense for what task definition files look like, take a look at the [examples](https://bitbucket.org/takam/pycontrol/src/default/tasks/?at=default).
+Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a *task definition file* written in Python.  Example task definition files are provided in the [tasks](https://bitbucket.org/takam/pycontrol/src/default/tasks/?at=default) folder.
+
+Task definition files run directly on the Micropython microcontroller, not on the computer.   Python modules such as *Numpy* that are installed on the computer will therefore not be available in the task definition.  For a list of the modules available in Micropython see the [Micropython docs](https://docs.micropython.org/en/latest/library/index.html).
+
+## Imports
 
 Every task definition file starts by importing some utility functions and constants:
 
@@ -18,7 +22,7 @@ import hardware_definition as hw
 
 ## States
 
-The state machine has a set of states defined by the user, and at any point in time it is in one of these states.  The set of states is defined by creating a varible called `states` which is a list of state names:
+The state machine has a set of states defined by the user, and at any point in time it is in one of these states.  The set of states is defined by a varible called `states` which is a list of state names:
 
 ```python
 states = ['state_A', 'state_B']
@@ -62,7 +66,7 @@ The function `goto_state` tells the state machine to transition to the state who
 goto_state('state_B')
 ```
 
-When a state transition occurs two special events called `'exit'` and `'entry'` are generated.  The `'exit'` event is evaluated in the state that is being exited, while the `'entry'` event is evaluated in the state which is being entered. These events allow code to be exectued every time a state is entered or exited, irrespective of the event that triggered the state transition.  Example usage:
+When a state transition occurs two special events called `'exit'` and `'entry'` are generated.  The `'exit'` event is evaluated in the state that is being exited, while the `'entry'` event is evaluated in the state which is being entered. These events allow code to be executed every time a state is entered or exited, irrespective of the event that triggered the state transition.  Example usage:
 
 
 ```python
@@ -75,7 +79,7 @@ def state_A(event):
 
 Calling `goto_state` in response to an `'entry'` or  `'exit'` event will cause an error because the state machine is already in transition to a new state when these events occur.
 
-It is recomended not to put any code in a state behaviour function after a `goto_state` because it will be executed following the state transition when the task is in the subsequent state, potentially causing hard to identify bugs.
+It is not recomended to put any code in a state behaviour function that executes after a `goto_state` because it will be executed following the state transition when the task is in the subsequent state, potentially causing hard to identify bugs.
 
 ## Time dependent behaviour.
 
@@ -122,15 +126,13 @@ pause_timer('event_A')
 unpause_timer('event_A')
 ```
 
-The function `timer_remaining` returns the time in ms until a timer set for the specified event elapses, returns 0 if no timer is set for that event.
+The function `timer_remaining` returns the time in ms until a timer set for the specified event elapses, and returns 0 if no timer is set for that event.
 
 ```python
 timer_remaining('event_A')
 ```
 
-
-You can also get the current time using the `get_current_time` function which returns the number of milliseconds since the framework started running.
-
+The `get_current_time` function returns the number of milliseconds since the framework started running.
 
 ```python
 x = get_current_time()
@@ -159,25 +161,26 @@ When the framwork is stopped in this way, the `run_end` function will be called 
 
 ## State independent behaviour
 
-To implement behaviour which occurs irrespective of which state the machine is in, the following function can be defined in the state machine description:
+The `all_states` function can be used to implement behaviour which occurs irrespective of the state the task is in.  Combined with timers and variables, the `all_states` function is a powerful tool for making things happen in parallel with the main state set of the task.  For a simple example of this see the [all_states_example](https://bitbucket.org/takam/pycontrol/src/default/tasks/all_states_example.py) task.
 
+If the `all_states` function is defined, it will be called every time an event occurs with the event that occured as an argument.
 
 ```python
 def all_states(event):
-    # Code here will be executed irrespective of the state the machine is in.
+    # Code here will be executed when any event occurs,
+    # irrespective of the state the machine is in.
 ```
 
-After the `all_states` function is executed the state behaviour function for the current state will be executed.  To block execution of the state specific behaviour function make the `all_states` function 
-return `True`:
-
+After the `all_states` function has executed the state behaviour function for the current state will be executed.  To block execution of the current state's behaviour function make the `all_states` function return `True`.
 
 ```python
 def all_states(event):
-    # Code here will be executed irrespective of the state the machine is in 
+    # Code here will be executed when any event occurs,
+    # irrespective of the state the machine is in.
     if condition:
-        return True # If condition is True state specific behaviour will not be executed.
+        return True # If condition is True, the current state's 
+                    # behaviour function will not be executed.
 ```
-
 
 ## Variables
 
@@ -202,7 +205,7 @@ Starting all variable names with `v.` makes all variables attributes of a single
 
 ## Data output
 
-Whenever an external event occurs it is output to the serial line along with a timestamp. Whenever a state transition occurs the state that is entered is output to the serial line with a timestamp.  Events triggered by timers are by default not logged in the data output, but any state transitions they generate are logged as normal.  If you want an event triggered by a timer to be recorded in the data output, set the `output_event` argument to `True` when setting the timer:
+Whenever an external event occurs it is output to the data log along with a timestamp. Whenever a state transition occurs the state that is entered is output with a timestamp.  Events triggered by timers are not logged in the data output by default, but any state transitions they generate are logged as normal.  If you want an event triggered by a timer to be recorded in the data output, set the `output_event` argument to `True` when setting the timer:
 
 ```python
 set_timer('event_A', 3*second, output_event=True)
@@ -210,7 +213,7 @@ set_timer('event_A', 3*second, output_event=True)
 reset_timer('event_B', 3*second, output_event=True)
 ```
 
-The `print()` function has modified behavour when called within the context of a task definition file; a timestamp is prefixed to the string provided as an argument before it is printed to the serial line.  The print function can therefore be used to output arbitrary data with timestamps consistent with those of events and state transitions.  The [reversal_learning](https://bitbucket.org/takam/pycontrol/src/default/tasks/reversal_learning.py) example shows one approach to using print statements to output task data. One line is printed for each trial summarising what happened on that trial and the current state of the task.
+The `print()` function has modified behavour when called within the context of a task definition file - the printed string is output to the data log along with a timestamp.  The print function can therefore be used to output arbitrary data with timestamps consistent with those of events and state transitions.  The [reversal_learning](https://bitbucket.org/takam/pycontrol/src/default/tasks/reversal_learning.py) example shows one approach to using print statements to output task data. One line is printed for each trial summarising what happened on that trial and the current state of the task.
 
 ## Structuring task files
 

@@ -36,14 +36,43 @@ Lines begining `!` indicate that an error occured during the framework run and c
 
 --- 
 
+# Visualising data
+
+The [session_plot](https://bitbucket.org/takam/pycontrol/src/default/tools/session_plot.py) module in the *tools* folder contains functions for visualising pyControl data offline.
+
+The session plot module has dependencies:
+
+- Python 3
+- numpy
+- matplotlib
+
+**Example usage:**
+
+```python
+import session_plot as sp # Import the session plot module.
+
+sp.session_plot('path//to//session//file') # Plot a session.
+
+sp.session_plot('path//to//session//file', fig_no=2) # Plot a session in figure 2.
+
+sp.play_session('path//to//session//file') # Scrolling animation of session.
+
+sp.play_session('path//to//session//file', start_time=30) # Scrolling animation of session starting at 30 seconds.
+```
+
+**Session plot**
+
+![session_plot.png](../media/session_plot.png)
+
+--- 
+
 # Importing data
 
-The file [data_import.py](https://bitbucket.org/takam/pycontrol/src/default/tools/data_import.py) contains tools for importing pyControl data into Python for analysis.
+The [data_import](https://bitbucket.org/takam/pycontrol/src/default/tools/data_import.py) module in the *tools* folder contains Python classes for importing and representing pyControl data.  A `Session` class represents data from a single session.  An `Experiment` class represents data from an experiment consisting of multiple sessions and subjects.
 
-The data import module has the following dependencies:
+The data import module has dependencies:
 
-- Python 3.5+
-
+- Python 3
 - numpy
 
 ---

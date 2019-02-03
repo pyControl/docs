@@ -14,7 +14,19 @@ The current and past members of the pyControl team.
 
 ---
 
-**Version 1.3.3**
+**Version 1.4** 03/02/2018
+
+GUI:
+
+  - Support for running experiments on multiple setups in parallel.
+
+Tools:
+
+  - Added session_plot module for visualing sessions offline.
+
+---
+
+**Version 1.3.3** 12/12/2018
 
 
 GUI:

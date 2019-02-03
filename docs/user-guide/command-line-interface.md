@@ -1,6 +1,8 @@
 # Command line interface
 
-The pyControl command line interface (CLI) provides a text based interface for controlling micropython boards (pyboards) running pyControl.  The two principal tools are the scripts *run_task.py* and *run_experiment.py*. The *run_task* script configures and runs a task on a single pyboard. The *run_experiment* script runs experiments specified in a configuration file on a set of pyboards, it is used for running experiments on many setups in parallel.  
+The pyControl command line interface (CLI) provides a text based interface for controlling micropython boards (pyboards) running pyControl. Before the GUI was developed the CLI was the principal way of using pyControl, but it is now depreciated and will be removed from future versions of pyControl at some point. 
+
+The two principal tools are the scripts *run_task.py* and *run_experiment.py*. The *run_task* script configures and runs a task on a single pyboard. The *run_experiment* script runs experiments specified in a configuration file on a set of pyboards, it is used for running experiments on many setups in parallel.  
 
 ## Run task
 
