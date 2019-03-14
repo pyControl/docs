@@ -77,6 +77,8 @@ We can also convert the times when a pycontrol event occured into the correspond
 event_frame_numbers = camera_aligner.A_to_B(event_times_pycontrol)
 ```
 
+An example analysis showing how to synchronise pyControl behavioural data with neural activity recorded using [pyPhotometry](https://pyphotometry.readthedocs.io/en/latest/) is provided in this [data synchronisation](https://github.com/ThomasAkam/data_synchronisation/blob/master/data_synchronisation.ipynb) jupyter notebook. 
+
 ---
 
 ## Rsync_aligner class reference
