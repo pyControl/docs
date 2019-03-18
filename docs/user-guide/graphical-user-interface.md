@@ -34,7 +34,7 @@ The variables table is used to set the value of variables before the task starts
 
 A variable can be set as persistent by ticking the *persistent* check-box. If a variable is persistent it's value is saved at the end of the session. The next time the experiment is run, if the variable is still set as persistent, its value will be set to the previously stored value.  Persistent variables are saved as a [JSON](https://www.json.org/) object in a file *persistent_variables.json* in the experiments data folder. JSON is a human readable format so the stored values can be inspected and edited using a text editor.
 
-Summary variable can be specified by ticking the *summary* check-box. The value of summary variables is displayed for each subject at the end of the session and copied to the clipboard in a format that can be pasted directly into spreadsheets or text editors.  
+Summary variable can be specified by ticking the *summary* check-box. The value of summary variables is displayed for each subject at the end of the session and copied to the clipboard in a format that can be pasted directly into spreadsheets or text editors. The value of each subjects summary variables at the end of the session is also written to that subjects data file.
 
 The *save* button saves the current experiment configuration.  Saved experiments can be loaded by selecting them with the drop down menu. Saved experiments can be deleted with the delete button.  Each experiment is saved as a seperate file in the folder *pyControl/experiments*.  Experiment configurations are saved as  JSON objects in text files with a *.pcx* file extension.
 
