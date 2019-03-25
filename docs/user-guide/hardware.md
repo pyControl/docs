@@ -655,6 +655,10 @@ An audio board which uses the [DFPlayer](https://www.dfrobot.com/wiki/index.php/
 
 **Required driver files:** *_audio_player.py*
 
+[Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Audio_player/)
+
+![Audio board](../media/hardware/audio-player.jpg)
+
 ```python 
 class Audio_player(port)
 ```
