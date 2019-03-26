@@ -63,9 +63,18 @@ conda install -c anaconda pyqtgraph
 
 pyControl has been tested primarily on Windows 7 and 10 but in principle should be cross platform and has been used on Mac and Linux.  You may need to install the micropython USB drivers to ensure your operating system recognizes the board and can open a serial connection to it, see [micropython windows setup](http://micropython.org/resources/Micro-Python-Windows-setup.pdf) and the micropython [docs](http://docs.micropython.org/en/latest/pyboard/pyboard/tutorial/repl.html).  The micropython drivers are unsigned so to install them on Windows 10, follow the instructions [here](https://www.maketecheasier.com/install-unsigned-drivers-windows10/) under *Install Unsigned Drivers from Advanced Boot Menu*.  You should only need to do this the first time you install the drivers on a computer.
 
-Micropython boards (pyboards) need to be running a fairly recent version of the Micropython firmware to work with pyControl (version >= 1.9).  When you connect to a pyboard with the GUI, the micropython version running on the board is displayed.  Instructions for updating the micropython firmware can be found for windows [here](http://micropython.org/download) and for Linux/Mac [here](https://github.com/micropython/micropython/wiki/Pyboard-Firmware-Update). You can use the GUI's board config menu to put the pyboard into device firmware upgrade (DFU) mode rather than physically connecting the DFU pin to 3.3V.
+Micropython boards (pyboards) need to be running a fairly recent version of the Micropython firmware to work with pyControl.  When you connect to a pyboard with the GUI, the micropython version installed on the board is displayed.  If the micropython version is <1.9 update micropython by doing the following (windows):
 
-### Updating
+1.  Download and install the software [DfuSe demo](https://www.st.com/en/development-tools/stsw-stm32080.html).
+2.  Download the latest numbered release of the firmware (e.g. v1.10) from the micropython [download](http://micropython.org/download) page.  Note, there are two different version of the pyboard microcontroller, *PYBv1.0* and *PYBv1.1*, which require different versions of the firmware.  The board version will be printed on the microcontroller, make sure to download the matching version of the firmware.  There are various different versions of the firmware for each board with names like *standard* and *double FP* - download the *standard* version.
+3.  Open the pyControl GUI and connect to your board.  Open the *Config* menu and select the option *Device firmware update (DFU) mode*.  The pyControl GUI will put the board in DFU mode and disconnect from it.
+4.  Open the program *DfuSe demo*, in the *Available DFU Devices* drop down menu it should say *STM Device in DFU Mode*, indicating it has found the board and it is in DFU mode.  In the *Upgrade or Verify Action* box, press the button *Choose*, then select the micropython firmware file you downloaded.
+5.  Press *Upgrade* and then *Yes* in the dialog box.  *DfuSe demo* will upload the new firmware to the board. When you see a message saying *Upgrade successful*, quit *DfuSe demo*.
+6.  Press the reset button on the pyboard to exit DFU mode.  Connect to the board using the pyControl GUI and the micropython version should be updated.
+
+For information about updating micropython on Linux/Mac see [here](https://github.com/micropython/micropython/wiki/Pyboard-Firmware-Update). 
+
+### Updating pyControl
 
 To update pyControl, download the latest version from the download page, unzip it, and copy across the *config* and *tasks* directories from your old installation to keep you configuration settings and tasks.  After updating pyControl you should reload the pyControl framework onto your pyboards using the GUI's board config menu.
 
