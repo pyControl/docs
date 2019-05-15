@@ -18,7 +18,7 @@ nav:
     - Hardware: user-guide/hardware.md
     - Synchronisation: user-guide/synchronisation.md 
     - pyControl data: user-guide/pycontrol-data.md
-#    - Source code installation: user-guide/source-code-installation.md
+    - Troubleshooting: user-guide/troubleshooting.md
 - Contributing: contributing.md
 
 - About:
