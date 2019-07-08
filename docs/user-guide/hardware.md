@@ -10,6 +10,16 @@ All pyControl hardware is open source and design files for the hardware detailed
 
 For information about synchronising pyControl with other hardware such as electrophysiology or video cameras see the [synchronisation](synchronisation.md) user guide.
 
+## Safety
+
+As electronic devices pyControl hardware could pose a fire risk if used inappropriately.
+
+- All boards should be securely mounted using M3 bolts and insulating spacers to prevent short circuits due to contact with metal objects. 
+
+- Power down hardware when not in use.
+ 
+- When connecting external devices consider the amount of current they will draw.  See the [Breakout boards](hardware.md#breakout-boards) section below for more information.
+
 ## Hardware definitions
 
 Hardware objects can be instantiated directly in a state machine definition file (as in the [button](https://bitbucket.org/takam/pycontrol/src/default/tasks/button.py) example), however the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is  typically used for many different tasks so seperating out the hardware and task definition code into seperate files avoids repeating the hardware definition in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are specified in the setup's hardware definitions.
@@ -162,6 +172,13 @@ class Digital_output(pin, inverted=False, pulse_enabled=False)
 
 Typically when pyControl is used to run a behavioural experiment, the micropython microcontroller is mounted on a breakout board, which interfaces it with *behaviour ports*, BNC connectors, indicator LEDs and user pushbuttons. 
 
+> #### !!! Electrical safety !!!
+> When connecting devices to breakout boards it is important to consider the amount of current they will draw.  Several components limit the maximum current that can safely be drawn: 
+> 
+> - The driver ICs on driver lines (see below) can sink up to 150mA per driver line.
+> - Cat 5 network cable (used to connect devices to behaviour ports) can carry up to 0.6A per conductor.  The maximum current that can safely be drawn in total from the 12V and 5V lines on the behaviour port is 0.6A as all the current returns via the ground line.
+> - The voltage regulator on the breakout board that powers the behaviour port 5V lines can source aproximately 300mA of current, which is shared by the 5V lines on all behaviour ports.  
+
 ### Behaviour ports
 
 Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 or 6 network cables), with the following set of lines:
@@ -177,14 +194,20 @@ Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 o
 | Power driver (POW) B         | 7                    |
 | Special function             | 5                    |
 
-The digital input/output (DIO) lines connect directly to pins on the micropython microcontroller. The microcontroller uses 3.3V logic so when these pins are used as outputs they switch from 0 to 3.3V in the off and on states respectively. The DIO lines are 5V tolerant and can recieve 5V logic signals as inputs.  Some DIO lines have additional functionality such as analog to digital conversion (ADC) or serial communication (I2C or UART).
+The digital input/output (DIO) lines connect directly to pins on the micropython microcontroller. The microcontroller uses 3.3V logic so when these pins are used as outputs they switch from 0 to 3.3V in the off and on states respectively. The DIO lines are 5V tolerant and can recieve 5V logic signals as inputs.  Some DIO lines have additional functionality such as analog to digital conversion (ADC) or serial communication (I2C or UART).  If you need a digital output with a higher voltage, this can be achieved by using one of the power driver lines with a pull up resistor (see below).
 
 The power driver lines are for controlling loads that need higher currents or voltages than can be provided directly from a microcontroller pin.  These lines are connected to low side driver ICs ([datasheet](https://toshiba.semicon-storage.com/info/docget.jsp?did=29893)) on the breakout board, which are in turn controlled by pins on the microcontroller.  Low side drivers connect the negative side of the load to ground when turned on:
 
 ![Driver diagram](../media/hardware/driver-diagram.jpg)
 
-The positive side of the load can be connected to any voltage up to +12V.  Each driver line can sink up to 150mA of current. Putting more current through the driver lines can damage the driver IC, and in extreme cases could pose a fire risk.  The driver ICs are mounted in sockets and can be easily replaced if damaged.  The driver ICs have built in clamp diodes connected to the +12V supply so can be used directly to drive inductive loads such as solenoids.
+The positive side of the load can be connected to any voltage up to +12V.  Each driver line can sink up to 150mA of current. Putting more current through the driver lines can damage the driver IC, and could pose a fire risk.  The driver ICs are mounted in sockets and can be easily replaced if damaged.  The driver ICs have built in clamp diodes connected to the +12V supply so can be used directly to drive inductive loads such as solenoids.
 
+The driver lines can be used as digital outputs by connecting them to a positive voltage via a resistor:
+
+![POW as digital diagram](../media/hardware/POW_as_digital_out_diagram.png)
+
+When the driver line (POW) is off the output will be pulled up to 5V, when the driver line is  on it will pull the output down to 0V.  This can be useful if you need to control devices that require a digital logic signal with a voltage higher than 3.3V (though many 5V logic devices work fine with 3.3V inputs), or if you just need more digital outputs.  
+ 
 The special function pin has different functions on different ports, for example it may be an extra driver line or a pin with digital to analog (DAC) functionality, see below for more information.
 
 Typically devices which plug into a behaviour port have several inputs and outputs, for example the [Poke](#poke) device comprises an IR beam, stimulus LED and solenoid. Rather than having to specify each input and output on a hardware device seperately, each device has its own Python class which takes a behaviour port as an argument, allowing it to be instantiated with a single command. For example the hardware definition below specifies that 3 nose pokes are plugged into ports 1-3 of Breakout board 1.2.
@@ -427,6 +450,11 @@ Class for controlling an [EasyDriver](http://www.schmalzhaus.com/EasyDriver/) st
 
 The stepper motor adaptor board connects an Easydriver to a pyControl behaviour port.
 
+> #### !!! Electrical safety !!!
+
+> The stepper motor driver can draw power either from the 12V line on the behaviour port or from a 12V power supply connected to the stepper motor board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If your stepper motor requires more current, connect a 12V power supply directly to the stepper motor driver.  The current requirements for some common stepper motors are detailed in the EasyDriver documentation.
+
+
 [Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Stepper_driver/)
 
 ![Stepper driver](../media/hardware/stepper_driver.jpg)
@@ -538,7 +566,13 @@ To save space on the pyboards file system and reduce framework loading times, th
 
 The port expander board uses serial to parallel IO expander ICs ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) to run 8 behaviour ports from a single behaviour port on the breakout board.  The port expander must be connected to a behaviour port that supports I2C serial communication (ports 3 and 4 on breakout 1.2).
 
-Each port on the port expander works like a standard behaviour port, with 2 DIO lines, 2 driver lines for high current loads, as well as ground, 5V and 12V lines.
+Each port on the port expander works like a standard behaviour port, with 2 DIO lines, 2 driver lines for high current loads, as well as ground, 5V and 12V lines.  Digital outputs on the port expander do not support the `Digital_output.pulse()` method.
+
+
+> #### !!! Electrical safety !!!
+
+> The port expander can draw power either from the the behaviour port or from a 12V power supply connected to the expander board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If the devices plugged into the port expander may draw more than 0.6A current in total, connect a power supply directly to the port expander board.
+
 
 **Required driver files:** *_port_expander.py*, *_MCP.py*
 
@@ -602,6 +636,56 @@ five_poke.poke_1.LED.on() # Turn on poke 1's LED.
 
 ---
 
+## Nine Poke
+
+The nine poke board is a set of nine nose pokes on a single PCB, each with an IR beam and stimulus LED.  The pokes are controlled from a single behaviour port using i2c serial communication (supported by ports 3 & 4 on breakout board 1.2). Events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc. by default, and events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` etc. by default.
+
+An optional solenoid driver daughter board can be connected to the nine poke board to control up to 8 solenoids.  If the solenoid driver board is not connected, the *solenoid_driver* argument must be set to False when the *Nine_poke* is instantiated.
+
+**Required driver files:** *_nine_poke.py*, *_MCP.py*
+
+[Repository](https://bitbucket.org/takam/pycontrol_hardware/src/default/Nine_poke/)
+
+**Nine poke PCB**
+![Nine_poke pcb](../media/hardware/nine-poke-pcb.jpg)
+
+**Nine poke mounted**
+![Nine_poke mounted](../media/hardware/nine-poke-mounted.jpg)
+
+**Back view showing solenoid driver board**
+![Nine_poke mounted back](../media/hardware/nine-poke-mounted-back.jpg)
+
+```python 
+class Nine_poke(port, rising_event_1 = 'poke_1', falling_event_1 = 'poke_1_out',
+                      rising_event_2 = 'poke_2', falling_event_2 = 'poke_2_out', 
+                      rising_event_3 = 'poke_3', falling_event_3 = 'poke_3_out', 
+                      rising_event_4 = 'poke_4', falling_event_4 = 'poke_4_out',
+                      rising_event_5 = 'poke_5', falling_event_5 = 'poke_5_out',
+                      rising_event_6 = 'poke_6', falling_event_6 = 'poke_6_out',
+                      rising_event_7 = 'poke_7', falling_event_7 = 'poke_7_out',
+                      rising_event_8 = 'poke_8', falling_event_8 = 'poke_8_out',
+                      rising_event_9 = 'poke_9', falling_event_9 = 'poke_9_out',
+                      debounce = 5, solenoid_driver=True)
+```
+
+*Example usage:*
+
+```python
+# Instantiate nine poke connected to breakout board port 3.
+nine_poke = Nine_poke(port=board.port_3) 
+
+nine_poke.poke_1.LED.on() # Turn on poke 1's LED.
+
+nine_poke.SOL_1.on() # Turn on the solenoid 1 output on the solenoid driver daughter board.
+
+# Solenoids connected to the daughter board can be assigned to pokes:
+nine_poke.poke_4.SOL = nine_poke.SOL_1 # Assign SOL_1 on the daughter board to poke 4.
+nine_poke.poke_4.SOL.on()              # Turn on the solenoid that has been assigned to poke 4.
+
+
+```
+
+---
 ## Lickometer
 
 An electrical lickometer board which has two lick detection circuits and two solenoid ports.  The outputs LCK 1 and LCK 2 should be connected to the  reward delivery tubes and the GND output should be connected to the (conductive) floor of the setup.  The lick detection circuits detect when the reward delivery tube is electrically connected to ground by the subject licking.  The maximum current  through the lick detection circuit is 1uA.  The default event names generated by licking are 'lick_1' and 'lick_2' when the contact is made, and 'lick_1_off' and 'lick_2_off' when the contact is broken.  Different event names can be specified when the Lickometer is instantiated.  By default debouncing is used on lick events with a 5ms debounce window.
