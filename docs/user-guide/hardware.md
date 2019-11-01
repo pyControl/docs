@@ -17,7 +17,7 @@ As electronic devices pyControl hardware could pose a fire risk if used inapprop
 - All boards should be securely mounted using M3 bolts and insulating spacers to prevent short circuits due to contact with metal objects. 
 
 - Power down hardware when not in use.
- 
+
 - When connecting external devices consider the amount of current they will draw.  See the [Breakout boards](hardware.md#breakout-boards) section below for more information.
 
 ## Hardware definitions
@@ -207,7 +207,7 @@ The driver lines can be used as digital outputs by connecting them to a positive
 ![POW as digital diagram](../media/hardware/POW_as_digital_out_diagram.png)
 
 When the driver line (POW) is off the output will be pulled up to 5V, when the driver line is  on it will pull the output down to 0V.  This can be useful if you need to control devices that require a digital logic signal with a voltage higher than 3.3V (though many 5V logic devices work fine with 3.3V inputs), or if you just need more digital outputs.  
- 
+
 The special function pin has different functions on different ports, for example it may be an extra driver line or a pin with digital to analog (DAC) functionality, see below for more information.
 
 Typically devices which plug into a behaviour port have several inputs and outputs, for example the [Poke](#poke) device comprises an IR beam, stimulus LED and solenoid. Rather than having to specify each input and output on a hardware device seperately, each device has its own Python class which takes a behaviour port as an argument, allowing it to be instantiated with a single command. For example the hardware definition below specifies that 3 nose pokes are plugged into ports 1-3 of Breakout board 1.2.
@@ -289,7 +289,7 @@ BNC_input  = Digital_input(pin=board.BNC_2, rising_event='BNC_input')
 
 # Instantiate pushbutton input, need to enable pullup resistor to use pushbutton.
 pushbutton = Digital_input(pin=board.button, falling_event='button', pull='up') 
-``` 
+```
 
 ---
 
@@ -347,11 +347,13 @@ left_poke.LED.on() # Turn on the stimulus LED.
 left_poke.SOL.off() # Turn off the solenoid.
 ```
 
---- 
+---
 
 ## Audio board
 
 Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the micropython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.
+
+In addition to the digital volume control there is a manual volume control knob (the small blue potentiometer on the board) that can be used to calibrate the audio volume.
 
 [Repository](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Audio_board)
 
