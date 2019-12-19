@@ -741,6 +741,9 @@ LED.off()                 # Turn off the LED
 
 An audio board which uses the [DFPlayer](https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299) audio module to play .wav files from an SD card, allowing arbitrary audio stimuli to be presented.  The board has two speaker outputs allowing stereo audio files to be played. Mono files are played played from both outputs, but the amplifiers for each output can be independently enabled or disabled allowing files to be played from either or both speakers.  The DFPlayer module requires the SD card to be formated in FAT16 or FAT32 and expects a specific folder and file name structure - the folders must be named *01*, *02* etc, and the files in each folder *001.wav*, *002.wav* etc.  The Audio_player needs a behaviour port with UART serial connectivity so can be plugged into ports 1, 3 or 4 on *Breakout_1_2*.  There is a short latency (approximately 15ms) between issuing the play command and the sound starting to play.
 
+Sending multple commands to the audio player without any delay in between (e.g. setting the volume and then playing a sound on subsequent lines of the task) may crash or fail becaues the audio player has not finshed processing the first command when the second arrives.  
+
+
 **Required driver files:** *_audio_player.py*
 
 [Repository](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Audio_player)

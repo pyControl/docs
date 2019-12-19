@@ -5,9 +5,8 @@ site_author: Champalimaud Foundation
 
 theme:
     name: readthedocs
-    #custom_dir: cinder
 
-repo_url: https://bitbucket.org/fchampalimaud/pycontrol-docs
+repo_url: https://github.com/pycontrol/pycontrol-docs
 
 nav:
 - Home: index.md
@@ -26,4 +25,4 @@ nav:
     - License: about/license.md
 
 copyright: Copyright &copy; 2016 - 2019 Thomas Akam
-#google_analytics: ['UA-27795084-5', 'mkdocs.org']
+

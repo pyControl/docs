@@ -27,7 +27,7 @@ The pyControl [google group](https://groups.google.com/forum/#!forum/pycontrol) 
 
 ### Installation
 
-Download the latest version of pyControl as a zip file from the repository's [downloads](https://bitbucket.org/takam/pycontrol/downloads/) page. Unzip the folder on your computer and you will have the following folder structure:
+Download the latest version of pyControl as a zip file from the github [repository](https://github.com/pyControl/pyControl)). Unzip the folder on your computer and you will have the following folder structure:
 
 ```
 - pyControl
@@ -47,21 +47,26 @@ Download the latest version of pyControl as a zip file from the repository's [do
 
 pyControl has the following dependencies:
 
-- Python 3 
+- Python 3  -  3.7.5 recomended as pyqtgraph is not currently compatible with 3.8.
 - pyserial
 - numpy
+- pyqt5
 - pyqtgraph
 
-The simplest way to install the required dependencies is to download and install the [Anaconda](https://www.anaconda.com/download/) Python distribution, then use the *conda* package management utility to install the other packages using the following commands in the *Anaconda Prompt*:
+ On a windows machine that does not already have Python installed, the simplest way to install Python is to download an installer from [python.org](https://www.python.org/downloads/). To ensure you can run Python files (including the pyControl GUI) by double clicking on them, select the options 'Add Python to PATH', 'Add Python to environment variables', and 'Associate files with Python' during installation.  Note; selecting these options when installing Python will cause the Python version you are installing to take precedence over any other version of Python installed on the computer, so may break previous Python based workflows on the computer.
+
+Once you have a working Python 3 installation on the computer, run the windows command prompt (cmd.exe) as an administrator and enter the following commands to install the required packages:
 
 ```
-conda update conda
-conda install -c anaconda pyserial
-conda install -c anaconda numpy
-conda install -c anaconda pyqtgraph
+python -m pip install numpy
+python -m pip install pyserial
+python -m pip install pyqt5
+python -m pip install pyqtgraph
 ```
 
-pyControl has been tested primarily on Windows 7 and 10 but in principle should be cross platform and has been used on Mac and Linux.  You may need to install the micropython USB drivers to ensure your operating system recognizes the board and can open a serial connection to it, see [micropython windows setup](http://micropython.org/resources/Micro-Python-Windows-setup.pdf) and the micropython [docs](http://docs.micropython.org/en/latest/pyboard/pyboard/tutorial/repl.html).  The micropython drivers are unsigned so to install them on Windows 10, follow the instructions [here](https://www.maketecheasier.com/install-unsigned-drivers-windows10/) under *Install Unsigned Drivers from Advanced Boot Menu*.  You should only need to do this the first time you install the drivers on a computer.
+You should then be able to launch the GUI by double clicking the file *pyControl_GUI.py* in the folder *pyControl/gui*.
+
+pyControl has been tested primarily on Windows 7 and 10 but in principle should be cross platform and has been used on Mac and Linux. You may need to install the micropython USB drivers to ensure your operating system recognizes the board and can open a serial connection to it, see [micropython windows setup](http://micropython.org/resources/Micro-Python-Windows-setup.pdf) and the micropython [docs](http://docs.micropython.org/en/latest/pyboard/pyboard/tutorial/repl.html).  The micropython drivers are unsigned so to install them on Windows 10, follow the instructions [here](https://www.maketecheasier.com/install-unsigned-drivers-windows10/) under *Install Unsigned Drivers from Advanced Boot Menu*.  You should only need to do this the first time you install the drivers on a computer.
 
 Micropython boards (pyboards) need to be running a fairly recent version of the Micropython firmware to work with pyControl.  When you connect to a pyboard with the GUI, the micropython version installed on the board is displayed.  If the micropython version is <1.9 update micropython by doing the following (windows):
 
@@ -78,7 +83,7 @@ For information about updating micropython on Linux/Mac see [here](https://githu
 
 To update pyControl, download the latest version from the download page, unzip it, and copy across the *config* and *tasks* directories from your old installation to keep you configuration settings and tasks.  After updating pyControl you should reload the pyControl framework onto your pyboards using the GUI's board config menu.
 
-Alternatively you can use version control software to clone the repository rather than downloading it as a zip.  You can then pull the latest version from the repository to update, but be careful not to overwrite your configuration files.
+Alternatively you can clone the repository rather than downloading it as a zip.  You can then pull the latest version from the repository to update, but be careful not to overwrite your configuration files.
 
 ### Running a task
 
