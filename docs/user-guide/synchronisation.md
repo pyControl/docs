@@ -2,7 +2,7 @@
 
 ![sync diagram](../media/hardware/sync-diagram.jpg)
 
-Experiments often require synchronising behavioural data with other systems such as video cameras or physiology recordings.  pyControl provides a tool for data synchronisation that works by sending synchronisation pulses from pyControl to the other systems which need to be synchonised with it. The times when sync pulses occured are recorded by each system in its own time reference frame and can then be used to convert times from one system into the reference frame of annother using code provided in the [tools](https://bitbucket.org/takam/pycontrol/src/default/tools/) folder.
+Experiments often require synchronising behavioural data with other systems such as video cameras or physiology recordings.  pyControl provides a tool for data synchronisation that works by sending synchronisation pulses from pyControl to the other systems which need to be synchonised with it. The times when sync pulses occured are recorded by each system in its own time reference frame and can then be used to convert times from one system into the reference frame of annother using code provided in the [tools](https://github.com/pyControl/code/tree/master/tools) folder.
 
 The sync pulse trains have random inter-pulse intervals which ensures there is a unique match between the inter-pulse-interval sequences recorded on each system, so it is always possible to identify which pulse coresponds to which even if some pulses are missing, e.g. due to forgetting to turn a system on till after the start of a session.  This also makes it unambiguous whether two files come from the same session in the event of a file name mix-up.
 
@@ -37,7 +37,7 @@ Once an Rsync object is instantiated, sync pulses will automatically be generate
 
 ## Synchronising data
 
-The [rsync](https://bitbucket.org/takam/pycontrol/src/default/tools/rsync.py) module in the tools folder can be used in Python to convert event times from one hardware system's reference frame that of annother system by using sync pulse times recorded on both systems.  To illustrate this, assume we have an array of sync pulse times recorded by pyControl called `pulse_times_pycontrol` and an array of sync pulse times recorded by an ephys system called `pulse_times_ephys`.  We also have an array of spike times recorded by the ephys system called `spike_times_ephys` which we want to convert into the reference frame of the pyControl data.  We first instantiate an *Rsync_aligner* object using the pulse times recorded by both systems:
+The [rsync](https://github.com/pyControl/code/blob/master/tools/rsync.py) module in the tools folder can be used in Python to convert event times from one hardware system's reference frame that of annother system by using sync pulse times recorded on both systems.  To illustrate this, assume we have an array of sync pulse times recorded by pyControl called `pulse_times_pycontrol` and an array of sync pulse times recorded by an ephys system called `pulse_times_ephys`.  We also have an array of spike times recorded by the ephys system called `spike_times_ephys` which we want to convert into the reference frame of the pyControl data.  We first instantiate an *Rsync_aligner* object using the pulse times recorded by both systems:
 
 ```python
 from rsync import Rsync_aligner

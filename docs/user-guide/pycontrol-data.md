@@ -38,7 +38,7 @@ Lines begining `!` indicate that an error occured during the framework run and c
 
 # Visualising data
 
-The [session_plot](https://bitbucket.org/takam/pycontrol/src/default/tools/session_plot.py) module in the *tools* folder contains functions for visualising pyControl data offline.
+The [session_plot](https://github.com/pyControl/code/blob/master/tools/session_plot.py) module in the *tools* folder contains functions for visualising pyControl data offline.
 
 The session plot module has dependencies:
 
@@ -68,7 +68,7 @@ sp.play_session('path//to//session//file', start_time=30) # Scrolling animation 
 
 # Importing data
 
-The [data_import](https://bitbucket.org/takam/pycontrol/src/default/tools/data_import.py) module in the *tools* folder contains Python classes for importing and representing pyControl data.  A `Session` class represents data from a single session.  An `Experiment` class represents data from an experiment consisting of multiple sessions and subjects.
+The [data_import](https://github.com/pyControl/code/blob/master/tools/data_import.py) module in the *tools* folder contains Python classes for importing and representing pyControl data.  A `Session` class represents data from a single session.  An `Experiment` class represents data from an experiment consisting of multiple sessions and subjects.
 
 The data import module has dependencies:
 

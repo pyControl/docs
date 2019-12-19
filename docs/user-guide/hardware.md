@@ -6,7 +6,7 @@
 
 A typical pyControl hardware setup consists of one or more breakout boards connected to a computer by USB, each of which runs a single behavioural setup.  The breakout board connects to a set of devices such as nosepokes, audio boards and LED drivers which make up the setup. USB hubs can be used between the computer and breakout boards such that many setups can be controlled from a single computer.
 
-All pyControl hardware is open source and design files for the hardware detailed below are available in the [pyControl hardware repository](https://github.com/ThomasAkam/pyControl_hardware).  In addition to pyControl electronics, the repository has designs for a [behaviour box](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Behaviour_box_small) and [sound attenuating chamber](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Sound_attenuating_chamber_small), and a list of [useful parts](https://github.com/ThomasAkam/pyControl_hardware/blob/master/useful-parts-list.md) such as cables, solenoids, mounting hardware etc for building setups.  Assembled pyControl hardware is available from the [OpenEphys store](http://www.open-ephys.org/pycontrol).
+All pyControl hardware is open source and design files for the hardware detailed below are available in the [pyControl hardware repository](https://github.com/pyControl/hardware).  In addition to pyControl electronics, the repository has designs for a [behaviour box](https://github.com/pyControl/hardware/tree/master/Behaviour_box_small) and [sound attenuating chamber](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small), and a list of [useful parts](https://github.com/pyControl/hardware/blob/master/useful-parts-list.md) such as cables, solenoids, mounting hardware etc for building setups.  Assembled pyControl hardware is available from the [OpenEphys store](http://www.open-ephys.org/pycontrol).
 
 For information about synchronising pyControl with other hardware such as electrophysiology or video cameras see the [synchronisation](synchronisation.md) user guide.
 
@@ -22,7 +22,7 @@ As electronic devices pyControl hardware could pose a fire risk if used inapprop
 
 ## Hardware definitions
 
-Hardware objects can be instantiated directly in a state machine definition file (as in the [button](https://bitbucket.org/takam/pycontrol/src/default/tasks/button.py) example), however the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is  typically used for many different tasks so seperating out the hardware and task definition code into seperate files avoids repeating the hardware definition in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are specified in the setup's hardware definitions.
+Hardware objects can be instantiated directly in a state machine definition file (as in the [button](https://github.com/pyControl/code/blob/master/tasks/button.py) example), however the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is  typically used for many different tasks so seperating out the hardware and task definition code into seperate files avoids repeating the hardware definition in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are specified in the setup's hardware definitions.
 
 The hardware definition tells the pyControl system what inputs and outputs are available for use by state machines.  A simple hardware definition file might read:
 
@@ -251,7 +251,7 @@ The current version 1.2 of the pyControl Breakout board has 6 RJ45 behaviour por
 
 [Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf)
 
-[Repository](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Breakout_board)
+[Repository](https://github.com/pyControl/hardware/tree/master/Breakout_board)
 
 **Front:**
 ![Breakout 1.2 front](../media/hardware/breakout-1-2-front.jpg)
@@ -301,7 +301,7 @@ The following Python classes define devices which plug into behaviour ports.
 
 Nosepoke port with infra-red beam, stimulus LED and socket to connect solenoid valve.
 
-[Repository](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Nose_poke)
+[Repository](https://github.com/pyControl/hardware/tree/master/Nose_poke)
 
 |**Front**|**Side - solenoid attached**|
 |---|---|
@@ -355,7 +355,7 @@ Audio amplifier board for driving a speaker to produce auditory stimuli.  The bo
 
 In addition to the digital volume control there is a manual volume control knob (the small blue potentiometer on the board) that can be used to calibrate the audio volume.
 
-[Repository](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Audio_board)
+[Repository](https://github.com/pyControl/hardware/tree/master/Audio_board)
 
 ![Audio board](../media/hardware/audio-board.jpg)
 
@@ -417,7 +417,7 @@ speaker.off() # Turn off sound output.
 
 A constant current LED driver for optogenetic stimulation.
 
-[Repository](https://github.com/ThomasAkam/pyControl_hardware/tree/master/LED_driver)
+[Repository](https://github.com/pyControl/hardware/tree/master/LED_driver)
 
 ![LED driver](../media/hardware/LED-driver.jpg)
 
@@ -459,7 +459,7 @@ The stepper motor adaptor board connects an Easydriver to a pyControl behaviour 
 > The stepper motor driver can draw power either from the 12V line on the behaviour port or from a 12V power supply connected to the stepper motor board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If your stepper motor requires more current, connect a 12V power supply directly to the stepper motor driver.  The current requirements for some common stepper motors are detailed in the EasyDriver documentation.
 
 
-[Repository](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Stepper_driver)
+[Repository](https://github.com/pyControl/hardware/tree/master/Stepper_driver)
 
 ![Stepper driver](../media/hardware/stepper_driver.jpg)
 
@@ -498,9 +498,9 @@ Class for acquiring data from a rotary encoder, used e.g. to measure the speed o
 
 The rotary encoder adaptor board connects an Avago HEDM-55xx series rotary encoder ([datasheet](https://docs.broadcom.com/docs/AV02-1046EN)) to a pyControl behaviour port.  The rotary encoder adaptor must be plugged into port_1 on breakout board 1.2.
 
-For an example task using a rotary encoder to measure running speed and trigger framework events when running starts and stops see [*running_wheel*](https://bitbucket.org/takam/pycontrol/src/default/tasks/running_wheel.py).
+For an example task using a rotary encoder to measure running speed and trigger framework events when running starts and stops see [*running_wheel*](https://github.com/pyControl/code/blob/master/tasks/running_wheel.py).
 
-[Repository](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Rotary_encoder)
+[Repository](https://github.com/pyControl/hardware/tree/master/Rotary_encoder)
 
 ![Stepper driver](../media/hardware/rotary_encoder.jpg)
 
@@ -580,7 +580,7 @@ Each port on the port expander works like a standard behaviour port, with 2 DIO 
 
 **Required driver files:** *_port_expander.py*, *_MCP.py*
 
-[Repository](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Port_expander)
+[Repository](https://github.com/pyControl/hardware/tree/master/Port_expander)
 
 ![Stepper driver](../media/hardware/port_expander_photo.jpg)
 
@@ -609,7 +609,7 @@ The Five Poke board is a set of five nose pokes on a single PCB, each with an IR
 
 **Required driver files:** *_five_poke.py*
 
-[Repository](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Five_poke)
+[Repository](https://github.com/pyControl/hardware/tree/master/Five_poke)
 
 **Five poke mounted**
 ![Five_poke mounted](../media/hardware/five-poke-mounted.jpg)
@@ -648,7 +648,7 @@ An optional solenoid driver daughter board can be connected to the nine poke boa
 
 **Required driver files:** *_nine_poke.py*, *_MCP.py*
 
-[Repository](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Nine_poke)
+[Repository](https://github.com/pyControl/hardware/tree/master/Nine_poke)
 
 **Nine poke PCB**
 ![Nine_poke pcb](../media/hardware/nine-poke-pcb.jpg)
@@ -696,7 +696,7 @@ An electrical lickometer board which has two lick detection circuits and two sol
 
 **Required driver files:** *_lickometer.py*
 
-[Repository](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Lickometer)
+[Repository](https://github.com/pyControl/hardware/tree/master/Lickometer)
 
 ![Five_poke mounted](../media/hardware/lickometer_photo.jpg)
 
@@ -746,7 +746,7 @@ Sending multple commands to the audio player without any delay in between (e.g. 
 
 **Required driver files:** *_audio_player.py*
 
-[Repository](https://github.com/ThomasAkam/pyControl_hardware/tree/master/Audio_player)
+[Repository](https://github.com/pyControl/hardware/tree/master/Audio_player)
 
 ![Audio board](../media/hardware/audio-player.jpg)
 

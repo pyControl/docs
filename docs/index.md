@@ -20,6 +20,8 @@ Tools for importing pyControl data into Python for analysis are provided in the 
 
 The pyControl [google group](https://groups.google.com/forum/#!forum/pycontrol) is a email list for pyControl users.
 
+pyControl hardware, software and documentation repositories are on [GitHub](https://github.com/pyControl).
+
 ---
 
 ## Getting started
@@ -27,7 +29,7 @@ The pyControl [google group](https://groups.google.com/forum/#!forum/pycontrol) 
 
 ### Installation
 
-Download the latest version of pyControl as a zip file from the github [repository](https://github.com/pyControl/pyControl)). Unzip the folder on your computer and you will have the following folder structure:
+Download the latest version of pyControl as a zip file from the [releases](https://github.com/pyControl/code/releases) page. Unzip the folder on your computer and you will have the following folder structure:
 
 ```
 - pyControl
@@ -47,7 +49,7 @@ Download the latest version of pyControl as a zip file from the github [reposito
 
 pyControl has the following dependencies:
 
-- Python 3  -  3.7.5 recomended as pyqtgraph is not currently compatible with 3.8.
+- Python 3  *(version 3.7.5 recomended as pyqtgraph is not currently compatible with 3.8)*
 - pyserial
 - numpy
 - pyqt5
@@ -91,7 +93,7 @@ Run the file *pyControl_GUI.py* in the folder *pyControl/gui*, you will see a GU
 # 
 Plug in a pyboard and it will appear in the *Select* drop down menu in the *Setup*  box.  Select the board and press the *Connect* button.  The GUI will connect to the board and upload the pyControl framework.
 # 
-From the *Tasks* drop down menu, select the task [*blinker*](https://bitbucket.org/takam/pycontrol/src/default/tasks/blinker.py).  Press the *Upload* button to upload the task to the pyboard.
+From the *Tasks* drop down menu, select the task [*blinker*](https://github.com/pyControl/code/blob/master/tasks/blinker.py).  Press the *Upload* button to upload the task to the pyboard.
 # 
 Press the *Start* button.  The task will run causing the blue LED on the pyboard to start blinking.
 # 

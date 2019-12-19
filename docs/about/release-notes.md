@@ -6,7 +6,7 @@
 
 The current and past members of the pyControl team.
 
-* [@takam](https://bitbucket.org/takam/)
+* [@takam](https://github.com/ThomasAkam)
 * [@cajomferro](https://github.com/cajomferro/)
 * [@UmSenhorQualquer](https://github.com/UmSenhorQualquer)
 
