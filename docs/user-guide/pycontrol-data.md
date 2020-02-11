@@ -7,12 +7,13 @@ An example data file might read:
 ```text
 I Experiment name  : example_experiment
 I Task name : button
+I Task file hash : 289826412
 I Subject ID : m001
 I Start date : 2018/01/30 21:49:42
 
-S {'LED_on': 1, 'LED_off': 2}
+S {"LED_on": 1, "LED_off": 2}
 
-E {'button_press': 3}
+E {"button_press": 3}
 
 D 0 2
 D 8976 3
@@ -22,11 +23,11 @@ D 10162 3
 D 10163 2
 ```
 
-Lines begining `I` contain infomation about the session and experiment.  
+Lines begining `I` contain infomation about the session including subject, task and experiment names, start date and time.
 
-The single line begining `S` is a Python dictionary containing the state names and corresponding IDs.
+The single line begining `S` is a JSON object (also a Python dict)  containing the state names and corresponding IDs.
 
-The single line begining `E` is a Python dictionary containing the event names and corresponding IDs.
+The single line begining `E` is a JSON object (also a Python dict) containing the event names and corresponding IDs.
 
 Lines begining `D` are data lines with format `D timestamp ID` where *timestamp* is the time in milliseconds since the start of the framework run and *ID* is a state ID (indicating a state transition) or an event ID (indicating an event occured).
 
@@ -34,7 +35,11 @@ Lines begining `P` are the output of print statements with format *P timestamp p
 
 Lines begining `!` indicate that an error occured during the framework run and contain the error message.
 
---- 
+## Versioned task files
+
+Task files used to generate data are also stored in the data folder, with a file hash appended to the task file name to uniquely identify the file version.  The file hash of the task file used for each session is recorded in that session's data file so the exact task file version used to run each session can be identified.
+
+---
 
 # Visualising data
 
@@ -220,7 +225,7 @@ when = ['2017-07-01',...,'2017-07-07'] # Select session with '2017-07-01' <= dat
 
 ## Analog data
 
-pyControl analog data files (*'.pca'* file extension) are binary data files created by [analog inputs](hardware.md#analog-input) and other source of analog data such as [rotary encoders](hardware.md#rotary-encoder).  They consist of alternating timestamps and data samples, both saved as 4 byte little endian signed integers.  The function `load_analog_data` loads a pyControl analog data file into Python, returning a numpy array whose first column is timestamps and second column data samples.  
+pyControl analog data files (*'.pca'* file extension) are binary data files created by [analog inputs](hardware.md#analog-input) and other source of analog data such as [rotary encoders](hardware.md#rotary-encoder).  They consist of alternating timestamps and data samples, both saved as 4 byte little endian signed integers.  The function `load_analog_data` loads a pyControl analog data file into Python, returning a numpy array whose first column is timestamps and second column data samples
 
 ```python
 analog_data_array = load_analog_data('path//to//analog_data_file.pca')

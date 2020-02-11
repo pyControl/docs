@@ -2,15 +2,37 @@
 
 ---
 
-## Maintenance team
+**Version 1.4.1** 03/02/2018
 
-The current and past members of the pyControl team.
+GUI:
 
-* [@takam](https://github.com/ThomasAkam)
-* [@cajomferro](https://github.com/cajomferro/)
-* [@UmSenhorQualquer](https://github.com/UmSenhorQualquer)
-
-## Change Log
+- Task files used in an experiment are now automatically saved in the experiments data folder with a file hash appended to the task file name to uniquely identify the file version.  Whenever a task file used in the experiment is modified the new version will be saved to the data folder when the experiment is run.  The task file hash used for each session is recorded in the session's data file so the exact task file used to run each session can be identified.
+#
+- A menu bar now provides quick access to online help, data/task folders, and some GUI settings.
+#
+- Behaviour plots can now be paused.
+#
+- Keyboard shortcuts now implemented for some commonly actions, detailed in the help menu.
+#
+- Task variables can now be specified as private by ending the variable name with three underscores, making them invisible to the GUI.
+#
+- A meaningful error message is now shown on failure to import dependencies.
+#
+- Persistent variables implementation now allows running different subjects on different sessions in same experiment data folder without overwriting the persistent variables. 
+#
+- Improved reliability of file transfer to pyboard.
+#
+- Ordering of subjects in summary variables table is now consistent with that in configure experiment tab.
+#
+- GUI is now launched by running file pyControl_GUI.py in the pyControl root directory.
+#
+- Event and state dictionaries now written to task file as JSON objects to make them easier to parse cross platform. This does not affect reading task files in Python as JSON objects are also Python dicts (as used previously).
+#
+- Various bugfixes and reliability improvements.
+#
+CLI
+#
+- Removed command line interface.
 
 ---
 
