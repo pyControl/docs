@@ -49,7 +49,7 @@ Download the latest version of pyControl as a zip file from the [releases](https
 
 pyControl has the following dependencies:
 
-- Python 3 *(pyqtgraph is not currently compatible with Python 3.8)*
+- Python 3
 - pyserial
 - numpy
 - pyqt5

@@ -12,8 +12,6 @@ If the GUI does not open this is probably because you do not have the required [
 
 If the GUI status says 'Connection Failed' when you try to connect to the board, reset the board using the *Reset* button on the breakout board or micropython microcontroller, then try connecting again.
 
-You may need to install the micropython USB drivers to ensure your operating system recognizes the board and can open a serial connection to it, see [micropython windows setup](http://micropython.org/resources/Micro-Python-Windows-setup.pdf) and the micropython [docs](http://docs.micropython.org/en/latest/pyboard/pyboard/tutorial/repl.html).  The micropython drivers are unsigned so to install them on Windows 10, follow the instructions [here](https://www.maketecheasier.com/install-unsigned-drivers-windows10/) under *Install Unsigned Drivers from Advanced Boot Menu*.  You should only need to do this the first time you install the drivers on a computer.
-
 ### Can' transfer files to pyboard
 
 If you get a message saying *Error: Unable to transfer file.* this usually means that the filesystem on the pyboard has got corrupted. To fix this problem, reset the filesystem by following the instructions [here](https://docs.micropython.org/en/latest/pyboard/tutorial/reset.html#factory-reset-the-filesystem).  
@@ -22,17 +20,21 @@ The instructions say to use the *Reset* and *USR* buttons and LEDs on the microp
 
 After the filesystem reset has finished, reset the board again using the *Reset* button, then connect to the board with the GUI.  The filesystem reset removes both the pyControl framework and any hardware definition from the pyboard so you will have to reload them using the board config menu.  
 
-To reduce the likelihood of filesystem corruption, it is strongly recomended to disable the pyboards filesystem from acting as a USB flash drive.  This can be done using the *'Disable USB flash drive'* option in the board config menu.
+To reduce the likelihood of filesystem corruption, it is strongly recomended to disable the pyboards filesystem from acting as a USB flash drive before loading the framework.  This can be done using the *'Disable USB flash drive'* option in the board config menu.
 
-### Board acting funny
+### Board acting funny / reliability problems
 
-If a board is acting strangely, e.g. giving error messages like *Error: Unable to execute command.* or *pyControl Framework:Import error* try the following steps to fix the problem:
+If a board is acting strangely, e.g. giving error messages like *PyboardError('could not exec command')* or *pyControl Framework:Import error* try the following steps to fix the problem:
 
-1. Disconnect from the board using the GUI and reset it using the *Reset* button either on the pyboard or on the pyControl breakout board.
+- Disconnect from the board using the GUI and reset it using the *Reset* button either on the pyboard or on the pyControl breakout board.
 #
-2.  If resetting the board does not solve the problem, it is possible the pyboard's filesystem has got corrupted.  Follow the instructions above to reset the pyboard filesystem.
+-  If resetting the board does not solve the problem, it is possible the pyboard's filesystem has got corrupted.  Follow the instructions above under *Can' transfer files to pyboard* to reset the pyboard filesystem.
 
-These two steps will solve the great majority of board misbehaviour.
+These two steps will solve the great majority of board misbehaviour.  If you continue to have reliabilty problems:
+
+- Make sure you have disabled the pyboard from acting as a USB flash drive using the 'Disable USB flash drive' option in the board config menu. This stops the computers from trying to access or modify the boards file system which can otherwise cause reliability issues.
+#
+- On windows, use the micropython USB drivers rather than the generic windows USB serial device drivers. To check which drivers you are using, look in the windows device manager under *Ports (COM & LPT)*, if your pyboard shows up as a *USB Serial Device* then you are using the generic windows driver, if it shows up as a *Pyboard USB Comm port* you are using the micropython USB drivers. For information on installing the microputhon USB drivers see [micropython windows setup](http://micropython.org/resources/Micro-Python-Windows-setup.pdf) and the micropython [docs](http://docs.micropython.org/en/latest/pyboard/pyboard/tutorial/repl.html).  The micropython drivers are unsigned so to install them on Windows 10, follow the instructions [here](https://www.maketecheasier.com/install-unsigned-drivers-windows10/) under *Install Unsigned Drivers from Advanced Boot Menu*.  You should only need to do this the first time you install the drivers on a computer.  Note, the micropython USB driver is stored on the pyboards flash drive, so if you have disabled the pyboard from acting as a flash drive using the GUI's board config menu, you will need to re-enable it in order to access the driver file from windows. 
 
 ### Unable to setup state machine
 
