@@ -2,7 +2,7 @@
 
 ## Overview
 
-Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a *task definition file* written in Python.  Example task definition files are provided in the [tasks](https://github.com/pyControl/code/tree/master/tasks) folder.
+Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a *task definition file* written in Python.  Example task definition files are provided in the [tasks](https://github.com/pyControl/code/tree/master/tasks/example) folder.
 
 Task definition files run directly on the Micropython microcontroller, not on the computer.   Python modules such as *Numpy* that are installed on the computer will therefore not be available in the task definition.  For a list of the modules available in Micropython see the [Micropython docs](https://docs.micropython.org/en/latest/library/index.html).
 

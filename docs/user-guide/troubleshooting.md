@@ -8,6 +8,11 @@ To open the GUI you need to run the file *pyControl_GUI.py* using Python.  One w
 
 If the GUI does not open this is probably because you do not have the required [dependencies](../index.md#dependencies) installed, you should see an error message indicating which dependency could not be loaded. 
 
+### Board does not show up in GUI.
+
+If no boards that you connect to the computer show up in the GUI, but do show up in the windows device manager, the problem may be caused by the operating system langauge being set to something other than English.  This changes how pyboards are named in the list of available serial devices returned by Python's `serial.tools.list_ports` function which is used in *GUI_main.py* to identify which boards are available to connect to.  We currently do not have a good cross language fix for this, so your options are to either to change the os language to English or modify the line in *GUI_main.py* which uses `list_ports` to 
+identify the available pyboards.
+
 ### Can't connect to acquisition board.
 
 If the GUI status says 'Connection Failed' when you try to connect to the board, reset the board using the *Reset* button on the breakout board or micropython microcontroller, then try connecting again.

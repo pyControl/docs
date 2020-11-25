@@ -1,6 +1,6 @@
 # pyControl GUI
 
-The pyControl GUI is a graphical interface for running experiments, configuring setups and visualising behaviour.   The GUI is a tabbed window with tabs *Run task*, *Experiments* and *Setups*.  The *Run task* tab controls one hardware setup at a time i.e. one pyboard and its connected hardware.  It is designed for quickly prototyping tasks and testing hardware setups.  The *Experiments* tab is used to configure and run experiments on many setups in parallel.  The *Setups* tab is used to name and configure the hardware setups connected to the computer.
+The pyControl GUI is a graphical interface for running experiments, configuring setups and visualising behaviour.   The GUI is a tabbed window with tabs *Run task*, *Experiments* and *Setups*.  The *Run task* tab controls one hardware setup at a time i.e. one pyboard and its connected hardware.  It is designed for quickly prototyping tasks and testing hardware setups, but can also be used to aquire data from one setup.  The *Experiments* tab is used to configure and run experiments on many setups in parallel.  The *Setups* tab is used to name and configure the hardware setups connected to the computer.
 
 To run the GUI, run the file *pyControl_GUI.py* in the pyControl root directory.
 
@@ -14,13 +14,14 @@ The **Setup** control box is used to select a pyboard, connect and disconnect fr
 
 The **Data file** control box is used to select the directory where data files will be stored and to specify the ID of the subject.  The filename is given by the subject ID and session start date and time.
 
-The **Task** control box is used to select and upload a task and configure task variables.  The tasks available in the drop down menu are those in the folder *pyControl/tasks*.  The tasks folder can be changed by editing the file *pyControl/config/paths.py*.  The *upload* button transfers the task file to the pyboard and sets up the task state machine.  Once a task is uploaded the button changes to *reset*.  Resetting the task returns it to its initial state as defined in the task definition file.  
+The **Task** control box is used to select and upload a task and configure task variables.  The tasks available in the drop down menu are those in the folder *pyControl/tasks*.  The tasks folder can be changed using the *Settings* menu.  Tasks can be organised into subfolders within the *tasks* folder, creating a nested list in the GUI drop down menu.  This can be useful if you have a lot of tasks, e.g. to organise them by user.  The *upload* button transfers the task file to the pyboard and sets up the task state machine.  Once a task is uploaded the button changes to *reset*.  Resetting the task returns it to its initial state as defined in the task definition file.  
 
 The *Variables* button opens a dialog for setting or getting the value of task variables.  It can be used either before a run starts or while a task is running.  Variables must be defined in the task definition file using the `v.my_variable` syntax (see [programming tasks](programming-tasks.md#variables)).  Variables can be set to numbers, or to Python objects including strings, lists and dictionaries.  The constants `ms`, `second`, `minute` and `hour` can be used, e.g. a variable can be set to `30*minute`.  You can make task variables invisible to the GUI by ending their name in three underscores (e.g. `v.my_private_variable___`).  Such 'private' variables work as normal in the task file but do not show up in the GUI.  This can be useful if you have a lot of task variables, making it hard to find the ones you need to change in the GUI.
 
 # Experiments tab
 
-The experiments tab is used to configure, save, load and run experiments on one or more hardware setups at the same time.  An experiment is a set of hardware setups each with a corresponding subject, run on a given task, potentially with variables set to non-default values for some or all subjects.
+The experiments tab is used to configure, save, load and run experiments on one or more hardware setups at the same time.  An experiment is a set of subjects, each with a corresponding hardware setup, run on the same task, potentially with variables set to non-default values for some or all subjects.  When you run an experiment you can run all the subjects or select
+only a subset to run, and can start and stop different subjects at different times.
 
 ## Configuring experiments
 
@@ -30,7 +31,7 @@ When the experiments tab is opened it shows the configure experiment dialog.  To
 
 Optionally a hardware test can be specified for the experiment.  The hardware test is a task that is run before the main task, allowing the user to check whether the hardware is working as intended.  The hardware test can be the same task as that used for the experiment, or another task designed specifically to test the hardware.  No data is saved during the hardware test.
 
-The subjects table is used to specify which hardware setups will be used and which subject will run on each setup.  To add a subject to the experiment, press the *add* button, select the setup and enter a name for the subject.
+The subjects table is used to specify which subjects will run in which hardware setups.  To add a subject to the experiment, press the *add* button, select the setup and enter a name for the subject.  The *Run* check box determines whether on not a particular subject will be run when the experiment is run.  You can assign multiple subjects to the same setup in the variables table but can only run a single subject on a given setup at a time.
 
 The variables table is used to set the value of variables before the task starts.  Variables can be set to the same value for all subjects or to different values for different subjects. Variables can be set to numbers, or Python objects including strings, lists and dictionaries.  The constants  `ms`, `second`, `minute` and `hour` can be used, e.g. a variable can be set to `5*second`.  
 
@@ -46,7 +47,7 @@ To run an experiment, press the *run* button on the configure experiments tab.
 
 ![run_task_GUI.jpg](../media/GUI/run_experiment_tab.png)
 
-The GUI will connect to the setups and upload the task. Once the task is loaded on all the boards the *start* button will become available to start the experiment.
+The GUI will connect to the setups and upload the task. Once the task is loaded on all the boards the *Start all* button and *Start* buttons for individual subjects will become available.
 
 While the experiment is running, data from each setup is shown in a seperate box.  This shows the current state, the most recent event, the most recent line printed, and a log of output generated by the task. The variables button brings up a dialog to set or get the value of task variables for that subject.
 
