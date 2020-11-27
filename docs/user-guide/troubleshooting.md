@@ -10,8 +10,12 @@ If the GUI does not open this is probably because you do not have the required [
 
 ### Board does not show up in GUI.
 
-If no boards that you connect to the computer show up in the GUI, but do show up in the windows device manager, the problem may be caused by the operating system langauge being set to something other than English.  This changes how pyboards are named in the list of available serial devices returned by Python's `serial.tools.list_ports` function which is used in *GUI_main.py* to identify which boards are available to connect to.  We currently do not have a good cross language fix for this, so your options are to either to change the os language to English or modify the line in *GUI_main.py* which uses `list_ports` to 
-identify the available pyboards.
+If no pyboards that you connect to the computer show up in the GUI's board select dropdown menu, the problem may be caused by the computers operating system langauge being set to something other than English.  This changes the name that pyboards are given in the computers list of connected serial devices, which is used by the GUI to identify connected boards.  There are two possible ways to fix this problem:
+
+- Use the Micropython USB drivers rather than the generic windows USB serial device drivers.  This should ensure that pyboards are listed by the computers operating system as *Pyboard* irrespective of the operating system language.  Information on how to install the Micropython USB drivers is provided below in section *How to install the Micropython USB drivers*.
+#
+- Alternatively, change the computers operating system language to English.
+
 
 ### Can't connect to acquisition board.
 
@@ -39,7 +43,15 @@ These two steps will solve the great majority of board misbehaviour.  If you con
 
 - Make sure you have disabled the pyboard from acting as a USB flash drive using the 'Disable USB flash drive' option in the board config menu. This stops the computers from trying to access or modify the boards file system which can otherwise cause reliability issues.
 #
-- On windows, use the micropython USB drivers rather than the generic windows USB serial device drivers. To check which drivers you are using, look in the windows device manager under *Ports (COM & LPT)*, if your pyboard shows up as a *USB Serial Device* then you are using the generic windows driver, if it shows up as a *Pyboard USB Comm port* you are using the micropython USB drivers. For information on installing the microputhon USB drivers see [micropython windows setup](http://micropython.org/resources/Micro-Python-Windows-setup.pdf) and the micropython [docs](http://docs.micropython.org/en/latest/pyboard/pyboard/tutorial/repl.html).  The micropython drivers are unsigned so to install them on Windows 10, follow the instructions [here](https://www.maketecheasier.com/install-unsigned-drivers-windows10/) under *Install Unsigned Drivers from Advanced Boot Menu*.  You should only need to do this the first time you install the drivers on a computer.  Note, the micropython USB driver is stored on the pyboards flash drive, so if you have disabled the pyboard from acting as a flash drive using the GUI's board config menu, you will need to re-enable it in order to access the driver file from windows. 
+- Use the Micropython USB drivers rather than the generic windows USB serial device drivers (see below).
+
+### How to install the Micropython USB drivers
+
+By default windows will use generic USB serial device drivers for connected pyboards.  Normally this works fine, but if you are having reliability problems, or the GUI is not recognising connected pyboards due the computers operating system langage being set to something other than English (see above), it is recommended to use the Micropython USB drivers.  
+
+To check which drivers you are using, look in the windows device manager under *Ports (COM & LPT)*, if your pyboard shows up as a *USB Serial Device* then you are using the generic windows driver, if it shows up as a *Pyboard USB Comm port* you are using the micropython USB drivers. For information on installing the microputhon USB drivers see [micropython windows setup](http://micropython.org/resources/Micro-Python-Windows-setup.pdf) and the micropython [docs](http://docs.micropython.org/en/latest/pyboard/pyboard/tutorial/repl.html).  The micropython drivers are unsigned so to install them on Windows 10, follow the instructions [here](https://www.maketecheasier.com/install-unsigned-drivers-windows10/) under *Install Unsigned Drivers from Advanced Boot Menu*.  You should only need to do this the first time you install the drivers on a computer.
+
+The micropython USB driver is stored on the pyboards flash drive, so if you have disabled the pyboard from acting as a flash drive using the GUI's board config menu, you will need to re-enable it in order to access the driver file from windows. 
 
 ### Unable to setup state machine
 
