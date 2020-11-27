@@ -240,8 +240,10 @@ house_light = Digital_output(pin=board.port_4.POW_A)
 # Instantiate line DIO_B on port 5 as a digital input.
 sync_input = Digital_input(pin=board.port_5.DIO_B, rising_event='sync_pulse') 
 ```
+The easiest way to make an electrical connection to pins on a behavioural port is to plug in a *port adapter* board.  This breaks out all the pins of the port to a screw terminal, and the power driver lines along with +5 and +12V to a set of female headers that can be used to connect loads such as solenoids or LEDs.
 
-
+**Port adapter:**
+![Port adapter](../media/hardware/port_adapter.png)
 
 ---
 
