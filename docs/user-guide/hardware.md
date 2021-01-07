@@ -22,7 +22,7 @@ As electronic devices pyControl hardware could pose a fire risk if used inapprop
 
 ## Hardware definitions
 
-Hardware objects can be instantiated directly in a state machine definition file (as in the [button](https://github.com/pyControl/code/blob/master/tasks/button.py) example), however the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is  typically used for many different tasks so seperating out the hardware and task definition code into seperate files avoids repeating the hardware definition in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are specified in the setup's hardware definitions.
+Hardware objects can be instantiated directly in a state machine definition file (as in the [button](https://github.com/pyControl/code/blob/master/tasks/example/button.py) example), however the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is  typically used for many different tasks so seperating out the hardware and task definition code into seperate files avoids repeating the hardware definition in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are specified in the setup's hardware definitions.
 
 The hardware definition tells the pyControl system what inputs and outputs are available for use by state machines.  A simple hardware definition file might read:
 
@@ -103,6 +103,36 @@ class Digital_input(pin, rising_event=None, falling_event=None, debounce=5, deci
 
 ---
 
+## Digital output
+
+The digital output class is used to control a pyboard pin used as a digital output.
+
+```python
+class Digital_output(pin, inverted=False, pulse_enabled=False)
+```
+
+*Arguments:*
+
+`pin` Micropython pin to use.
+
+`inverted` If `True`, the pin voltage is set high when the input is turned off and low when turned on.
+
+`pulse_enabled` Set to `True` to enable squarewave pulsed output using the `pulse` method.  Pulsed output uses one of the pyboard hardware timers and as there are a limited number of these pulsed output is by default disabled.
+
+*Methods:*
+
+`Digital_output.on()` Turn on output.
+
+`Digital_output.off()` Turn off output.
+
+`Digital_output.toggle()` Toggle output.
+
+`Digital_output.pulse(freq, duty_cycle=50, n_pulses=False)` Turn on a pulse train with specified frequency (Hz). The duty cycle (percentage of the period for which the signal is high) can be specified as 10, 25, 50 or 75.  If the n_pulses argument is set to an integer the pulse train will stop after this number of pulses has been delivered.
+
+`Digital_output.enable_pulse()` Setup output to support pulsed output.
+
+---
+
 ## Analog input
 
 The analog input class measures the voltage on a pin at a specified sampling rate, can stream these measurements to the host computer to be saved to disk, and can generate pyControl framework events when the voltage rises above or falls below a specified threshold.  
@@ -138,33 +168,9 @@ class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, 
 
 ---
 
-## Digital output
+## Analog outputs
 
-The digital output class is used to control a pyboard pin used as a digital output.
-
-```python
-class Digital_output(pin, inverted=False, pulse_enabled=False)
-```
-
-*Arguments:*
-
-`pin` Micropython pin to use.
-
-`inverted` If `True`, the pin voltage is set high when the input is turned off and low when turned on.
-
-`pulse_enabled` Set to `True` to enable squarewave pulsed output using the `pulse` method.  Pulsed output uses one of the pyboard hardware timers and as there are a limited number of these pulsed output is by default disabled.
-
-*Methods:*
-
-`Digital_output.on()` Turn on output.
-
-`Digital_output.off()` Turn off output.
-
-`Digital_output.toggle()` Toggle output.
-
-`Digital_output.pulse(freq, duty_cycle=50, n_pulses=False)` Turn on a pulse train with specified frequency (Hz). The duty cycle (percentage of the period for which the signal is high) can be specified as 10, 25, 50 or 75.  If the n_pulses argument is set to an integer the pulse train will stop after this number of pulses has been delivered.
-
-`Digital_output.enable_pulse()` Setup output to support pulsed output.
+Pyboard pins 'X5' and 'X6' support analog output.  On the breakout board they are connected to the BNC connectors labled DAC-1 and DAC-2 and also to the special function pins on behaviour ports 3 and 4 respectively.  To use these pins as analog outputs see the [pyb.DAC](https://docs.micropython.org/en/latest/library/pyb.DAC.html) class in the micropython docs.
 
 ---
 
@@ -500,7 +506,7 @@ Class for acquiring data from a rotary encoder, used e.g. to measure the speed o
 
 The rotary encoder adaptor board connects an Avago HEDM-55xx series rotary encoder ([datasheet](https://docs.broadcom.com/docs/AV02-1046EN)) to a pyControl behaviour port.  The rotary encoder adaptor must be plugged into port_1 on breakout board 1.2.
 
-For an example task using a rotary encoder to measure running speed and trigger framework events when running starts and stops see [*running_wheel*](https://github.com/pyControl/code/blob/master/tasks/running_wheel.py).
+For an example task using a rotary encoder to measure running speed and trigger framework events when running starts and stops see [*running_wheel*](https://github.com/pyControl/code/blob/master/tasks/example/running_wheel.py).
 
 [Repository](https://github.com/pyControl/hardware/tree/master/Rotary_encoder)
 

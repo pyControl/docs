@@ -20,7 +20,8 @@ D 8976 3
 D 8976 1
 P 8976 This is the output of a print statement
 D 10162 3
-D 10163 2
+V 10231 variable_name variable_value
+D 10423 2
 ```
 
 Lines begining `I` contain infomation about the session including subject, task and experiment names, start date and time.
@@ -33,11 +34,13 @@ Lines begining `D` are data lines with format `D timestamp ID` where *timestamp*
 
 Lines begining `P` are the output of print statements with format *P timestamp printed_output*. 
 
+Lines begining `V` indicate the value of a task variable along with a timestamp.  These lines are generated whenever a variable is either set or read from the board by the GUI.  Variables set prior to the task starting are given a timestamp of 0, and the value of summary variables printed at the end of the run are given a timestamp of -1.
+
 Lines begining `!` indicate that an error occured during the framework run and contain the error message.
 
 ## Versioned task files
 
-Task files used to generate data are also stored in the data folder, with a file hash appended to the task file name to uniquely identify the file version.  The file hash of the task file used for each session is recorded in that session's data file so the exact task file version used to run each session can be identified.
+Task files used to generate data are also stored in the data folder, with a file hash appended to the task file name to uniquely identify the file version.  The file hash of the task file used for each session is recorded in that session's data file so the exact task file version used to run each session can be identified.  We encourage users to treat these versioned task files as part of the experiments data, and to include them in data repositories to promote replicability of pyControl experiments.
 
 ---
 

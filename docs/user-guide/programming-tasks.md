@@ -161,7 +161,7 @@ When the framwork is stopped in this way, the `run_end` function will be called 
 
 ## State independent behaviour
 
-The `all_states` function can be used to implement behaviour which occurs irrespective of the state the task is in.  Combined with timers and variables, the `all_states` function is a powerful tool for making things happen in parallel with the main state set of the task.  For a simple example of this see the [all_states_example](https://github.com/pyControl/code/blob/master/tasks/all_states_example.py) task.
+The `all_states` function can be used to implement behaviour which occurs irrespective of the state the task is in.  Combined with timers and variables, the `all_states` function is a powerful tool for making things happen in parallel with the main state set of the task.  For a simple example of this see the [all_states_example](https://github.com/pyControl/code/blob/master/tasks/example/all_states_example.py) task.
 
 If the `all_states` function is defined, it will be called every time an event occurs with the event that occured as an argument.
 
@@ -215,11 +215,11 @@ set_timer('event_A', 3*second, output_event=True)
 reset_timer('event_B', 3*second, output_event=True)
 ```
 
-The `print()` function has modified behavour when called within the context of a task definition file - the printed string is output to the data log along with a timestamp.  The print function can therefore be used to output arbitrary data with timestamps consistent with those of events and state transitions.  The [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/reversal_learning.py) example shows one approach to using print statements to output task data. One line is printed for each trial summarising what happened on that trial and the current state of the task.
+The `print()` function has modified behavour when called within the context of a task definition file - the printed string is output to the data log along with a timestamp.  The print function can therefore be used to output arbitrary data with timestamps consistent with those of events and state transitions.  The [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/example/reversal_learning.py) example shows one approach to using print statements to output task data. One line is printed for each trial summarising what happened on that trial and the current state of the task.
 
 ## Structuring task files
 
-As pyControl task definition files are just Python modules, you can define arbitrary functions that can be called from within state behaviour functions.  A useful application of this is to seperate code that defines the behaviour of the state machine from code which implements other aspects of the task, such as block structure or stimulus selection.  Organising task code in this way is recommended as it makes task definitions easier to understand and maintain. The [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/reversal_learning.py) example uses this structure.
+As pyControl task definition files are just Python modules, you can define arbitrary functions that can be called from within state behaviour functions.  A useful application of this is to seperate code that defines the behaviour of the state machine from code which implements other aspects of the task, such as block structure or stimulus selection.  Organising task code in this way is recommended as it makes task definitions easier to understand and maintain. The [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/example/reversal_learning.py) example uses this structure.
 
 # Function reference
 

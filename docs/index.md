@@ -86,7 +86,7 @@ Plug in a pyboard and it will appear in the *Select* drop down menu in the *Setu
 #
 If the pyControl framework is not already installed on the board, you will see a message saying *Load pyControl framework using 'Config' button.* Press the *Config* button to bring up the config menu and select *Load framework*.  If you see a message prompting you to disable the pyboard filesystem from acting as a USB flash drive, click *Yes*, then reconnect to the board (the serial port may have changed when you disable the flash drive) and load the framework.
 #
-Once the pyControl framework is installed on the board, from the *Tasks* drop down menu, select the task [*blinker*](https://github.com/pyControl/code/blob/master/tasks/blinker.py).  Press the *Upload* button to upload the task to the pyboard.
+Once the pyControl framework is installed on the board, from the *Tasks* drop down menu, select the task [*blinker*](https://github.com/pyControl/code/blob/master/tasks/example/blinker.py).  Press the *Upload* button to upload the task to the pyboard.
 # 
 Press the *Start* button.  The task will run causing the blue LED on the pyboard to start blinking.
 # 
