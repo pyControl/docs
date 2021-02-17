@@ -29,7 +29,9 @@ pyControl hardware, software and documentation repositories are on [GitHub](http
 
 ### Installation
 
-Download the latest version of pyControl as a zip file from the [releases](https://github.com/pyControl/code/releases) page. Unzip the folder on your computer and you will have the following folder structure:
+Get the latest version of the pyControl GUI, either by downloading it at a zip file from the [releases](https://github.com/pyControl/code/releases) page or by cloning the [code repository](https://github.com/pyControl/code) to your computer with Git.  Cloning the repository is recommended as it makes it easier to update pyControl in future.
+
+Either way you obtain the code, you will have the following folder structure:
 
 ```
 - pyControl
@@ -74,9 +76,11 @@ Micropython boards (pyboards) need to be running a fairly recent version of the 
 
 ### Updating pyControl
 
-To update pyControl, download the latest version from the download page, unzip it, and copy across the *tasks* directory from your old installation to keep your tasks.  After updating pyControl you should reload the pyControl framework onto your pyboards using the GUI's board config menu.
+If you installed  pyControl by cloning it with git, you can update it by simply pulling the latest version from the code repository.
 
-Alternatively you can clone the repository using git rather than downloading it as a zip.  You can then pull the latest version from the code repository to update.
+Alternatively, you can download the latest version from the download page, unzip it, and copy across the *tasks* directory from your old installation to keep your tasks.  
+
+Either way, after updating pyControl reload the framework onto your pyboards using the GUI's board config menu.
 
 ### Running a task
 

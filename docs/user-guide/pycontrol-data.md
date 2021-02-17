@@ -38,6 +38,14 @@ Lines begining `V` indicate the value of a task variable along with a timestamp.
 
 Lines begining `!` indicate that an error occured during the framework run and contain the error message.
 
+## Analog data
+
+pyControl analog data files (*'.pca'* file extension) are binary data files created by [analog inputs](hardware.md#analog-input) and other source of analog data such as [rotary encoders](hardware.md#rotary-encoder).  They consist of alternating timestamps and data samples, both saved as 4 byte little endian signed integers.  The function `load_analog_data` in the data_import module (see below) loads a pyControl analog data file into Python, returning a numpy array whose first column is timestamps and second column data samples
+
+```python
+analog_data_array = load_analog_data('path//to//analog_data_file.pca')
+```
+
 ## Versioned task files
 
 Task files used to generate data are also stored in the data folder, with a file hash appended to the task file name to uniquely identify the file version.  The file hash of the task file used for each session is recorded in that session's data file so the exact task file version used to run each session can be identified.  We encourage users to treat these versioned task files as part of the experiments data, and to include them in data repositories to promote replicability of pyControl experiments.
@@ -76,7 +84,7 @@ sp.play_session('path//to//session//file', start_time=30) # Scrolling animation 
 
 # Importing data
 
-The [data_import](https://github.com/pyControl/code/blob/master/tools/data_import.py) module in the *tools* folder contains Python classes for importing and representing pyControl data.  A `Session` class represents data from a single session.  An `Experiment` class represents data from an experiment consisting of multiple sessions and subjects.
+The [data_import](https://github.com/pyControl/code/blob/master/tools/data_import.py) module in the *tools* folder contains Python classes for importing and representing pyControl data.  A `Session` class represents data from a single session.  An `Experiment` class represents data from an experiment consisting of multiple sessions and subjects. A `load_analog_data` function loads analog signals.
 
 The data import module has dependencies:
 
@@ -224,12 +232,3 @@ when = [...,'2017-07-07'] # Select session with date <= '2017-07-07'
 when = ['2017-07-01',...,'2017-07-07'] # Select session with '2017-07-01' <= date <= '2017-07-07'.
 ```
 
---- 
-
-## Analog data
-
-pyControl analog data files (*'.pca'* file extension) are binary data files created by [analog inputs](hardware.md#analog-input) and other source of analog data such as [rotary encoders](hardware.md#rotary-encoder).  They consist of alternating timestamps and data samples, both saved as 4 byte little endian signed integers.  The function `load_analog_data` loads a pyControl analog data file into Python, returning a numpy array whose first column is timestamps and second column data samples
-
-```python
-analog_data_array = load_analog_data('path//to//analog_data_file.pca')
-```
