@@ -209,7 +209,7 @@ def state_A(event):
             # do something else.
 ```
 
-Starting all variable names with `v.` makes all variables attributes of a single object called `v` (imported from `pyControl.utility`).  This avoids problems that could otherwise occur when variables are accessed or set in state behaviour functions due to these functions having their own [namespaces](https://docs.python.org/3/tutorial/classes.html).  It also allows the GUI and CLI to access the variables to set or get their values.
+Starting all variable names with `v.` makes all variables attributes of a single object called `v` (imported from `pyControl.utility`).  This avoids problems that could otherwise occur when variables are accessed or set in state behaviour functions due to these functions having their own [namespaces](https://docs.python.org/3/tutorial/classes.html).  It also allows the GUI to access the variables to set or get their values.
 
 You can make task variables invisible to the GUI by ending their name in three underscores (e.g. `v.my_private_variable___`).  Such 'private' variables work as normal in the task file but do not show up in the GUI.  This can be useful if you have a lot of task variables, making it hard to find the ones you need to change in the GUI.
 
