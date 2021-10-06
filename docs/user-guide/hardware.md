@@ -65,13 +65,13 @@ You can turn off all outputs (for example at the end of a session) using the com
 hw.off()  # Turn off all outputs.
 ```
 
-# Inputs and outputs
+## Inputs and outputs
 
 The following hardware classes control the behaviour of a single pin on the micropython microcontroller.
 
 ---
 
-## Digital input
+### Digital input
 
 The digital input class generates pyControl framework events when a specified pin on the Micropython board changes state. Seperate events can be specified for rising and falling edges. 
 
@@ -103,7 +103,7 @@ class Digital_input(pin, rising_event=None, falling_event=None, debounce=5, deci
 
 ---
 
-## Digital output
+### Digital output
 
 The digital output class is used to control a pyboard pin used as a digital output.
 
@@ -133,7 +133,7 @@ class Digital_output(pin, inverted=False, pulse_enabled=False)
 
 ---
 
-## Analog input
+### Analog input
 
 The analog input class measures the voltage on a pin at a specified sampling rate, can stream these measurements to the host computer to be saved to disk, and can generate pyControl framework events when the voltage rises above or falls below a specified threshold.  
 
@@ -168,7 +168,7 @@ class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, 
 
 ---
 
-## Analog outputs
+### Analog outputs
 
 Pyboard pins 'X5' and 'X6' support analog output.  On the breakout board they are connected to the BNC connectors labled DAC-1 and DAC-2 and also to the special function pins on behaviour ports 3 and 4 respectively.  To use these pins as analog outputs see the [pyb.DAC](https://docs.micropython.org/en/latest/library/pyb.DAC.html) class in the micropython docs.
 
@@ -301,11 +301,11 @@ pushbutton = Digital_input(pin=board.button, falling_event='button', pull='up')
 
 ---
 
-# Devices
+## Devices
 
 The following Python classes define devices which plug into behaviour ports.
 
-## Poke
+### Poke
 
 Nosepoke port with infra-red beam, stimulus LED and socket to connect solenoid valve.
 
@@ -357,7 +357,7 @@ left_poke.SOL.off() # Turn off the solenoid.
 
 ---
 
-## Audio board
+### Audio board
 
 Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the micropython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.
 
@@ -421,7 +421,7 @@ speaker.off() # Turn off sound output.
 
 ---
 
-## LED driver
+### LED driver
 
 A constant current LED driver for optogenetic stimulation.
 
@@ -456,7 +456,7 @@ stim.pulse(freq=20, duty_cycle=10, n_pulses=10) # Turn on 10 pulse train at 20Hz
 
 ---
 
-## Stepper motor
+### Stepper motor
 
 Class for controlling an [EasyDriver](http://www.schmalzhaus.com/EasyDriver/) stepper motor driver or any driver which takes a *step* and *direction* pin as control inputs.
 
@@ -500,7 +500,7 @@ motor_2 = Stepper_motor(step_pin='X1', direction_pin='X2') # Instantiating drive
 
 ---
 
-## Rotary encoder
+### Rotary encoder
 
 Class for acquiring data from a rotary encoder, used e.g. to measure the speed of a running wheel.  The encoder must be an incremental rotary encoder that outputs a quadrature signal. The rotary encoder class can stream the position or velocity of the encoder to the computer at a specified sampling rate, and generate framework events when the position/velocity goes above/below a specified threshold.  Currently the rotary encoder class expects the two lines carrying the quadrature signal to be connected to micropython pins 'X1' and 'X2' (Port 1 DIO_A and DIO_B on breakout board 1.2).
 
@@ -568,13 +568,13 @@ current_speed = running_wheel.velocity # Get the current speed of the encoder.
 
 ---
 
-# More devices
+## More devices
 
 To save space on the pyboards file system and reduce framework loading times, the driver files for the following devices are not uploaded to the pyboard by default.  To use them copy the required driver file(s) from *pyControl/devices/more devices* to *pyControl/devices*, then reload the framework to the pyboard using the GUI's config menu.
 
 ---
 
-## Port expander
+### Port expander
 
 The port expander board uses serial to parallel IO expander ICs ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) to run 8 behaviour ports from a single behaviour port on the breakout board.  The port expander must be connected to a behaviour port that supports I2C serial communication (ports 3 and 4 on breakout 1.2).
 
@@ -611,7 +611,7 @@ button = Digital_input(pin=port_exp.port_3.DIO_B, rising_event='button_press') #
 
 ---
 
-## Five Poke
+### Five Poke
 
 The Five Poke board is a set of five nose pokes on a single PCB, each with an IR beam and stimulus LED.  The Five Poke connects to 2 behaviour ports on the breakout board.  Port 1 on the Five Poke must be connected to a behaviour port with 3 driver lines (port 1 or 2 on Breakout board 1.2). Port 2 on the Five Poke must be connected to a behaviour port with 3 DIO lines (port 3 or 4 on Breakout board 1.2).  The events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc by default, and the events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` by default.  Different event names can be specified when the Five poke is instantiated.
 
@@ -648,7 +648,7 @@ five_poke.poke_1.LED.on() # Turn on poke 1's LED.
 
 ---
 
-## Nine Poke
+### Nine Poke
 
 The nine poke board is a set of nine nose pokes on a single PCB, each with an IR beam and stimulus LED.  The pokes are controlled from a single behaviour port using i2c serial communication (supported by ports 3 & 4 on breakout board 1.2). Events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc. by default, and events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` etc. by default.
 
@@ -698,7 +698,7 @@ nine_poke.poke_4.SOL.on()              # Turn on the solenoid that has been assi
 ```
 
 ---
-## Lickometer
+### Lickometer
 
 An electrical lickometer board which has two lick detection circuits and two solenoid ports.  The outputs LCK 1 and LCK 2 should be connected to the  reward delivery tubes and the GND output should be connected to the (conductive) floor of the setup.  The lick detection circuits detect when the reward delivery tube is electrically connected to ground by the subject licking.  The maximum current  through the lick detection circuit is 1uA.  The default event names generated by licking are 'lick_1' and 'lick_2' when the contact is made, and 'lick_1_off' and 'lick_2_off' when the contact is broken.  Different event names can be specified when the Lickometer is instantiated.  By default debouncing is used on lick events with a 5ms debounce window.
 
@@ -724,7 +724,7 @@ Lickometer.SOL_2.off() # Turn off solenoid 2.
 
 ---
 
-## Analog LED driver
+### Analog LED driver
 
 An LED driver board with analog control of the LED current from 1 - 400mA using the micropython DAC.  The Analog LED driver needs to be connected to a behaviour port that has a DAC output (ports 3 and 4 on breakout board 1.2).
 
@@ -745,7 +745,7 @@ LED.off()                 # Turn off the LED
 
 ---
 
-## Audio_player
+### Audio_player
 
 An audio board which uses the [DFPlayer](https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299) audio module to play .wav files from an SD card, allowing arbitrary audio stimuli to be presented.  The board has two speaker outputs allowing stereo audio files to be played. Mono files are played played from both outputs, but the amplifiers for each output can be independently enabled or disabled allowing files to be played from either or both speakers.  The DFPlayer module requires the SD card to be formated in FAT16 or FAT32 and expects a specific folder and file name structure - the folders must be named *01*, *02* etc, and the files in each folder *001.wav*, *002.wav* etc.  The Audio_player needs a behaviour port with UART serial connectivity so can be plugged into ports 1, 3 or 4 on *Breakout_1_2*.  There is a short latency (approximately 15ms) between issuing the play command and the sound starting to play.
 
@@ -779,7 +779,7 @@ player.set_enabled(left=True, right=False) # Enable left speaker output, disable
 
 ---
 
-# MCP23017 
+## MCP23017 
 
 The MCP23017 is a serial to parallel IO expander IC ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) which can be used to add additional digital input/output lines to the Micropython microcontroller. The IC must be connected to the Micropython via an I2C serial connection, which are available on the DIO pins of ports 3 and 4 of breakout board 1.2.  If you plan to use MCP23017 pins as pyControl digital inputs the INTA interrupt pin on the MCP23017 must be connected to a DIO pin on the Micropython. The pins on the MCP23017 can be used as standard pyControl Digital_input and Digital_output objects as shown in the usage example below.
 
