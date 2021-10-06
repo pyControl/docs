@@ -82,7 +82,7 @@ Micropython boards (pyboards) need to be running a fairly recent version of the 
 
 If you installed  pyControl by cloning it with git, you can update it by simply pulling the latest version from the code repository.
 
-Alternatively, you can download the latest version from the download page, unzip it, and copy across the *tasks* directory from your old installation to keep your tasks.  
+Alternatively, you can download the latest version from the download page, unzip it, and copy across the *tasks* directory and *config* directory from your old installation to keep your tasks and configuration settings.  
 
 Either way, after updating pyControl reload the framework onto your pyboards using the GUI's board config menu.
 
