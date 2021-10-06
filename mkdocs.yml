@@ -4,7 +4,7 @@ site_description: Open source, Python based, behavioural experiment control.
 site_author: Champalimaud Foundation
 
 theme:
-    name: readthedocs
+    name: material
 
 repo_url: https://github.com/pycontrol/pycontrol-docs
 
