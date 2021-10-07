@@ -30,7 +30,7 @@ The single line beginning `S` is a JSON object (also a Python dict) containing t
 
 The single line beginning `E` is a JSON object (also a Python dict) containing the event names and corresponding IDs.
 
-Lines beginning `D` are data lines with format `D timestamp ID` where *timestamp* is the time in milliseconds since the start of the framework run and *ID* is a state ID (indicating a state transition) or an event ID (indicating an event occured).
+Lines beginning `D` are data lines with format `D timestamp ID` where *timestamp* is the time in milliseconds since the start of the framework run and *ID* is a state ID (indicating a state transition) or an event ID (indicating an event occurred).
 
 Lines beginning `P` are the output of print statements with format *P timestamp printed_output*. 
 
@@ -80,7 +80,7 @@ sp.play_session('path//to//session//file', start_time=30) # Scrolling animation 
 
 ![session_plot.png](../media/session_plot.png)
 
---- 
+---
 
 ## Importing data
 

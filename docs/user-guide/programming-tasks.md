@@ -14,11 +14,19 @@ Every task definition file starts by importing some utility functions and consta
 from pyControl.utility import *
 ```
 
-If you are using a hardware definition file to specify external [hardware](hardware.md) you also need to import the hardware definition:
+If you are using a hardware definition file to specify external hardware you also need to import the hardware definition:
 
 ```python
 import hardware_definition as hw
 ```
+
+Alternatively if you want to instantiate hardware directly in the task file you can import the hardware classes directly with:
+
+```python
+from devices import *
+```
+
+See the [hardware](hardware.md) docs for more information about defining hardware used in a task.
 
 ## States
 
@@ -87,7 +95,7 @@ def state_A(event):
 
 Calling `goto_state` in response to an `'entry'` or `'exit'` event will cause an error because the state machine is already in transition to a new state when these events occur.
 
-It is not recommended to put any code in a state behaviour function that executes after a `goto_state` because it will be executed following the state transition when the task is in the subsequent state, potentially causing hard to identify bugs.
+It is strongly **not recommended** to put any code in a state behaviour function that executes after a `goto_state` because it will be executed following the state transition when the task is in the subsequent state, potentially causing hard to identify bugs.
 
 ## Time dependent behaviour.
 
@@ -97,7 +105,7 @@ The simplest way to implement time dependent behaviour is using the `timed_goto_
 timed_goto_state('state_C', 10*second) # Transition to state 'state_C' after 10 seconds.
 ```
 
-If a state transition occurs for any reason before the `timed_goto_state` triggers, the  `timed_goto_state` is canceled and will have no effect.
+If a state transition occurs for any reason before the `timed_goto_state` triggers, the  `timed_goto_state` is cancelled and will have no effect.
 
 Timers provide a more flexible way of implementing time dependent behaviour by allowing a specified event to be triggered after a specified time has elapsed.
 
@@ -165,7 +173,7 @@ The framework can be stopped from within a state machine by calling the function
 stop_framework()
 ```
 
-When the framwork is stopped in this way, the `run_end` function will be called as usual.  The typical use of `stop_framework` is to stop the framework at the end of the behaviour session, dependent on a timer or criterion such as the number of rewards delivered.
+When the framework is stopped in this way, the `run_end` function will be called as usual.  The typical use of `stop_framework` is to stop the framework at the end of the behaviour session, dependent on a timer or criterion such as the number of rewards delivered.
 
 ## State independent behaviour
 
@@ -223,11 +231,32 @@ set_timer('event_A', 3*second, output_event=True)
 reset_timer('event_B', 3*second, output_event=True)
 ```
 
-The `print()` function has modified behavour when called within the context of a task definition file - the printed string is output to the data log along with a timestamp.  The print function can therefore be used to output arbitrary data with timestamps consistent with those of events and state transitions.  The [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/example/reversal_learning.py) example shows one approach to using print statements to output task data. One line is printed for each trial summarising what happened on that trial and the current state of the task.
+The `print()` function has modified behaviour when called within the context of a task definition file - the printed string is output to the data log along with a timestamp.  The print function can therefore be used to output arbitrary data with timestamps consistent with those of events and state transitions.  The [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/example/reversal_learning.py) example shows one approach to using print statements to output task data. One line is printed for each trial summarising what happened on that trial and the current state of the task.
 
 ## Structuring task files
 
 As pyControl task definition files are just Python modules, you can define arbitrary functions that can be called from within state behaviour functions.  A useful application of this is to separate code that defines the behaviour of the state machine from code which implements other aspects of the task, such as block structure or stimulus selection.  Organising task code in this way is recommended as it makes task definitions easier to understand and maintain. The [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/example/reversal_learning.py) example uses this structure.
+
+## Writing performant task code
+
+The following do's and don'ts are good practice for ensuring that tasks run stably and respond to input with low latency:
+
+- **Avoid polling:** Polling is the process of regularly checking the state of an input to detect when to do something.  It is rarely the right thing to do in pyControl tasks, as polling an input at high frequency ties up processor time which could affect framework performance.  For digital inputs it is always preferably to detect changes in the state of the input using framework events generated on rising and/or falling edges by the `Digital_input` class, as no resources are used except when the change actually occurs.  For analog inputs,  where possible use the `Analog_input`'s ability to generate framework events when a specified threshold is crossed rather than polling the value of the input.  Polling may be necessary if you need to respond to events send over a serial connection (e.g. from an external device that communicates via UART).  In this case either poll at the lowest frequency necessary to ensure an acceptable response latency to the serial input, or if possible trigger the serial read using a separate digital input from the external device.
+- **Input debouncing:** By default, pyControl digital inputs implement debouncing which prevents edges occurring closer together than a specified threshold (default 5ms) from generating multiple framework events.  For inputs generated by sensing physical processes (e.g. a switch closing or IR beam breaking), this is usually what you want, as the edges generated may be ragged, causing multiple logic level threshold crossings on a single physical event.  However debouncing incurs some additional processing cost when edges occur, so should be turned off on digital inputs that will receive events at high rates with clean edges (e.g. from a camera on each frame of a video), by using the argument `debounce=False` when the `Digital_input` is instantiated.
+- **Garbage collection** Micropython has a garbage collector which runs when needed to free up memory by removing variables that are no longer in use.  Garbage collection takes several ms to run and events generated by external inputs or expiring timers that occur during garbage collection will be processed once it has finished.  If an occasional delay of a couple of ms would be an issue in your task, it is possible to manually trigger garbage collection at a time when it will not cause problems (e.g in the inter-trial interval).  To do this, import the garbage collection module into the task file with `import gc` and call garbage collection with `gc.collect()`.
+
+## Where do pyControl functions come from
+
+If you are familiar with Python you may be wondering where the pyControl specific functions used in task files, such as `goto_state` etc, come from.   Some of these functions are imported from the modules [pyControl.utility](https://github.com/pyControl/code/blob/master/pyControl/utility.py) and [devices](https://github.com/pyControl/code/blob/master/devices/__init__.py) using the `from x import *` syntax, which imports the contents of the module directly into the namespace of the importing script:
+
+```python
+from pyControl.utility import *
+from devices import *
+```
+
+The *utility* module contains the random number and math functions detailed below, variables used to define time intervals (e.g. `second`, `minute`, etc), and the `v` object which user task variables are defined as attribute of (see above).   The *devices* module contains hardware classes  representing inputs and outputs (e.g.  `Digital_input`) and the classes representing devices such as breakout boards nose-pokes.  Though it is not generally recommended in Python to use the  `from x import *` syntax because it creates ambiguity about where function come from and can lead to collisions where imported functions overwrite those already defined (see discussion [here](https://stackoverflow.com/questions/2360724/what-exactly-does-import-import)),  we think that the resulting cleaner task file syntax justifies its use here.
+
+The state machine specific functions (e.g. `goto_state`, `set_timer` etc.) are not imported at all but rather added to the module after it is imported when the [State_machine](https://github.com/pyControl/code/blob/master/pyControl/state_machine.py) object is instantiated, a process known as [monkey patching](https://stackoverflow.com/questions/5626193/what-is-monkey-patching).  This is a holdover from very early pyControl development and is not particularly Pythonic, but in practice works reliably so has not been changed.
 
 ## Function reference
 
@@ -513,7 +542,7 @@ pyControl provides the following additional maths functions and classes:
 
 ```python
 mean(x)
-``` 
+```
 
 Return the mean value of x.
 
