@@ -24,19 +24,19 @@ V 10231 variable_name variable_value
 D 10423 2
 ```
 
-Lines begining `I` contain infomation about the session including subject, task and experiment names, start date and time.
+Lines beginning `I` contain information about the session including subject, task and experiment names, start date and time.
 
-The single line begining `S` is a JSON object (also a Python dict)  containing the state names and corresponding IDs.
+The single line beginning `S` is a JSON object (also a Python dict) containing the state names and corresponding IDs.
 
-The single line begining `E` is a JSON object (also a Python dict) containing the event names and corresponding IDs.
+The single line beginning `E` is a JSON object (also a Python dict) containing the event names and corresponding IDs.
 
-Lines begining `D` are data lines with format `D timestamp ID` where *timestamp* is the time in milliseconds since the start of the framework run and *ID* is a state ID (indicating a state transition) or an event ID (indicating an event occured).
+Lines beginning `D` are data lines with format `D timestamp ID` where *timestamp* is the time in milliseconds since the start of the framework run and *ID* is a state ID (indicating a state transition) or an event ID (indicating an event occured).
 
-Lines begining `P` are the output of print statements with format *P timestamp printed_output*. 
+Lines beginning `P` are the output of print statements with format *P timestamp printed_output*. 
 
-Lines begining `V` indicate the value of a task variable along with a timestamp.  These lines are generated whenever a variable is either set or read from the board by the GUI.  Variables set prior to the task starting are given a timestamp of 0, and the value of summary variables printed at the end of the run are given a timestamp of -1.
+Lines beginning `V` indicate the value of a task variable along with a timestamp.  These lines are generated whenever a variable is either set or read from the board by the GUI.  Variables set prior to the task starting are given a timestamp of 0, and the value of summary variables printed at the end of the run are given a timestamp of -1.
 
-Lines begining `!` indicate that an error occured during the framework run and contain the error message.
+Lines beginning `!` indicate that an error occurred during the framework run and contain the error message.
 
 ## Analog data
 
@@ -48,11 +48,11 @@ analog_data_array = load_analog_data('path//to//analog_data_file.pca')
 
 ## Versioned task files
 
-Task files used to generate data are also stored in the data folder, with a file hash appended to the task file name to uniquely identify the file version.  The file hash of the task file used for each session is recorded in that session's data file so the exact task file version used to run each session can be identified.  We encourage users to treat these versioned task files as part of the experiments data, and to include them in data repositories to promote replicability of pyControl experiments.
+Task files used to generate data are also stored in the data folder, with a file hash appended to the task file name to uniquely identify the file version.  The file hash of the task file used for each session is recorded in that session's data file so the exact task file version used to run each session can be identified.  We encourage users to treat these versioned task files as part of the experiments' data, and to include them in data repositories to promote replicability of pyControl experiments.
 
 ---
 
-# Visualising data
+## Visualising data
 
 The [session_plot](https://github.com/pyControl/code/blob/master/tools/session_plot.py) module in the *tools* folder contains functions for visualising pyControl data offline.
 
@@ -82,9 +82,9 @@ sp.play_session('path//to//session//file', start_time=30) # Scrolling animation 
 
 --- 
 
-# Importing data
+## Importing data
 
-The [data_import](https://github.com/pyControl/code/blob/master/tools/data_import.py) module in the *tools* folder contains Python classes for importing and representing pyControl data.  A `Session` class represents data from a single session.  An `Experiment` class represents data from an experiment consisting of multiple sessions and subjects. A `load_analog_data` function loads analog signals.
+The [data_import](https://github.com/pyControl/code/blob/master/tools/data_import.py) module in the *tools* folder contains Python classes for importing and representing pyControl data.  A `Session` class represents data from a single session. An `Experiment` class represents data from an experiment consisting of multiple sessions and subjects. A `load_analog_data` function loads analog signals.
 
 The data import module has dependencies:
 
@@ -93,7 +93,7 @@ The data import module has dependencies:
 
 ---
 
-## Session
+### Session
 
 The `Session` class is used to import a pyControl data file and represent it as a Python object.  
 
@@ -131,7 +131,7 @@ class Session(file_path, int_subject_IDs=True)
 
 `file_path` Path of the pyControl data file to import.
 
-`int_subject_IDs` If *True*, subject ID is converted to integer, e.g. *'m012'* is converted to *12*.  Otherwise subject ID is a string.
+`int_subject_IDs` If *True*, subject ID is converted to integer, e.g. *'m012'* is converted to *12*.  Otherwise, subject ID is a string.
 
 *Attributes:*
 
@@ -147,15 +147,14 @@ class Session(file_path, int_subject_IDs=True)
 
 `Session.datetime_string` The date and time that the session started stored as a string of format 'YYYY-MM-DD HH:MM:SS'
 
-`Session.events` List of state entries and events in order they occured.  Each item is a namedtuple with fields 'time' & 'name', such that you can get the name and time of event/state entry x with x.name and x.time respectively.
+`Session.events` List of state entries and events in order they occurred.  Each item is a namedtuple with fields 'time' & 'name', such that you can get the name and time of event/state entry x with x.name and x.time respectively.
 
-`Session.times` Dictionary with keys that are the names of the framework events and states and values which are Numpy arrays of the times (in milliseconds since the start of the framework run) at which the event/state entry occured.
+`Session.times` Dictionary with keys that are the names of the framework events and states and values which are Numpy arrays of the times (in milliseconds since the start of the framework run) at which the event/state entry occurred.
 
 `Session.print_lines` List of all the lines output by print statements during the framework run, each line starts with the time in milliseconds at which it was printed.
 
----
 
-## Experiment
+### Experiment
 
 The `Experiment` class is used to import all data files from a given experiment (stored in a single folder) and represent the experiment as a Python object. The experiment class has a method *get_sessions* which can be used to flexibly select sessions from specific subjects and times.
 
@@ -191,7 +190,7 @@ class Experiment(folder_path, int_subject_IDs=True)
 
 `folder_path` Path of the pyControl data folder to import.
 
-`int_subject_IDs` If *True*, subject ID is converted to integer, e.g. *'m012'* is converted to *12*.  Otherwise subject ID is a string.
+`int_subject_IDs` If *True*, subject ID is converted to integer, e.g. *'m012'* is converted to *12*. Otherwise, subject ID is a string.
 
 *Attributes:*
 

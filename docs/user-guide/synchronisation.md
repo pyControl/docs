@@ -2,11 +2,11 @@
 
 ![sync diagram](../media/hardware/sync-diagram.jpg)
 
-Experiments often require synchronising behavioural data with other systems such as video cameras or physiology recordings.  pyControl provides a tool for data synchronisation that works by sending synchronisation pulses from pyControl to the other systems which need to be synchonised with it. The times when sync pulses occured are recorded by each system in its own time reference frame and can then be used to convert times from one system into the reference frame of annother using code provided in the [tools](https://github.com/pyControl/code/tree/master/tools) folder.
+Experiments often require synchronising behavioural data with other systems such as video cameras or physiology recordings.  pyControl provides a tool for data synchronisation that works by sending synchronisation pulses from pyControl to the other systems which need to be synchonised with it. The times when sync pulses occurred are recorded by each system in its own time reference frame and can then be used to convert times from one system into the reference frame of another using code provided in the [tools](https://github.com/pyControl/code/tree/master/tools) folder.
 
-The sync pulse trains have random inter-pulse intervals which ensures there is a unique match between the inter-pulse-interval sequences recorded on each system, so it is always possible to identify which pulse coresponds to which even if some pulses are missing, e.g. due to forgetting to turn a system on till after the start of a session.  This also makes it unambiguous whether two files come from the same session in the event of a file name mix-up.
+The sync pulse trains have random inter-pulse intervals which ensures there is a unique match between the inter-pulse-interval sequences recorded on each system, so it is always possible to identify which pulse corresponds to which even if some pulses are missing, e.g. due to forgetting to turn a system on till after the start of a session.  This also makes it unambiguous whether two files come from the same session in the event of a file name mix-up.
 
-The only functionallity a system needs to be synchronised in this way is the ability to record  when digital input pulses occured.  This can be by explictly storing timestamps, or implicitly, such as camera recording once each frame the state of an input pin (or whether an LED in the field of view is on or off).
+The only functionality a system needs to be synchronised in this way is the ability to record  when digital input pulses occurred.  This can be by explicitly storing timestamps, or implicitly, such as camera recording once each frame the state of an input pin (or whether an LED in the field of view is on or off).
 
 ## Sync pulse generation
 
@@ -46,7 +46,7 @@ ephys_aligner = Rsync_aligner(pulse_times_A=pulse_times_pycontrol,
 	                          pulse_times_B=pulse_times_ephys)
 ```
 
-We can then convert the spike times recorded by the ephys system into the pyControl data's time refernce frame using:
+We can then convert the spike times recorded by the ephys system into the pyControl data's time reference frame using:
 
 ```python
 spike_times_pycontrol = ephys_aligner.B_to_A(spike_times_ephys)
@@ -58,20 +58,20 @@ We could also convert an array of pyControl event times into the reference frame
 event_times_ephys = ephys_aligner.A_to_B(event_times_pycontrol)
 ```
 
-In the above example we have assumed that both systems use units of milliseconds to measure time.  If the systems use different units of time this has to be specified when the *Rsync_aligner* is instantiated.  For example, assume we want to synchronise a camera which acquires frames at 60Hz with pyControl data, using an array called `pulse_frame_numbers` specifying the frame numbers when sync pulses occured. We instantiate the *Rsync_aligner* object specifying the time units for the camera sync pulses as 1000/60, the time interval in milliseconds between frames.
+In the above example we have assumed that both systems use units of milliseconds to measure time.  If the systems use different units of time this has to be specified when the *Rsync_aligner* is instantiated.  For example, assume we want to synchronise a camera which acquires frames at 60Hz with pyControl data, using an array called `pulse_frame_numbers` specifying the frame numbers when sync pulses occurred. We instantiate the *Rsync_aligner* object specifying the time units for the camera sync pulses as 1000/60, the time interval in milliseconds between frames.
 
 ```python
 camera_aligner = Rsync_aligner(pulse_times_A=pulse_times_pycontrol, 
 	                           pulse_times_B=pulse_frame_numbers, units_B=1000/60)
 ```
 
-We can then convert the frame numbers when an event of interest occured into the pyControl data's time reference frame using:
+We can then convert the frame numbers when an event of interest occurred into the pyControl data's time reference frame using:
 
 ```python
 frame_times_pycontrol = camera_aligner.B_to_A(video_frame_numbers)
 ```
 
-We can also convert the times when a pycontrol event occured into the corresponding camera frame numbers:
+We can also convert the times when a pyControl event occurred into the corresponding camera frame numbers:
 
 ```pyton
 event_frame_numbers = camera_aligner.A_to_B(event_times_pycontrol)
@@ -90,9 +90,9 @@ class Rsync_aligner(pulse_times_A, pulse_times_B, units_A=1, units_B=1,
 
 *Arguments:*
 
-`pulse_times_A` The times when sync pulses occured recorded by hardware system A.
+`pulse_times_A` The times when sync pulses occurred recorded by hardware system A.
 
-`pulse_times_B` The times when sync pulses occured recorded by hardware system B.
+`pulse_times_B` The times when sync pulses occurred recorded by hardware system B.
 
 `units_A` The time units used by system A expressed in milliseconds.  E.g. if system A uses units of seconds the *units_A* argument is 1000.  
 
@@ -102,7 +102,7 @@ class Rsync_aligner(pulse_times_A, pulse_times_B, units_A=1, units_B=1,
 
 `plot` Whether to plot information about the alignment.
 
-`raise_exception` If *True* an *RsyncError* exception is raised if no match is found between the sync pulse sequences.  If *False* an error message is printed but no exception is rasied.
+`raise_exception` If *True* an *RsyncError* exception is raised if no match is found between the sync pulse sequences.  If *False* an error message is printed but no exception is raised.
 
 *Methods:*
 
@@ -120,7 +120,7 @@ Convert a set of event times recorded by system B into the time reference frame 
 
 When the aligner is instantiated it works out which pulses from each system correspond to each other by taking short chunks of pulse sequence A and finding the corresponding chunks of pulse sequence B which minimise the mean squared error between the inter-pulse intervals.  As the alignment is performed on short chunks rather than the whole sequence, it is robust against missing pulses on one or both systems even if they occur part way through a recording.  
 
-After finding for each chunk the match which minimises the mean squared error,  the aligner determines a mean-squared error threshold which seperates chunks that have a corresponding match in the other sequence from chunks that do not have a match (due to missing pulses).  The threshold is found by fitting a mixture of Gaussians to the distribution of log mean squared errors from both the best matches and second best matches for all chunks.  This distribution should have two well seperated peaks, one containing correct matches and the other non-matches.
+After finding for each chunk the match which minimises the mean squared error, the aligner determines a mean-squared error threshold which separates chunks that have a corresponding match in the other sequence from chunks that do not have a match (due to missing pulses).  The threshold is found by fitting a mixture of Gaussians to the distribution of log mean squared errors from both the best matches and second best matches for all chunks.  This distribution should have two well separated peaks, one containing correct matches and the other non-matches.
 
 The *A_to_B* and *B_to_A* methods convert event times from the reference frame of one system to that of the other by linearly interpolating between sync pulse times on either side of the event.  These functions return *NaNs* for any event time where the sync pulses on either side of the event do not have a match in the pulse sequence recorded on the other system.
 
