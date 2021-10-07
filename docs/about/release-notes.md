@@ -86,12 +86,15 @@ Tools:
 
 
 CLI/GUI:
+
 - Bug fixes and reliability improvements.
 
 Framework:
+
 - Added Lickometer and Analog LED driver devices.
 
 Tools:
+
 - Added Rsync alignment code
 
 ---
@@ -100,12 +103,15 @@ Tools:
 
 
 CLI/GUI:
+
 - Bug fixes and reliability improvements.
 
 Framework:
+
 - Added Lickometer and Analog LED driver devices.
 
 Tools:
+
 - Added Rsync alignment code
 
 ---
@@ -114,9 +120,11 @@ Tools:
 
 
 GUI:
+
 - UI improvements and bug fixes.
 
 Framework:
+
 - Added Audio_player device driver.
 
 ---
@@ -124,15 +132,18 @@ Framework:
 **Version 1.3** 16/04/2018
 
 GUI:
+
 - New graphical interface run_task_gui.py for running tasks, supports online
   visualisation of task behaviour and setting of variables during run.
 
 CLI:
+
 - Summary variables now written to data file at end of run_experiment.py
 - Event and state names rather than IDs now displayed during run_task and 
   run_experiment.
 
 Framework:
+
 - Added Port_expander hardware device driver.
 - All data now tranmtted from pyboard to computer as binary rather than printed 
   strings.
@@ -143,10 +154,12 @@ Framework:
 
 **Version 1.2.1** 29/03/2018
 
-CLI: 
+CLI:
+
 - run_task.py scanning for connected pyboards fixed on Windows 10.
 
 Framework:
+
 - Added support for MCP23008 IO expander.
 - Fixed incorrect pin ID for Breakout_1_2 BNC_2.
 
@@ -155,10 +168,12 @@ Framework:
 **Version 1.2** 31/01/2018
 
 CLI:
+
 - run_task.py can automatically detect the serial port of connected pyboards.
 - run_task.py can save data generated in framework run.
 
 Framework:
+
 - Digital_output.pulse() now allows duty cycle and number of pulses to be 
   specified.
 - Added Analog_input class.
@@ -172,9 +187,11 @@ Framework:
 
 
 Framework:
+
 - Added 'timer_remaining' function.
 
-Bug fixes: 
+Bug fixes:
+
 - Fixed various bugs that caused problems using CLI on Linux.
 - Fixed bug that could cause CLI to crash during transfer of large files to
   pyboard.
@@ -191,14 +208,17 @@ Bug fixes:
    into Python for analysis. 
 
 CLI:
+
 - Run task now allows board to be selected by number rather than port.
 
 Framework:
+
 - Added 'pause_timer' and 'unpause_timer' functions.
 - Added 'choice', 'gauss_rand' and 'exp_rand' random functions.
 - More informative error messages for some common task file errors.
 
 Bug fixes:
+
 - Fixed import problem which could prevent run_experiment from running.
 
 ---
@@ -206,12 +226,14 @@ Bug fixes:
 **Version 1.1.2**  08/05/2017
 
 Framework:
+
 - Added six_poke hardware device.
 - removed .wav playback for audio outputs.
 - Moved rarely used device drivers to seperate 'more devices' folder for 
   faster framework upload.
 
 CLI:
+
 - Faster and more reliable file upload to boards.
 - Data file names now include start time.
 - Improved information output to data file before run start.
@@ -223,6 +245,7 @@ CLI:
 - Simplified run_task menus for getting and setting variables.
 
 Bug fixes:
+
 - Fixed bug which meant that run_experiment stopped when the
   last numbered box stopped rather than when all boxes had stopped. 
 - Print output from run_end() now saved by run experiment.
@@ -233,14 +256,16 @@ Bug fixes:
 
 
 Framework:
+
 - Added get_current_time function which returns current time in ms.
 - Added support for playing .wav files to Audio_output class.
 CLI:
+
 - Added run_task.py, a script for configuring and running tasks on 
   individual pyboards.
 
-**Version 1.0** 30/12/2016
-
 ---
+
+**Version 1.0** 30/12/2016
 
 - Initial release of pyControl CLI
