@@ -20,8 +20,7 @@ The *Variables* button opens a dialog for setting or getting the value of task v
 
 # Experiments tab
 
-The experiments tab is used to configure, save, load and run experiments on one or more hardware setups at the same time.  An experiment is a set of subjects, each with a corresponding hardware setup, run on the same task, potentially with variables set to non-default values for some or all subjects.  When you run an experiment you can run all the subjects or select
-only a subset to run, and can start and stop different subjects at different times.
+The experiments tab is used to configure, save, load and run experiments on one or more hardware setups at the same time.  An experiment is a set of subjects, each with a corresponding hardware setup, run on the same task, potentially with variables set to non-default values for some or all subjects.  When you run an experiment you can run all the subjects or select only a subset to run, and can start and stop different subjects at different times.
 
 ## Configuring experiments
 
@@ -43,7 +42,7 @@ The *save* button saves the current experiment configuration.  Saved experiments
 
 ## Running experiments
 
-To run an experiment, press the *run* button on the configure experiments tab.
+To run an experiment, press the *Run* button on the configure experiments tab.  This changes the experiments tab from the configure experiment interface to a run experiment interface:
 
 ![run_task_GUI.jpg](../media/GUI/run_experiment_tab.png)
 
