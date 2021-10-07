@@ -24,19 +24,19 @@ V 10231 variable_name variable_value
 D 10423 2
 ```
 
-Lines begining `I` contain infomation about the session including subject, task and experiment names, start date and time.
+Lines beginning `I` contain information about the session including subject, task and experiment names, start date and time.
 
-The single line begining `S` is a JSON object (also a Python dict) containing the state names and corresponding IDs.
+The single line beginning `S` is a JSON object (also a Python dict) containing the state names and corresponding IDs.
 
-The single line begining `E` is a JSON object (also a Python dict) containing the event names and corresponding IDs.
+The single line beginning `E` is a JSON object (also a Python dict) containing the event names and corresponding IDs.
 
-Lines begining `D` are data lines with format `D timestamp ID` where *timestamp* is the time in milliseconds since the start of the framework run and *ID* is a state ID (indicating a state transition) or an event ID (indicating an event occured).
+Lines beginning `D` are data lines with format `D timestamp ID` where *timestamp* is the time in milliseconds since the start of the framework run and *ID* is a state ID (indicating a state transition) or an event ID (indicating an event occured).
 
-Lines begining `P` are the output of print statements with format *P timestamp printed_output*. 
+Lines beginning `P` are the output of print statements with format *P timestamp printed_output*. 
 
-Lines begining `V` indicate the value of a task variable along with a timestamp.  These lines are generated whenever a variable is either set or read from the board by the GUI.  Variables set prior to the task starting are given a timestamp of 0, and the value of summary variables printed at the end of the run are given a timestamp of -1.
+Lines beginning `V` indicate the value of a task variable along with a timestamp.  These lines are generated whenever a variable is either set or read from the board by the GUI.  Variables set prior to the task starting are given a timestamp of 0, and the value of summary variables printed at the end of the run are given a timestamp of -1.
 
-Lines begining `!` indicate that an error occured during the framework run and contain the error message.
+Lines beginning `!` indicate that an error occurred during the framework run and contain the error message.
 
 ## Analog data
 
@@ -147,9 +147,9 @@ class Session(file_path, int_subject_IDs=True)
 
 `Session.datetime_string` The date and time that the session started stored as a string of format 'YYYY-MM-DD HH:MM:SS'
 
-`Session.events` List of state entries and events in order they occured.  Each item is a namedtuple with fields 'time' & 'name', such that you can get the name and time of event/state entry x with x.name and x.time respectively.
+`Session.events` List of state entries and events in order they occurred.  Each item is a namedtuple with fields 'time' & 'name', such that you can get the name and time of event/state entry x with x.name and x.time respectively.
 
-`Session.times` Dictionary with keys that are the names of the framework events and states and values which are Numpy arrays of the times (in milliseconds since the start of the framework run) at which the event/state entry occured.
+`Session.times` Dictionary with keys that are the names of the framework events and states and values which are Numpy arrays of the times (in milliseconds since the start of the framework run) at which the event/state entry occurred.
 
 `Session.print_lines` List of all the lines output by print statements during the framework run, each line starts with the time in milliseconds at which it was printed.
 

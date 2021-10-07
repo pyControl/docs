@@ -22,7 +22,7 @@ As electronic devices pyControl hardware could pose a fire risk if used inapprop
 
 ## Hardware definitions
 
-Hardware objects can be instantiated directly in a state machine definition file (as in the [button](https://github.com/pyControl/code/blob/master/tasks/example/button.py) example), however the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is typically used for many different tasks so seperating out the hardware and task definition code into seperate files avoids repeating the hardware definition in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are specified in the setup's hardware definitions.
+Hardware objects can be instantiated directly in a state machine definition file (as in the [button](https://github.com/pyControl/code/blob/master/tasks/example/button.py) example), however the recommended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is typically used for many different tasks so separating out the hardware and task definition code into separate files avoids repeating the hardware definition in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are specified in the setup's hardware definitions.
 
 The hardware definition tells the pyControl system what inputs and outputs are available for use by state machines.  A simple hardware definition file might read:
 
@@ -75,9 +75,9 @@ The following hardware classes control the behaviour of a single pin on the Micr
 
 The digital input class generates pyControl framework events when a specified pin on the Micropython board changes state. Seperate events can be specified for rising and falling edges. 
 
-By defalt debouncing is used to prevent multiple events being triggered very close together in time if the edges are not clean.  The debouncing method used ensures that transient inputs shorter than the debounce duration still generate rising and faling edges.  Debouncing incurs some overheads so should be turned off for inputs with clean edges and high event rates.
+By defalt debouncing is used to prevent multiple events being triggered very close together in time if the edges are not clean.  The debouncing method used ensures that transient inputs shorter than the debounce duration still generate rising and falling edges.  Debouncing incurs some overheads so should be turned off for inputs with clean edges and high event rates.
 
-Setting the decimate argument to an integer N causes only every N'th input pulse to generate an event.  Input pulses that are ignored due to decimation incur minimal overheads.  Decimation is designed for inputs like camera sync pulses where the input occurs at a high rate and recording 1 out of every N pulses is sufficent. Decimate can be used only with debouncing off and an event specified for a single edge.  
+Setting the decimate argument to an integer N causes only every N'th input pulse to generate an event.  Input pulses that are ignored due to decimation incur minimal overheads.  Decimation is designed for inputs like camera sync pulses where the input occurs at a high rate and recording 1 out of every N pulses is sufficient. Decimate can be used only with debouncing off and an event specified for a single edge.  
 
 ```python
 class Digital_input(pin, rising_event=None, falling_event=None, debounce=5, decimate=False, pull=None)
@@ -139,7 +139,7 @@ The analog input class measures the voltage on a pin at a specified sampling rat
 
 The input voltage is measured with 12 bit resolution giving a number between 0 and 4095, corresponding to the voltage range 0 to 3.3V relative to the pyboard ground.
 
-Acquiring analog data and streaming it to the host computer uses pyboard processor and communication resources so attempting to acquire at too high sampling rates or from too many inputs simultaneously will overload the board. The maximum achievable sample rates have not been extensively tested, though six analog inputs aquiring at 1KHz each appears to work.
+Acquiring analog data and streaming it to the host computer uses pyboard processor and communication resources so attempting to acquire at too high sampling rates or from too many inputs simultaneously will overload the board. The maximum achievable sample rates have not been extensively tested, though six analog inputs acquiring at 1KHz each appears to work.
 
 
 ```python
@@ -148,7 +148,7 @@ class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, 
 
 *Arguments:*
 
-`pin` Micropython pin to use. Only a subset of Micropython pins support analog to digital conversion (ADC) (see pyboard [quickref](https://docs.Micropython.org/en/latest/pyboard/pyboard/quickref.html)).
+`pin` Micropython pin to use. Only a subset of Micropython pins support analog to digital conversion (ADC) (see pyboard [quickref](https://docs.micropython.org/en/latest/pyboard/pyboard/quickref.html)).
 
 `name` Name of the analog input, used to identify data files generated when input is recorded.
 
@@ -170,7 +170,7 @@ class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, 
 
 ### Analog outputs
 
-Pyboard pins 'X5' and 'X6' support analog output.  On the breakout board they are connected to the BNC connectors labled DAC-1 and DAC-2 and also to the special function pins on behaviour ports 3 and 4 respectively.  To use these pins as analog outputs see the [pyb.DAC](https://docs.Micropython.org/en/latest/library/pyb.DAC.html) class in the Micropython docs.
+Pyboard pins 'X5' and 'X6' support analog output.  On the breakout board they are connected to the BNC connectors labeled DAC-1 and DAC-2 and also to the special function pins on behaviour ports 3 and 4 respectively.  To use these pins as analog outputs see the [pyb.DAC](https://docs.micropython.org/en/latest/library/pyb.DAC.html) class in the Micropython docs.
 
 ---
 
@@ -183,7 +183,7 @@ Typically when pyControl is used to run a behavioural experiment, the Micropytho
 > 
 > - The driver ICs on driver lines (see below) can sink up to 150mA per driver line.
 > - Cat 5 network cable (used to connect devices to behaviour ports) can carry up to 0.6A per conductor.  The maximum current that can safely be drawn in total from the 12V and 5V lines on the behaviour port is 0.6A as all the current returns via the ground line.
-> - The voltage regulator on the breakout board that powers the behaviour port 5V lines can source aproximately 300mA of current, which is shared by the 5V lines on all behaviour ports.  
+> - The voltage regulator on the breakout board that powers the behaviour port 5V lines can source approximately 300mA of current, which is shared by the 5V lines on all behaviour ports.  
 
 ### Behaviour ports
 
@@ -200,7 +200,7 @@ Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 o
 | Power driver (POW) B         | 7                    |
 | Special function             | 5                    |
 
-The digital input/output (DIO) lines connect directly to pins on the Micropython microcontroller. The microcontroller uses 3.3V logic so when these pins are used as outputs they switch from 0 to 3.3V in the off and on states respectively. The DIO lines are 5V tolerant and can recieve 5V logic signals as inputs.  Some DIO lines have additional functionality such as analog to digital conversion (ADC) or serial communication (I2C or UART).  If you need a digital output with a higher voltage, this can be achieved by using one of the power driver lines with a pull-up resistor (see below).
+The digital input/output (DIO) lines connect directly to pins on the Micropython microcontroller. The microcontroller uses 3.3V logic so when these pins are used as outputs they switch from 0 to 3.3V in the off and on states respectively. The DIO lines are 5V tolerant and can receive 5V logic signals as inputs.  Some DIO lines have additional functionality such as analog to digital conversion (ADC) or serial communication (I2C or UART).  If you need a digital output with a higher voltage, this can be achieved by using one of the power driver lines with a pull-up resistor (see below).
 
 The power driver lines are for controlling loads that need higher currents or voltages than can be provided directly from a microcontroller pin.  These lines are connected to low side driver ICs ([datasheet](https://toshiba.semicon-storage.com/info/docget.jsp?did=29893)) on the breakout board, which are in turn controlled by pins on the microcontroller. Low side drivers connect the negative side of the load to ground when turned on:
 
@@ -216,7 +216,7 @@ When the driver line (POW) is off the output will be pulled up to 5V, when the d
 
 The special function pin has different functions on different ports, for example it may be an extra driver line or a pin with digital to analog (DAC) functionality, see below for more information.
 
-Typically devices which plug into a behaviour port have several inputs and outputs, for example the [Poke](#poke) device comprises an IR beam, stimulus LED and solenoid. Rather than having to specify each input and output on a hardware device seperately, each device has its own Python class which takes a behaviour port as an argument, allowing it to be instantiated with a single command. For example the hardware definition below specifies that 3 nose pokes are plugged into ports 1-3 of Breakout board 1.2.
+Typically devices which plug into a behaviour port have several inputs and outputs, for example the [Poke](#poke) device comprises an IR beam, stimulus LED and solenoid. Rather than having to specify each input and output on a hardware device separately, each device has its own Python class which takes a behaviour port as an argument, allowing it to be instantiated with a single command. For example the hardware definition below specifies that 3 nose pokes are plugged into ports 1-3 of Breakout board 1.2.
 
 ```python
 from devices import *
@@ -237,7 +237,7 @@ hw.left_poke.LED.on()   # Turn on the LED on the left poke.
 hw.right_poke.SOL.off() # Turn off the solenoid on the right poke.
 ```
 
-If you want to refer to a single pin on a behaviour port in a hardware defintion, this can be done as in the examples below:
+If you want to refer to a single pin on a behaviour port in a hardware definition, this can be done as in the examples below:
 
 ```python
 # Instantiate line POW_A on port 4 as a digital output.
@@ -331,7 +331,7 @@ class Poke(port, rising_event=None, falling_event=None, debounce=5)
 
 `falling_event` Name of event triggered on IR beam make.
 
-`debounce` Minimum time interval between events (ms), set to False to deactive debouncing.
+`debounce` Minimum time interval between events (ms), set to False to deactivate debouncing.
 
 *Attributes:*
 
@@ -359,7 +359,7 @@ left_poke.SOL.off() # Turn off the solenoid.
 
 ### Audio board
 
-Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the Micropython [DAC](https://docs.Micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.
+Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the Micropython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.
 
 In addition to the digital volume control there is a manual volume control knob (the small blue potentiometer on the board) that can be used to calibrate the audio volume.
 
@@ -401,11 +401,11 @@ Play white(ish) noise with specified maximum frequency pulsed with a 50% duty cy
 
 `Audio_board.stepped_sine(start_freq, end_freq, n_steps, step_rate)`
 
-Play a series of sine waves whose frequency is stepped from `start_freq` to `end_freq` in `n_steps` steps at the specifed step rate.
+Play a series of sine waves whose frequency is stepped from `start_freq` to `end_freq` in `n_steps` steps at the specified step rate.
 
 `Audio_board.stepped_square(start_freq, end_freq, n_steps, step_rate)`
 
-Play a series of square waves whose frequency is stepped from `start_freq` to `end_freq` in `n_steps` steps at the specifed step rate.
+Play a series of square waves whose frequency is stepped from `start_freq` to `end_freq` in `n_steps` steps at the specified step rate.
 
 *Example usage:*
 
@@ -747,9 +747,9 @@ LED.off()                 # Turn off the LED
 
 ### Audio_player
 
-An audio board which uses the [DFPlayer](https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299) audio module to play .wav files from an SD card, allowing arbitrary audio stimuli to be presented.  The board has two speaker outputs allowing stereo audio files to be played. Mono files are played from both outputs, but the amplifiers for each output can be independently enabled or disabled allowing files to be played from either or both speakers.  The DFPlayer module requires the SD card to be formated in FAT16 or FAT32 and expects a specific folder and file name structure - the folders must be named *01*, *02* etc., and the files in each folder *001.wav*, *002.wav* etc. The Audio_player needs a behaviour port with UART serial connectivity so can be plugged into ports 1, 3 or 4 on *Breakout_1_2*.  There is a short latency (approximately 15ms) between issuing the play command and the sound starting to play.
+An audio board which uses the [DFPlayer](https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299) audio module to play .wav files from an SD card, allowing arbitrary audio stimuli to be presented.  The board has two speaker outputs allowing stereo audio files to be played. Mono files are played from both outputs, but the amplifiers for each output can be independently enabled or disabled allowing files to be played from either or both speakers.  The DFPlayer module requires the SD card to be formatted in FAT16 or FAT32 and expects a specific folder and file name structure - the folders must be named *01*, *02* etc., and the files in each folder *001.wav*, *002.wav* etc. The Audio_player needs a behaviour port with UART serial connectivity so can be plugged into ports 1, 3 or 4 on *Breakout_1_2*.  There is a short latency (approximately 15ms) between issuing the play command and the sound starting to play.
 
-Sending multple commands to the audio player without any delay in between (e.g. setting the volume and then playing a sound on subsequent lines of the task) may crash or fail becaues the audio player has not finshed processing the first command when the second arrives.  
+Sending multiple commands to the audio player without any delay in between (e.g. setting the volume and then playing a sound on subsequent lines of the task) may crash or fail because the audio player has not finished processing the first command when the second arrives.  
 
 
 **Required driver files:** *_audio_player.py*
