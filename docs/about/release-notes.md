@@ -1,59 +1,56 @@
 # Release Notes
 
---- 
-**Version 1.6** 25/11/2020
-
-GUI:
+## Version 1.6 --- 25/11/2020
+GUI: 
 
 - Experiments that uses multiple setups now load the task in parallel on all the setups at once, rather than serially on one setup after annother, giving a large speedup when many setups are used.
-#
+
 - The experiments tab now allows a subset of the subjects in an experiment to be selected to run, and allows different subjects to be started and stopped at different times.
-#
+
 - Task files can now be organised into subfolders within the tasks folder, to create a nested task select menu in the GUI.
-#
+
 - Buttons now have icons indicating their functionallity.
-#
+
 - Various minor bug fixes.
 
 ---
 
-**Version 1.5** 11/02/2020
-
-GUI:
+## Version 1.5 --- 11/02/2020
+GUI: 
 
 - Task files used in an experiment are now automatically saved in the experiments data folder with a file hash appended to the task file name to uniquely identify the file version.  Whenever a task file used in the experiment is modified the new version will be saved to the data folder when the experiment is run.  The task file hash used for each session is recorded in the session's data file so the exact task file used to run each session can be identified.
-#
+
 - A menu bar now provides quick access to online help, data/task folders, and some GUI settings.
-#
+
 - Behaviour plots can now be paused.
-#
+
 - Keyboard shortcuts now implemented for some commonly actions, detailed in the help menu.
-#
+
 - Task variables can now be specified as private by ending the variable name with three underscores, making them invisible to the GUI.
-#
+
 - A meaningful error message is now shown on failure to import dependencies.
-#
+
 - Persistent variables implementation now allows running different subjects on different sessions in same experiment data folder without overwriting the persistent variables. 
-#
+
 - Improved reliability of file transfer to pyboard.
-#
+
 - Ordering of subjects in summary variables table is now consistent with that in configure experiment tab.
-#
+
 - GUI is now launched by running file pyControl_GUI.py in the pyControl root directory.
-#
+
 - Event and state dictionaries now written to task file as JSON objects to make them easier to parse cross platform. This does not affect reading task files in Python as JSON objects are also Python dicts (as used previously).
-#
+
 - Various bugfixes and reliability improvements.
-#
-CLI
-#
+
+CLI:
+
 - Removed command line interface.
 
 ---
 
-**Version 1.4** 03/02/2019
+## Version 1.4 --- 03/02/2019
 
-GUI:
+GUI: 
 
   - Support for running experiments on multiple setups in parallel.
 
@@ -63,7 +60,7 @@ Tools:
 
 ---
 
-**Version 1.3.3** 12/12/2018
+## Version 1.3.3 --- 12/12/2018
 
 
 GUI:
@@ -82,9 +79,7 @@ Tools:
 
 ---
 
-
-**Version 1.3.2** 27/07/2018
-
+## Version 1.3.2 --- 27/07/2018
 
 CLI/GUI:
 
@@ -100,10 +95,9 @@ Tools:
 
 ---
 
-**Version 1.3.1** 16/05/2018
+## Version 1.3.1 --- 16/05/2018
 
-
-GUI:
+GUI: 
 
 - UI improvements and bug fixes.
 
@@ -113,9 +107,9 @@ Framework:
 
 ---
 
-**Version 1.3** 16/04/2018
+## Version 1.3 --- 16/04/2018
 
-GUI:
+GUI: 
 
 - New graphical interface run_task_gui.py for running tasks, supports online
   visualisation of task behaviour and setting of variables during run.
@@ -136,7 +130,7 @@ Framework:
 
 ---
 
-**Version 1.2.1** 29/03/2018
+## Version 1.2.1 --- 29/03/2018
 
 CLI:
 
@@ -149,7 +143,7 @@ Framework:
 
 ---
 
-**Version 1.2** 31/01/2018
+## Version 1.2 --- 31/01/2018
 
 CLI:
 
@@ -167,8 +161,7 @@ Framework:
 
 ---
 
-**Version 1.1.4** 21/12/2017
-
+## Version 1.1.4 --- 21/12/2017
 
 Framework:
 
@@ -185,8 +178,7 @@ Bug fixes:
 
 ---
 
-**Version 1.1.3** 28/07/2017
-
+## Version 1.1.3 --- 28/07/2017
 
 - Added data_import.py, a module for importing pyControl sessions and experiments
    into Python for analysis. 
@@ -207,7 +199,7 @@ Bug fixes:
 
 ---
 
-**Version 1.1.2**  08/05/2017
+## Version 1.1.2 ---  08/05/2017
 
 Framework:
 
@@ -236,13 +228,14 @@ Bug fixes:
 
 ---
 
-**Version 1.1** 06/02/2017
+## Version 1.1 --- 06/02/2017
 
 
 Framework:
 
 - Added get_current_time function which returns current time in ms.
 - Added support for playing .wav files to Audio_output class.
+
 CLI:
 
 - Added run_task.py, a script for configuring and running tasks on 
@@ -250,6 +243,6 @@ CLI:
 
 ---
 
-**Version 1.0** 30/12/2016
+## Version 1.0 --- 30/12/2016
 
 - Initial release of pyControl CLI
