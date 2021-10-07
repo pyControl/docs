@@ -175,58 +175,58 @@ Pyboard pins 'X5' and 'X6' support analog output.  On the breakout board they ar
 ---
 
 ## Breakout boards
+=== "Overview"
+    Typically when pyControl is used to run a behavioural experiment, the micropython microcontroller is mounted on a breakout board, which interfaces it with *behaviour ports* (see below), BNC connectors, indicator LEDs and user pushbuttons. 
 
-Typically when pyControl is used to run a behavioural experiment, the micropython microcontroller is mounted on a breakout board, which interfaces it with *behaviour ports* (see below), BNC connectors, indicator LEDs and user pushbuttons. 
+    The current version 1.2 of the pyControl Breakout board has 6 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and user pushbutton.  
 
-The current version 1.2 of the pyControl Breakout board has 6 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and user pushbutton.  
+    All 4 of the BNC connectors can be used as digital inputs or outputs.  When used as digital outputs they have a 3.3V high logic level, which can typically be used directly as an input for systems with 5V logic.  When used as digital inputs, BNC-1 and BNC-2 work with 5V  or 3.3V logic level input signals, but DAC-1 and DAC-2 are not 5V tolerant and should not be used with signals >3.3V.   All 4 BNC connectors can also be used as analog inputs, but when used in this mode the input signal should not exceed 3.3V.  Connectors DAC-1 and DAC-2 can also be used as analog ouputs.
 
-All 4 of the BNC connectors can be used as digital inputs or outputs.  When used as digital outputs they have a 3.3V high logic level, which can typically be used directly as an input for systems with 5V logic.  When used as digital inputs, BNC-1 and BNC-2 work with 5V  or 3.3V logic level input signals, but DAC-1 and DAC-2 are not 5V tolerant and should not be used with signals >3.3V.   All 4 BNC connectors can also be used as analog inputs, but when used in this mode the input signal should not exceed 3.3V.  Connectors DAC-1 and DAC-2 can also be used as analog ouputs.
+    All six behaviour ports have the standard 2 DIO lines, 2 POW driver lines, and 5V, 12V and ground lines.  Ports 1 & 2 have an additional driver line *POW_C*.  Ports 3 and 4 have an additional DIO line *DIO_C* which also supports analog output (DAC).  Ports 3 and 4 support I2C and ports 1,3 & 4 support UART serial communication over their DIO lines.
 
-All six behaviour ports have the standard 2 DIO lines, 2 POW driver lines, and 5V, 12V and ground lines.  Ports 1 & 2 have an additional driver line *POW_C*.  Ports 3 and 4 have an additional DIO line *DIO_C* which also supports analog output (DAC).  Ports 3 and 4 support I2C and ports 1,3 & 4 support UART serial communication over their DIO lines.
+    [Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf)     [GitHub](https://github.com/pyControl/hardware/tree/master/Breakout_board)
 
-[Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf)     [Github](https://github.com/pyControl/hardware/tree/master/Breakout_board)
+    **Front:**
+    ![Breakout 1.2 front](../media/hardware/breakout-1-2-front.jpg)
+    **Back:**
+    ![Breakout 1.2 back](../media/hardware/breakout-1-2-back.jpg)
 
-**Front:**
-![Breakout 1.2 front](../media/hardware/breakout-1-2-front.jpg)
-**Back:**
-![Breakout 1.2 back](../media/hardware/breakout-1-2-back.jpg)
+=== "API"
+    ```python
+    class Breakout_1_2()
+    ```
 
-```python
-class Breakout_1_2()
-```
+    *Atributes:*
 
-*Atributes:*
+    `Breakout_1_2.port_1`, ... , `Breakout_1_2.port_6`  
 
-`Breakout_1_2.port_1`, ... , `Breakout_1_2.port_6`  
+    `Breakout_1_2.BNC_1`, `Breakout_1_2.BNC_2`
 
-`Breakout_1_2.BNC_1`, `Breakout_1_2.BNC_2`
+    `Breakout_1_2.DAC_1`, `Breakout_1_2.DAC_2`
 
-`Breakout_1_2.DAC_1`, `Breakout_1_2.DAC_2`
+    `Breakout_1_2.button`
 
-`Breakout_1_2.button`
+    *Example usage:*
 
-*Example usage:*
+    ```python
+    # Instantiate breakout board object.
+    board = Breakout_1_2()
 
-```python
-# Instantiate breakout board object.
-board = Breakout_1_2()
+    # Instantiate poke connected to port 1.
+    left_poke = Poke(port=board.port_1, rising_event='left_poke') 
 
-# Instantiate poke connected to port 1.
-left_poke = Poke(port=board.port_1, rising_event='left_poke') 
+    # Instantiate digital output on BNC connector BNC_1.
+    BNC_output = Digital_output(pin=board.BNC_1) 
 
-# Instantiate digital output on BNC connector BNC_1.
-BNC_output = Digital_output(pin=board.BNC_1) 
+    # Instantiate digital input on BNC connector DAC_1.
+    BNC_input  = Digital_input(pin=board.DAC_1, rising_event='BNC_input')
 
-# Instantiate digital input on BNC connector DAC_1.
-BNC_input  = Digital_input(pin=board.DAC_1, rising_event='BNC_input')
+    # Instantiate analog input on BNC connector BNC_2.
+    analog_input  = Analog_input(pin=board.DAC_1, name='Analog 1', sampling_rate=1000)
 
-# Instantiate analog input on BNC connector BNC_2.
-analog_input  = Analog_input(pin=board.DAC_1, name='Analog 1', sampling_rate=1000)
-
-# Instantiate pushbutton input, need to enable pullup resistor to use pushbutton.
-pushbutton = Digital_input(pin=board.button, falling_event='button', pull='up') 
-```
-
+    # Instantiate pushbutton input, need to enable pullup resistor to use pushbutton.
+    pushbutton = Digital_input(pin=board.button, falling_event='button', pull='up') 
+    ```
 
 ### Behaviour ports
 
@@ -296,7 +296,7 @@ sync_input = Digital_input(pin=board.port_5.DIO_B, rising_event='sync_pulse')
 ```
 The easiest way to make an electrical connection to pins on a behavioural port is to plug in a *port adapter* board.  This breaks out all the pins of the port to a screw terminal, and the power driver lines along with +5 and +12V to a set of female headers that can be used to connect loads such as solenoids or LEDs.
 
-**Port adapter:**  [Github](https://github.com/pyControl/hardware/tree/master/Port_adapter)
+**Port adapter:**  [GitHub](https://github.com/pyControl/hardware/tree/master/Port_adapter)
 
 ![Port adapter](../media/hardware/port_adapter.png)
 
@@ -349,501 +349,529 @@ The following Python classes define devices which plug into behaviour ports.
 
 ### Poke
 
-Nosepoke port with infra-red beam, stimulus LED and socket to connect solenoid valve.
+=== "Overview"
 
-[Github](https://github.com/pyControl/hardware/tree/master/Nose_poke)
+    Nosepoke port with infra-red beam, stimulus LED and socket to connect solenoid valve.
 
-|**Front**|**Side - solenoid attached**|
-|---|---|
-|![Poke front](../media/hardware/poke-front.jpg)|![Poke side](../media/hardware/poke-side.jpg)
+    [GitHub](https://github.com/pyControl/hardware/tree/master/Nose_poke)
 
-**Mounted Front**
-![Poke front mounted](../media/hardware/poke-front-mounted.jpg)
+    === "Front/Side"
+        |**Front**|**Side - solenoid attached**|
+        |---|---|
+        |![Poke front](../media/hardware/poke-front.jpg)|![Poke side](../media/hardware/poke-side.jpg)
 
-**Mounted Back**
-![Poke back mounted](../media/hardware/poke-back-mounted.jpg)
+    === "Mounted"
+        **Mounted Front**
+        ![Poke front mounted](../media/hardware/poke-front-mounted.jpg)
 
-```python
-class Poke(port, rising_event=None, falling_event=None, debounce=5)
-```
+        **Mounted Back**
+        ![Poke back mounted](../media/hardware/poke-back-mounted.jpg)
 
-*Arguments:*
+=== "API"
 
-`rising_event` Name of event triggered on IR beam break.
+    ```python
+    class Poke(port, rising_event=None, falling_event=None, debounce=5)
+    ```
 
-`falling_event` Name of event triggered on IR beam make.
+    *Arguments:*
 
-`debounce` Minimum time interval between events (ms), set to False to deactivate debouncing.
+    `rising_event` Name of event triggered on IR beam break.
 
-*Attributes:*
+    `falling_event` Name of event triggered on IR beam make.
 
-`Poke.LED` Stimulus LED
+    `debounce` Minimum time interval between events (ms), set to False to deactivate debouncing.
 
-`Poke.SOL` Solenoid output.
+    *Attributes:*
 
-*Methods:*
+    `Poke.LED` Stimulus LED
 
-`Poke.value()` Returns `True` is beam is broken, `False` otherwise.
+    `Poke.SOL` Solenoid output.
 
-*Example usage:*
+    *Methods:*
 
-```python
+    `Poke.value()` Returns `True` is beam is broken, `False` otherwise.
 
-# Instantiate poke object and specify event names.
-left_poke = Poke(port=board.port_1, rising_event='left_poke', 'left_poke_out') 
+    *Example usage:*
 
-left_poke.LED.on() # Turn on the stimulus LED.
+    ```python
 
-left_poke.SOL.off() # Turn off the solenoid.
-```
+    # Instantiate poke object and specify event names.
+    left_poke = Poke(port=board.port_1, rising_event='left_poke', 'left_poke_out') 
 
----
+    left_poke.LED.on() # Turn on the stimulus LED.
+
+    left_poke.SOL.off() # Turn off the solenoid.
+    ```
+
 
 ### Audio board
 
-Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the Micropython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.
+=== "Overview"
 
-In addition to the digital volume control there is a manual volume control knob (the small blue potentiometer on the board) that can be used to calibrate the audio volume.
+    Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the Micropython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.
 
-[Github](https://github.com/pyControl/hardware/tree/master/Audio_board)
+    In addition to the digital volume control there is a manual volume control knob (the small blue potentiometer on the board) that can be used to calibrate the audio volume.
 
-![Audio board](../media/hardware/audio-board.jpg)
+    [GitHub](https://github.com/pyControl/hardware/tree/master/Audio_board)
 
-```python 
-class Audio_board(port)
-```
+    ![Audio board](../media/hardware/audio-board.jpg)
 
-*Methods:*
 
-`Audio_board.set_volume(V)` Set volume of audio output, range 0 - 127.
+=== "API"
 
-`Audio_board.off()` Turn off audio output.
+    ```python 
+    class Audio_board(port)
+    ```
 
-`Audio_board.sine(freq)` Play a sine wave at the specified frequency.
+    *Methods:*
 
-`Audio_board.square(freq)` Play a square wave at the specified frequency.
+    `Audio_board.set_volume(V)` Set volume of audio output, range 0 - 127.
 
-`Audio_board.noise(freq=10000)` Play white(ish) noise with specified maximum frequency.
+    `Audio_board.off()` Turn off audio output.
 
-`Audio_board.click()` Play a single click.
+    `Audio_board.sine(freq)` Play a sine wave at the specified frequency.
 
-`Audio_board.clicks(rate)` Play clicks at specified rate.
+    `Audio_board.square(freq)` Play a square wave at the specified frequency.
 
-`Audio_board.pulsed_sine(freq, pulse_rate)` 
+    `Audio_board.noise(freq=10000)` Play white(ish) noise with specified maximum frequency.
 
-Play a sine wave of the specified frequency pulsed with a 50% duty cycle at the specified rate.
+    `Audio_board.click()` Play a single click.
 
-`Audio_board.pulsed_square(freq, pulse_rate)`
+    `Audio_board.clicks(rate)` Play clicks at specified rate.
 
-Play a square wave of the specified frequency pulsed with a 50% duty cycle at the specified rate.
+    `Audio_board.pulsed_sine(freq, pulse_rate)` 
 
-`Audio_board.pulsed_noise(freq, pulse_rate)` 
+    Play a sine wave of the specified frequency pulsed with a 50% duty cycle at the specified rate.
 
-Play white(ish) noise with specified maximum frequency pulsed with a 50% duty cycle at the specified rate.
+    `Audio_board.pulsed_square(freq, pulse_rate)`
 
-`Audio_board.stepped_sine(start_freq, end_freq, n_steps, step_rate)`
+    Play a square wave of the specified frequency pulsed with a 50% duty cycle at the specified rate.
 
-Play a series of sine waves whose frequency is stepped from `start_freq` to `end_freq` in `n_steps` steps at the specified step rate.
+    `Audio_board.pulsed_noise(freq, pulse_rate)` 
 
-`Audio_board.stepped_square(start_freq, end_freq, n_steps, step_rate)`
+    Play white(ish) noise with specified maximum frequency pulsed with a 50% duty cycle at the specified rate.
 
-Play a series of square waves whose frequency is stepped from `start_freq` to `end_freq` in `n_steps` steps at the specified step rate.
+    `Audio_board.stepped_sine(start_freq, end_freq, n_steps, step_rate)`
 
-*Example usage:*
+    Play a series of sine waves whose frequency is stepped from `start_freq` to `end_freq` in `n_steps` steps at the specified step rate.
 
-```python
-speaker = Audio_board(board.port_3) # Instantiate audio board.
+    `Audio_board.stepped_square(start_freq, end_freq, n_steps, step_rate)`
 
-speaker.sine(5000) # Play a 5KHz sine wave.
+    Play a series of square waves whose frequency is stepped from `start_freq` to `end_freq` in `n_steps` steps at the specified step rate.
 
-speaker.noise() # Turn on white noise.
+    *Example usage:*
 
-speaker.off() # Turn off sound output.
-```
+    ```python
+    speaker = Audio_board(board.port_3) # Instantiate audio board.
 
----
+    speaker.sine(5000) # Play a 5KHz sine wave.
+
+    speaker.noise() # Turn on white noise.
+
+    speaker.off() # Turn off sound output.
+    ```
+
 
 ### LED driver
 
-A constant current LED driver for optogenetic stimulation.
+=== "Overview"
+    A constant current LED driver for optogenetic stimulation.
 
-[Github](https://github.com/pyControl/hardware/tree/master/LED_driver)
+    [GitHub](https://github.com/pyControl/hardware/tree/master/LED_driver)
 
-![LED driver](../media/hardware/LED-driver.jpg)
+    ![LED driver](../media/hardware/LED-driver.jpg)
 
-```python 
-class LED_driver(port)
-```
+=== "API"
+    ```python 
+    class LED_driver(port)
+    ```
 
-*Methods:*
+    *Methods:*
 
-`LED_driver.on()` Turn on LED
+    `LED_driver.on()` Turn on LED
 
-`LED_driver.off()` Turn off LED
+    `LED_driver.off()` Turn off LED
 
-`LED_driver.pulse(freq, duty_cycle=50, n_pulses=False)` Turn on a pulse train with specified frequency (Hz). The duty cycle (percentage of the period for which the signal is high) can be specified as 10, 25, 50 or 75.  If the n_pulses argument is set to an integer the pulse train will stop after this number of pulses has been delivered.
+    `LED_driver.pulse(freq, duty_cycle=50, n_pulses=False)` Turn on a pulse train with specified frequency (Hz). The duty cycle (percentage of the period for which the signal is high) can be specified as 10, 25, 50 or 75.  If the n_pulses argument is set to an integer the pulse train will stop after this number of pulses has been delivered.
 
 
-*Example usage:*
+    *Example usage:*
 
-```python
-stim = LED_driver(board.port_1) # Instantiate LED driver
+    ```python
+    stim = LED_driver(board.port_1) # Instantiate LED driver
 
-stim.on() # Turn on continous.
+    stim.on() # Turn on continous.
 
-stim.off() # Turn off.
+    stim.off() # Turn off.
 
-stim.pulse(freq=20, duty_cycle=10, n_pulses=10) # Turn on 10 pulse train at 20Hz.
-```
+    stim.pulse(freq=20, duty_cycle=10, n_pulses=10) # Turn on 10 pulse train at 20Hz.
+    ```
 
----
 
 ### Stepper motor
 
-Class for controlling an [EasyDriver](http://www.schmalzhaus.com/EasyDriver/) stepper motor driver or any driver which takes a *step* and *direction* pin as control inputs.
+=== "Overview"
+    Class for controlling an [EasyDriver](http://www.schmalzhaus.com/EasyDriver/) stepper motor driver or any driver which takes a *step* and *direction* pin as control inputs.
 
-The stepper motor adaptor board connects an Easydriver to a pyControl behaviour port.
-
-
-!!! note "Maximum current"
-    The stepper motor driver can draw power either from the 12V line on the behaviour port or from a 12V power supply connected to the stepper motor board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If your stepper motor requires more current, connect a 12V power supply directly to the stepper motor driver.  The current requirements for some common stepper motors are detailed in the EasyDriver documentation.
+    The stepper motor adaptor board connects an Easydriver to a pyControl behaviour port.
 
 
-[Github](https://github.com/pyControl/hardware/tree/master/Stepper_driver)
+    !!! note "Maximum current"
+        The stepper motor driver can draw power either from the 12V line on the behaviour port or from a 12V power supply connected to the stepper motor board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If your stepper motor requires more current, connect a 12V power supply directly to the stepper motor driver.  The current requirements for some common stepper motors are detailed in the EasyDriver documentation.
 
-![Stepper driver](../media/hardware/stepper_driver.jpg)
 
-```python 
-class Stepper_motor(port=None, direction_pin=None, step_pin=None)
-```
+    [GitHub](https://github.com/pyControl/hardware/tree/master/Stepper_driver)
 
-*Methods:*
+    ![Stepper driver](../media/hardware/stepper_driver.jpg)
 
-`Stepper_motor.forward(step_rate, n_steps=False)` Turn the motor forward at the specified step rate (Hz).  If the n_pulses argument is set to an integer the motor will move that many steps at the specified rate and then stop.
+=== "API"
+    ```python 
+    class Stepper_motor(port=None, direction_pin=None, step_pin=None)
+    ```
 
-`Stepper_motor.backward(step_rate, n_steps=False)` Turn the motor backwards.
+    *Methods:*
 
-`Stepper_motor.stop()` Stop the stepper motor.
+    `Stepper_motor.forward(step_rate, n_steps=False)` Turn the motor forward at the specified step rate (Hz).  If the n_pulses argument is set to an integer the motor will move that many steps at the specified rate and then stop.
 
-*Example usage:*
+    `Stepper_motor.backward(step_rate, n_steps=False)` Turn the motor backwards.
 
-```python
+    `Stepper_motor.stop()` Stop the stepper motor.
 
-motor = Stepper_motor(board.port_1) # Instantiate stepper motor
+    *Example usage:*
 
-motor.forward(step_rate=100) # Move forward at 100 step/second.
+    ```python
 
-motor.stop() # Stop the motor.
+    motor = Stepper_motor(board.port_1) # Instantiate stepper motor
 
-motor.backward(step_rate=50, n_steps=100) # Move backward for 100 steps at 50 step/second.
+    motor.forward(step_rate=100) # Move forward at 100 step/second.
 
-motor_2 = Stepper_motor(step_pin='X1', direction_pin='X2') # Instantiating driver with step and direction pins rather than port.
-```
+    motor.stop() # Stop the motor.
 
----
+    motor.backward(step_rate=50, n_steps=100) # Move backward for 100 steps at 50 step/second.
+
+    motor_2 = Stepper_motor(step_pin='X1', direction_pin='X2') # Instantiating driver with step and direction pins rather than port.
+    ```
+
 
 ### Rotary encoder
 
-Class for acquiring data from a rotary encoder, used e.g. to measure the speed of a running wheel.  The encoder must be an incremental rotary encoder that outputs a quadrature signal. The rotary encoder class can stream the position or velocity of the encoder to the computer at a specified sampling rate, and generate framework events when the position/velocity goes above/below a specified threshold.  Currently the rotary encoder class expects the two lines carrying the quadrature signal to be connected to Micropython pins 'X1' and 'X2' (Port 1 DIO_A and DIO_B on breakout board 1.2).
+=== "Overview"
+    Class for acquiring data from a rotary encoder, used e.g. to measure the speed of a running wheel.  The encoder must be an incremental rotary encoder that outputs a quadrature signal. The rotary encoder class can stream the position or velocity of the encoder to the computer at a specified sampling rate, and generate framework events when the position/velocity goes above/below a specified threshold.  Currently the rotary encoder class expects the two lines carrying the quadrature signal to be connected to Micropython pins 'X1' and 'X2' (Port 1 DIO_A and DIO_B on breakout board 1.2).
 
-The rotary encoder adaptor board connects an Avago HEDM-55xx series rotary encoder ([datasheet](https://docs.broadcom.com/docs/AV02-1046EN)) to a pyControl behaviour port.  The rotary encoder adaptor must be plugged into port_1 on breakout board 1.2.
+    The rotary encoder adaptor board connects an Avago HEDM-55xx series rotary encoder ([datasheet](https://docs.broadcom.com/docs/AV02-1046EN)) to a pyControl behaviour port.  The rotary encoder adaptor must be plugged into port_1 on breakout board 1.2.
 
-For an example task using a rotary encoder to measure running speed and trigger framework events when running starts and stops see [*running_wheel*](https://github.com/pyControl/code/blob/master/tasks/example/running_wheel.py).
+    For an example task using a rotary encoder to measure running speed and trigger framework events when running starts and stops see [*running_wheel*](https://github.com/pyControl/code/blob/master/tasks/example/running_wheel.py).
 
-Decoding the quadrature signal from the encoder is handled by dedicated low level routines on the pyboard microcontroller, so load on the microcontrollers is not affected by the rate of edges generated by the encoder.  The maximum rate at which edges can be registered is not specified but given the dedicated processing hardware is unlikely to be limiting in behavioural applications.   As with the `Analog_input` a maximum sampling rate of 1KHz is recommended as data is saved with ms resolution timestamps.
+    Decoding the quadrature signal from the encoder is handled by dedicated low level routines on the pyboard microcontroller, so load on the microcontrollers is not affected by the rate of edges generated by the encoder.  The maximum rate at which edges can be registered is not specified but given the dedicated processing hardware is unlikely to be limiting in behavioural applications.   As with the `Analog_input` a maximum sampling rate of 1KHz is recommended as data is saved with ms resolution timestamps.
 
-[Github](https://github.com/pyControl/hardware/tree/master/Rotary_encoder)
+    [GitHub](https://github.com/pyControl/hardware/tree/master/Rotary_encoder)
 
-![Stepper driver](../media/hardware/rotary_encoder.jpg)
+    ![Stepper driver](../media/hardware/rotary_encoder.jpg)
 
+=== "API"
+    ```python 
+    class Rotary_encoder(name, sampling_rate, output='velocity', threshold=None,
+                        rising_event=None, falling_event=None, bytes_per_sample=2,
+                        reverse=False)
+    ```
 
-```python 
-class Rotary_encoder(name, sampling_rate, output='velocity', threshold=None,
-                     rising_event=None, falling_event=None, bytes_per_sample=2,
-                     reverse=False)
-```
+    *Arguments:*
 
-*Arguments:*
+    `name` Name of the rotatory encoder, used to identify data files generated when input is recorded.
 
-`name` Name of the rotatory encoder, used to identify data files generated when input is recorded.
+    `sampling_rate` The rate at which encoder position/velocity is sampled.
 
-`sampling_rate` The rate at which encoder position/velocity is sampled.
+    `output` Whether to stream encoder position or velocity to computer.  Valid values are *'position'* or *'velocity'*.  Also determines whether a position or velocity threshold is used for event generation.  Velocity signals are in units of encoder counts per second, so an encoder with a resolution of 100 counts per revolution turning at 2 revolution per second would output a velocity of 200. Position signals are in units of encoder counts.
 
-`output` Whether to stream encoder position or velocity to computer.  Valid values are *'position'* or *'velocity'*.  Also determines whether a position or velocity threshold is used for event generation.  Velocity signals are in units of encoder counts per second, so an encoder with a resolution of 100 counts per revolution turning at 2 revolution per second would output a velocity of 200. Position signals are in units of encoder counts.
+    `threshold` Threshold against which the position or velocity (as specified by the `output` argument) is compared for generating rising and falling events, must be an integer.
 
-`threshold` Threshold against which the position or velocity (as specified by the `output` argument) is compared for generating rising and falling events, must be an integer.
+    `rising_event` Name of event triggered when position/velocity crosses threshold in rising direction.
 
-`rising_event` Name of event triggered when position/velocity crosses threshold in rising direction.
+    `falling_event` Name of event triggered when position/velocity crosses threshold in falling direction.
 
-`falling_event` Name of event triggered when position/velocity crosses threshold in falling direction.
+    `bytes_per_sample` Number of bytes used per sample when data is sent to the computer.  Valid values are 2 or 4.  Only set to 4 if your signals are likely to go outside the range covered by 2 byte signed integers (-32748 to 32748).
 
-`bytes_per_sample` Number of bytes used per sample when data is sent to the computer.  Valid values are 2 or 4.  Only set to 4 if your signals are likely to go outside the range covered by 2 byte signed integers (-32748 to 32748).
+    `reverse` Set to *True* to reverse the direction of rotation which is considered a positive velocity.
 
-`reverse` Set to *True* to reverse the direction of rotation which is considered a positive velocity.
+    *Methods:*
 
-*Methods:*
+    `Rotary_encoder.record()` Start streaming position/velocity measurements to computer. Data is saved in the same file format as data generated by [analog inputs](#analog-input).
 
-`Rotary_encoder.record()` Start streaming position/velocity measurements to computer. Data is saved in the same file format as data generated by [analog inputs](#analog-input).
+    `Rotary_encoder.stop()` Stop streaming data to computer. If rising or falling events are specified for the rotary en position of the encoder.coder these will be generated regardless of whether or not the encoder is streaming data to the computer.
 
-`Rotary_encoder.stop()` Stop streaming data to computer. If rising or falling events are specified for the rotary en position of the encoder.coder these will be generated regardless of whether or not the encoder is streaming data to the computer.
+    *Attributes:*
 
-*Attributes:*
+    `Rotary_encoder.velocity` The current velocity of the encoder.
 
-`Rotary_encoder.velocity` The current velocity of the encoder.
+    `Rotary_encoder.position` The current position of the encoder.
 
-`Rotary_encoder.position` The current position of the encoder.
+    *Example usage:*
 
-*Example usage:*
+    ```python
 
-```python
+    # Instantiate rotary encoder.  Encoder must be plugged into Port 1 of breakout board 1.2.
+    # Encoder is configured to report velocity at a 100Hz sampling rate and generate events
+    # 'running_start' and 'running_stop' when the speed goes above/below a threshold of 
+    # 200 encoder counts/second.
 
-# Instantiate rotary encoder.  Encoder must be plugged into Port 1 of breakout board 1.2.
-# Encoder is configured to report velocity at a 100Hz sampling rate and generate events
-# 'running_start' and 'running_stop' when the speed goes above/below a threshold of 
-# 200 encoder counts/second.
+    running_wheel = Rotary_encoder(sampling_rate=100, output='velocity', threshold=200,
+                        rising_event='running_start', falling_event='running_stop') 
 
-running_wheel = Rotary_encoder(sampling_rate=100, output='velocity', threshold=200,
-                    rising_event='running_start', falling_event='running_stop') 
+    running_wheel.record() # Start streaming running speed to computer.
 
-running_wheel.record() # Start streaming running speed to computer.
+    current_speed = running_wheel.velocity # Get the current speed of the encoder.
+    ```
 
-current_speed = running_wheel.velocity # Get the current speed of the encoder.
-```
-
----
 
 ## More devices
 
 To save space on the pyboards file system and reduce framework loading times, the driver files for the following devices are not uploaded to the pyboard by default.  To use them copy the required driver file(s) from *pyControl/devices/more devices* to *pyControl/devices*, then reload the framework to the pyboard using the GUI's config menu.
 
----
 
 ### Port expander
+=== "Overview"
 
-The port expander board uses serial to parallel IO expander ICs ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) to run 8 behaviour ports from a single behaviour port on the breakout board.  The port expander must be connected to a behaviour port that supports I2C serial communication (ports 3 and 4 on breakout 1.2).
+    The port expander board uses serial to parallel IO expander ICs ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) to run 8 behaviour ports from a single behaviour port on the breakout board.  The port expander must be connected to a behaviour port that supports I2C serial communication (ports 3 and 4 on breakout 1.2).
 
-Each port on the port expander works like a standard behaviour port, with 2 DIO lines, 2 driver lines for high current loads, as well as ground, 5V and 12V lines.  Digital outputs on the port expander do not support the `Digital_output.pulse()` method.
-
-
-!!! note "Maximum current"
-    The port expander can draw power either from the behaviour port or from a 12V power supply connected to the expander board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If the devices plugged into the port expander may draw more than 0.6A current in total, connect a power supply directly to the port expander board.
+    Each port on the port expander works like a standard behaviour port, with 2 DIO lines, 2 driver lines for high current loads, as well as ground, 5V and 12V lines.  Digital outputs on the port expander do not support the `Digital_output.pulse()` method.
 
 
-**Required driver files:** *_port_expander.py*, *_MCP.py*
+    !!! note "Maximum current"
+        The port expander can draw power either from the behaviour port or from a 12V power supply connected to the expander board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If the devices plugged into the port expander may draw more than 0.6A current in total, connect a power supply directly to the port expander board.
 
-[Github](https://github.com/pyControl/hardware/tree/master/Port_expander)
 
-![Stepper driver](../media/hardware/port_expander_photo.jpg)
+    **Required driver files:** *_port_expander.py*, *_MCP.py*
 
-```python 
-class Port_expander(port=None)
-```
+    [GitHub](https://github.com/pyControl/hardware/tree/master/Port_expander)
 
-*Example usage:*
+    ![Stepper driver](../media/hardware/port_expander_photo.jpg)
 
-```python
+=== "API"
 
-port_exp = Port_expander(board.port_3) # Instantiate port expander.
+    ```python 
+    class Port_expander(port=None)
+    ```
 
-poke = Poke(port=port_exp.port_1) # Poke conencted to port expander port 1.
+    *Example usage:*
 
-house_light = Digital_output(pin=port_exp.port_2.POW_A) # House light connected to driver line A on expander port 2.
+    ```python
 
-button = Digital_input(pin=port_exp.port_3.DIO_B, rising_event='button_press') # Button connected to DIO line B on expander port 3 
-```
+    port_exp = Port_expander(board.port_3) # Instantiate port expander.
 
----
+    poke = Poke(port=port_exp.port_1) # Poke conencted to port expander port 1.
+
+    house_light = Digital_output(pin=port_exp.port_2.POW_A) # House light connected to driver line A on expander port 2.
+
+    button = Digital_input(pin=port_exp.port_3.DIO_B, rising_event='button_press') # Button connected to DIO line B on expander port 3 
+    ```
+
 
 ### Five Poke
 
-The Five Poke board is a set of five nose pokes on a single PCB, each with an IR beam and stimulus LED.  The Five Poke connects to 2 behaviour ports on the breakout board.  Port 1 on the Five Poke must be connected to a behaviour port with 3 driver lines (port 1 or 2 on Breakout board 1.2). Port 2 on the Five Poke must be connected to a behaviour port with 3 DIO lines (port 3 or 4 on Breakout board 1.2).  The events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc. by default, and the events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` by default.  Different event names can be specified when the Five poke is instantiated.
+=== "Overview"
 
-**Required driver files:** *_five_poke.py*
+    The Five Poke board is a set of five nose pokes on a single PCB, each with an IR beam and stimulus LED.  The Five Poke connects to 2 behaviour ports on the breakout board.  Port 1 on the Five Poke must be connected to a behaviour port with 3 driver lines (port 1 or 2 on Breakout board 1.2). Port 2 on the Five Poke must be connected to a behaviour port with 3 DIO lines (port 3 or 4 on Breakout board 1.2).  The events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc. by default, and the events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` by default.  Different event names can be specified when the Five poke is instantiated.
 
-[Github](https://github.com/pyControl/hardware/tree/master/Five_poke)
+    **Required driver files:** *_five_poke.py*
 
-**Five poke mounted**
-![Five_poke mounted](../media/hardware/five-poke-mounted.jpg)
+    [GitHub](https://github.com/pyControl/hardware/tree/master/Five_poke)
 
-**Five poke PCB**
-![Five_poke pcb](../media/hardware/five-poke-pcb.jpg)
+    **Five poke mounted**
+    ![Five_poke mounted](../media/hardware/five-poke-mounted.jpg)
 
-```python 
-class Five_poke(ports, 
-	rising_event_1='poke_1',falling_event_1='poke_1_out',
-    rising_event_2='poke_2', falling_event_2='poke_2_out', 
-    rising_event_3='poke_3', falling_event_3='poke_3_out', 
-    rising_event_4='poke_4', falling_event_4='poke_4_out',
-    rising_event_5='poke_5', falling_event_5='poke_5_out',
-    debounce=5)
-```
+    **Five poke PCB**
+    ![Five_poke pcb](../media/hardware/five-poke-pcb.jpg)
 
-*Example usage:*
+=== "API"
 
-```python
-# Instantiate Five Poke
-# Port 1 on the Five poke board is connected to port 1 on the breakout board.
-# Port 2 on the Five poke board is connected to port 3 on the breakout board.
-five_poke = Five_poke(ports=[board.port_1, board.port_3]) 
+    ```python 
+    class Five_poke(ports, 
+        rising_event_1='poke_1',falling_event_1='poke_1_out',
+        rising_event_2='poke_2', falling_event_2='poke_2_out', 
+        rising_event_3='poke_3', falling_event_3='poke_3_out', 
+        rising_event_4='poke_4', falling_event_4='poke_4_out',
+        rising_event_5='poke_5', falling_event_5='poke_5_out',
+        debounce=5)
+    ```
 
-five_poke.poke_1.LED.on() # Turn on poke 1's LED.
-```
+    *Example usage:*
 
----
+    ```python
+    # Instantiate Five Poke
+    # Port 1 on the Five poke board is connected to port 1 on the breakout board.
+    # Port 2 on the Five poke board is connected to port 3 on the breakout board.
+    five_poke = Five_poke(ports=[board.port_1, board.port_3]) 
+
+    five_poke.poke_1.LED.on() # Turn on poke 1's LED.
+    ```
+
 
 ### Nine Poke
 
-The nine poke board is a set of nine nose pokes on a single PCB, each with an IR beam and stimulus LED.  The pokes are controlled from a single behaviour port using i2c serial communication (supported by ports 3 & 4 on breakout board 1.2). Events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc. by default, and events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` etc. by default.
+=== "Overview"
 
-An optional solenoid driver daughter board can be connected to the nine poke board to control up to 8 solenoids.  If the solenoid driver board is not connected, the *solenoid_driver* argument must be set to False when the *Nine_poke* is instantiated.
+    The nine poke board is a set of nine nose pokes on a single PCB, each with an IR beam and stimulus LED.  The pokes are controlled from a single behaviour port using i2c serial communication (supported by ports 3 & 4 on breakout board 1.2). Events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc. by default, and events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` etc. by default.
 
-**Required driver files:** *_nine_poke.py*, *_MCP.py*
+    An optional solenoid driver daughter board can be connected to the nine poke board to control up to 8 solenoids.  If the solenoid driver board is not connected, the *solenoid_driver* argument must be set to False when the *Nine_poke* is instantiated.
 
-[Github](https://github.com/pyControl/hardware/tree/master/Nine_poke)
+    **Required driver files:** *_nine_poke.py*, *_MCP.py*
 
-**Nine poke PCB**
-![Nine_poke pcb](../media/hardware/nine-poke-pcb.jpg)
+    [GitHub](https://github.com/pyControl/hardware/tree/master/Nine_poke)
 
-**Nine poke mounted**
-![Nine_poke mounted](../media/hardware/nine-poke-mounted.jpg)
+    === "PCB"
+        ![Nine_poke pcb](../media/hardware/nine-poke-pcb.jpg)
 
-**Back view showing solenoid driver board**
-![Nine_poke mounted back](../media/hardware/nine-poke-mounted-back.jpg)
+    === "Mounted"
+        ![Nine_poke mounted](../media/hardware/nine-poke-mounted.jpg)
 
-```python 
-class Nine_poke(port, rising_event_1 = 'poke_1', falling_event_1 = 'poke_1_out',
-                      rising_event_2 = 'poke_2', falling_event_2 = 'poke_2_out', 
-                      rising_event_3 = 'poke_3', falling_event_3 = 'poke_3_out', 
-                      rising_event_4 = 'poke_4', falling_event_4 = 'poke_4_out',
-                      rising_event_5 = 'poke_5', falling_event_5 = 'poke_5_out',
-                      rising_event_6 = 'poke_6', falling_event_6 = 'poke_6_out',
-                      rising_event_7 = 'poke_7', falling_event_7 = 'poke_7_out',
-                      rising_event_8 = 'poke_8', falling_event_8 = 'poke_8_out',
-                      rising_event_9 = 'poke_9', falling_event_9 = 'poke_9_out',
-                      debounce = 5, solenoid_driver=True)
-```
+    === "Backside"
+        ![Nine_poke mounted back](../media/hardware/nine-poke-mounted-back.jpg)
 
-*Example usage:*
+=== "API"
 
-```python
-# Instantiate nine poke connected to breakout board port 3.
-nine_poke = Nine_poke(port=board.port_3) 
+    ```python 
+    class Nine_poke(port, rising_event_1 = 'poke_1', falling_event_1 = 'poke_1_out',
+                        rising_event_2 = 'poke_2', falling_event_2 = 'poke_2_out', 
+                        rising_event_3 = 'poke_3', falling_event_3 = 'poke_3_out', 
+                        rising_event_4 = 'poke_4', falling_event_4 = 'poke_4_out',
+                        rising_event_5 = 'poke_5', falling_event_5 = 'poke_5_out',
+                        rising_event_6 = 'poke_6', falling_event_6 = 'poke_6_out',
+                        rising_event_7 = 'poke_7', falling_event_7 = 'poke_7_out',
+                        rising_event_8 = 'poke_8', falling_event_8 = 'poke_8_out',
+                        rising_event_9 = 'poke_9', falling_event_9 = 'poke_9_out',
+                        debounce = 5, solenoid_driver=True)
+    ```
 
-nine_poke.poke_1.LED.on() # Turn on poke 1's LED.
+    *Example usage:*
 
-nine_poke.SOL_1.on() # Turn on the solenoid 1 output on the solenoid driver daughter board.
+    ```python
+    # Instantiate nine poke connected to breakout board port 3.
+    nine_poke = Nine_poke(port=board.port_3) 
 
-# Solenoids connected to the daughter board can be assigned to pokes:
-nine_poke.poke_4.SOL = nine_poke.SOL_1 # Assign SOL_1 on the daughter board to poke 4.
-nine_poke.poke_4.SOL.on()              # Turn on the solenoid that has been assigned to poke 4.
+    nine_poke.poke_1.LED.on() # Turn on poke 1's LED.
 
+    nine_poke.SOL_1.on() # Turn on the solenoid 1 output on the solenoid driver daughter board.
 
-```
+    # Solenoids connected to the daughter board can be assigned to pokes:
+    nine_poke.poke_4.SOL = nine_poke.SOL_1 # Assign SOL_1 on the daughter board to poke 4.
+    nine_poke.poke_4.SOL.on()              # Turn on the solenoid that has been assigned to poke 4.
+    ```
 
----
 ### Lickometer
 
-An electrical lickometer board which has two lick detection circuits and two solenoid ports.  The outputs LCK 1 and LCK 2 should be connected to the reward delivery tubes and the GND output should be connected to the (conductive) floor of the setup.  The lick detection circuits detect when the reward delivery tube is electrically connected to ground by the subject licking.  The maximum current through the lick detection circuit is 1uA.  The default event names generated by licking are 'lick_1' and 'lick_2' when the contact is made, and 'lick_1_off' and 'lick_2_off' when the contact is broken.  Different event names can be specified when the Lickometer is instantiated.  By default, debouncing is used on lick events with a 5ms debounce window.
+=== "Overview"
 
-**Required driver files:** *_lickometer.py*
+    An electrical lickometer board which has two lick detection circuits and two solenoid ports.  The outputs LCK 1 and LCK 2 should be connected to the reward delivery tubes and the GND output should be connected to the (conductive) floor of the setup.  The lick detection circuits detect when the reward delivery tube is electrically connected to ground by the subject licking.  The maximum current through the lick detection circuit is 1uA.  The default event names generated by licking are 'lick_1' and 'lick_2' when the contact is made, and 'lick_1_off' and 'lick_2_off' when the contact is broken.  Different event names can be specified when the Lickometer is instantiated.  By default, debouncing is used on lick events with a 5ms debounce window.
 
-[Github](https://github.com/pyControl/hardware/tree/master/Lickometer)
+    **Required driver files:** *_lickometer.py*
 
-![Five_poke mounted](../media/hardware/lickometer_photo.jpg)
+    [GitHub](https://github.com/pyControl/hardware/tree/master/Lickometer)
 
-```python 
-class Lickometer(port, rising_event_A='lick_1', falling_event_A='lick_1_off',
-                       rising_event_B='lick_2', falling_event_B='lick_2_off', debounce=5)
-```
+    ![Five_poke mounted](../media/hardware/lickometer_photo.jpg)
 
-*Example usage:*
+=== "API"
 
-```python
-lickometer = Lickometer(port=board.port_1) # Instantiate lickometer.
+    ```python 
+    class Lickometer(port, rising_event_A='lick_1', falling_event_A='lick_1_off',
+                        rising_event_B='lick_2', falling_event_B='lick_2_off', debounce=5)
+    ```
 
-Lickometer.SOL_1.on()  # Turn  on solenoid 1.
-Lickometer.SOL_2.off() # Turn off solenoid 2.
-```
+    *Example usage:*
 
----
+    ```python
+    lickometer = Lickometer(port=board.port_1) # Instantiate lickometer.
+
+    Lickometer.SOL_1.on()  # Turn  on solenoid 1.
+    Lickometer.SOL_2.off() # Turn off solenoid 2.
+    ```
+
 
 ### Analog LED driver
 
-An LED driver board with analog control of the LED current from 1 - 400mA using the Micropython DAC.  The Analog LED driver needs to be connected to a behaviour port that has a DAC output (ports 3 and 4 on breakout board 1.2).
+=== "Overview"
 
-**Required driver files:** *_analog_LED.py*
+    An LED driver board with analog control of the LED current from 1 - 400mA using the Micropython DAC.  The Analog LED driver needs to be connected to a behaviour port that has a DAC output (ports 3 and 4 on breakout board 1.2).
 
-```python 
-class Analog_LED(port)
-```
+    **Required driver files:** *_analog_LED.py*
 
-*Example usage:*
+=== "API"
 
-```python
-LED = Analog_LED(port=board.port_3) # Instantiate LED driver
+    ```python 
+    class Analog_LED(port)
+    ```
 
-LED.on(LED_current_mA=20) # Turn on the LED at 20mA current.
-LED.off()                 # Turn off the LED
-```
+    *Example usage:*
 
----
+    ```python
+    LED = Analog_LED(port=board.port_3) # Instantiate LED driver
+
+    LED.on(LED_current_mA=20) # Turn on the LED at 20mA current.
+    LED.off()                 # Turn off the LED
+    ```
+
 
 ### Audio_player
 
-An audio board which uses the [DFPlayer](https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299) audio module to play .wav files from an SD card, allowing arbitrary audio stimuli to be presented.  The board has two speaker outputs allowing stereo audio files to be played. Mono files are played from both outputs, but the amplifiers for each output can be independently enabled or disabled allowing files to be played from either or both speakers.  The DFPlayer module requires the SD card to be formatted in FAT16 or FAT32 and expects a specific folder and file name structure - the folders must be named *01*, *02* etc., and the files in each folder *001.wav*, *002.wav* etc. The Audio_player needs a behaviour port with UART serial connectivity so can be plugged into ports 1, 3 or 4 on *Breakout_1_2*.  There is a short latency (approximately 15ms) between issuing the play command and the sound starting to play.
+=== "Overview"
 
-Sending multiple commands to the audio player without any delay in between (e.g. setting the volume and then playing a sound on subsequent lines of the task) may crash or fail because the audio player has not finished processing the first command when the second arrives.  
+    An audio board which uses the [DFPlayer](https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299) audio module to play .wav files from an SD card, allowing arbitrary audio stimuli to be presented.  The board has two speaker outputs allowing stereo audio files to be played. Mono files are played from both outputs, but the amplifiers for each output can be independently enabled or disabled allowing files to be played from either or both speakers.  The DFPlayer module requires the SD card to be formatted in FAT16 or FAT32 and expects a specific folder and file name structure - the folders must be named *01*, *02* etc., and the files in each folder *001.wav*, *002.wav* etc. The Audio_player needs a behaviour port with UART serial connectivity so can be plugged into ports 1, 3 or 4 on *Breakout_1_2*.  There is a short latency (approximately 15ms) between issuing the play command and the sound starting to play.
+
+    Sending multiple commands to the audio player without any delay in between (e.g. setting the volume and then playing a sound on subsequent lines of the task) may crash or fail because the audio player has not finished processing the first command when the second arrives.  
 
 
-**Required driver files:** *_audio_player.py*
+    **Required driver files:** *_audio_player.py*
 
-[Github](https://github.com/pyControl/hardware/tree/master/Audio_player)
+    [GitHub](https://github.com/pyControl/hardware/tree/master/Audio_player)
 
-![Audio board](../media/hardware/audio-player.jpg)
+    ![Audio board](../media/hardware/audio-player.jpg)
 
-```python 
-class Audio_player(port)
-```
+=== "API"
 
-*Example usage:*
+    ```python 
+    class Audio_player(port)
+    ```
 
-```python
-player = Audio_player(port=board.port_1) # Instantiate Audio player
+    *Example usage:*
 
-player.play(folder_num=1, file_num=2) # Play file 2 from folder 1.
+    ```python
+    player = Audio_player(port=board.port_1) # Instantiate Audio player
 
-player.stop() # Stop audio.
+    player.play(folder_num=1, file_num=2) # Play file 2 from folder 1.
 
-player.set_volume(12) # Set the volume (range 1 - 30).
+    player.stop() # Stop audio.
 
-player.set_enabled(left=True, right=False) # Enable left speaker output, disable right speaker output.
+    player.set_volume(12) # Set the volume (range 1 - 30).
 
-```
+    player.set_enabled(left=True, right=False) # Enable left speaker output, disable right speaker output.
 
----
+    ```
+
 
 ### MCP23017 
 
-The MCP23017 is a serial to parallel IO expander IC ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) which can be used to add additional digital input/output lines to the Micropython microcontroller. The IC must be connected to the Micropython via an I2C serial connection, which are available on the DIO pins of ports 3 and 4 of breakout board 1.2.  If you plan to use MCP23017 pins as pyControl digital inputs the INTA interrupt pin on the MCP23017 must be connected to a DIO pin on the Micropython. The pins on the MCP23017 can be used as standard pyControl Digital_input and Digital_output objects as shown in the usage example below.
+=== "Overview"
 
-**Required driver files:** *_MCP.py*
+    The MCP23017 is a serial to parallel IO expander IC ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) which can be used to add additional digital input/output lines to the Micropython microcontroller. The IC must be connected to the Micropython via an I2C serial connection, which are available on the DIO pins of ports 3 and 4 of breakout board 1.2.  If you plan to use MCP23017 pins as pyControl digital inputs the INTA interrupt pin on the MCP23017 must be connected to a DIO pin on the Micropython. The pins on the MCP23017 can be used as standard pyControl Digital_input and Digital_output objects as shown in the usage example below.
 
-```python 
-class  MCP23017(I2C_bus=1, interrupt_pin='X5', addr=0x20)
-```
+    **Required driver files:** *_MCP.py*
 
-*Example usage:*
+=== "API"
+    ```python 
+    class  MCP23017(I2C_bus=1, interrupt_pin='X5', addr=0x20)
+    ```
 
-```python
-mcp = MCP23017(I2C_bus=1, interrupt_pin='X5', addr=0x20) # Instantiate MCP23017.
+    *Example usage:*
 
-mcp_output = Digital_output(pin=mcp.Pin('A0')) # Instantiate a Digital_output using pin A0 on the MCP23017.
+    ```python
+    mcp = MCP23017(I2C_bus=1, interrupt_pin='X5', addr=0x20) # Instantiate MCP23017.
 
-mcp_input = Digital_input(pin=mcp.Pin('A1'), rising_event='event_A') # Instantiate a Digital_input using pin A1 on the MCP23017.
-```
+    mcp_output = Digital_output(pin=mcp.Pin('A0')) # Instantiate a Digital_output using pin A0 on the MCP23017.
 
-The MCP23008 IC is also supported using the same syntax.  The MCP23017 has 16 DIO lines and the MCP23008 has 8 DIO lines. 
+    mcp_input = Digital_input(pin=mcp.Pin('A1'), rising_event='event_A') # Instantiate a Digital_input using pin A1 on the MCP23017.
+    ```
 
-```python 
-class  MCP23008(I2C_bus=1, interrupt_pin='X5', addr=0x20)
-```
+    The MCP23008 IC is also supported using the same syntax.  The MCP23017 has 16 DIO lines and the MCP23008 has 8 DIO lines. 
+
+    ```python 
+    class  MCP23008(I2C_bus=1, interrupt_pin='X5', addr=0x20)
+    ```
