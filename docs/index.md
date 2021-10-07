@@ -18,7 +18,7 @@ pyControl has a [Graphical User Interface](user-guide/graphical-user-interface.m
 
 Tools for importing pyControl data into Python for analysis are provided in the [data_import](user-guide/pycontrol-data.md) module.
 
-The pyControl [google group](https://groups.google.com/forum/#!forum/pycontrol) is a email list for pyControl users.
+The pyControl [google group](https://groups.google.com/forum/#!forum/pycontrol) is an email list for pyControl users.
 
 pyControl hardware, software and documentation repositories are on [GitHub](https://github.com/pyControl).
 
@@ -33,7 +33,7 @@ If you do fiber photometry experiments, you may be interested in pyControl's sis
 
 ### Installation
 
-Get the latest version of the pyControl GUI, either by downloading it at a zip file from the [releases](https://github.com/pyControl/code/releases) page or by cloning the [code repository](https://github.com/pyControl/code) to your computer with Git.  Cloning the repository is recommended as it makes it easier to update pyControl in future.
+Get the latest version of the pyControl GUI, either by downloading it at a zip file from the [releases](https://github.com/pyControl/code/releases) page or by cloning the [code repository](https://github.com/pyControl/code) to your computer with Git.  Cloning the repository is recommended as it makes it easier to update pyControl in the future.
 
 Either way you obtain the code, you will have the following folder structure:
 
@@ -61,7 +61,7 @@ pyControl has the following dependencies:
 - pyqt5
 - pyqtgraph 
 
- On a windows machine that does not already have Python installed, the simplest way to install Python is to download an installer from [python.org](https://www.python.org/downloads/). To ensure you can run Python files (including the pyControl GUI) by double clicking on them, select the options 'Add Python to PATH', 'Add Python to environment variables', and 'Associate files with Python' during installation.  Note; selecting these options when installing Python will cause the Python version you are installing to take precedence over any other version of Python installed on the computer, so may break previous Python based workflows on the computer.
+ On a windows machine that does not already have Python installed, the simplest way to install Python is to download an installer from [python.org](https://www.python.org/downloads/). To ensure you can run Python files (including the pyControl GUI) by double-clicking on them, select the options 'Add Python to PATH', 'Add Python to environment variables', and 'Associate files with Python' during installation.  Note; selecting these options when installing Python will cause the Python version you are installing to take precedence over any other version of Python installed on the computer, so may break previous Python based workflows on the computer.
 
 Once you have a working Python 3 installation on the computer, run the windows command prompt (cmd.exe) as an administrator and enter the following commands to install the required packages:
 
@@ -72,9 +72,9 @@ python -m pip install pyqt5
 python -m pip install pyqtgraph
 ```
 
-You should then be able to launch the GUI by double clicking the file *pyControl_GUI.py* in the pyControl root directory.  
+You should then be able to launch the GUI by double-clicking the file *pyControl_GUI.py* in the pyControl root directory.  
 
-pyControl has been tested primarily on Windows 7 and 10 but in principle should be cross platform and has been used on Mac and Linux. 
+pyControl has been tested primarily on Windows 7 and 10 but in principle should be cross-platform and has been used on Mac and Linux. 
 
 Micropython boards (pyboards) need to be running a fairly recent version of the Micropython firmware to work with pyControl.  When you connect to a pyboard with the GUI, the micropython version installed on the board is displayed.  If the micropython version is <1.9 upgrade micropython using the instructions [here](user-guide/troubleshooting.md#upgrading-micropython).
 

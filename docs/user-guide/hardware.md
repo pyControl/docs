@@ -6,7 +6,7 @@
 
 A typical pyControl hardware setup consists of one or more breakout boards connected to a computer by USB, each of which runs a single behavioural setup.  The breakout board connects to a set of devices such as nosepokes, audio boards and LED drivers which make up the setup. USB hubs can be used between the computer and breakout boards such that many setups can be controlled from a single computer.
 
-All pyControl hardware is open source and design files for the hardware detailed below are available in the [pyControl hardware repository](https://github.com/pyControl/hardware).  In addition to pyControl electronics, the repository has designs for a [behaviour box](https://github.com/pyControl/hardware/tree/master/Behaviour_box_small) and [sound attenuating chamber](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small), and a list of [useful parts](https://github.com/pyControl/hardware/blob/master/useful-parts-list.md) such as cables, solenoids, mounting hardware etc for building setups.  Assembled pyControl hardware is available from the [OpenEphys store](http://www.open-ephys.org/pycontrol).
+All pyControl hardware is open source and design files for the hardware detailed below are available in the [pyControl hardware repository](https://github.com/pyControl/hardware).  In addition to pyControl electronics, the repository has designs for a [behaviour box](https://github.com/pyControl/hardware/tree/master/Behaviour_box_small) and [sound attenuating chamber](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small), and a list of [useful parts](https://github.com/pyControl/hardware/blob/master/useful-parts-list.md) such as cables, solenoids, mounting hardware etc. for building setups.  Assembled pyControl hardware is available from the [OpenEphys store](http://www.open-ephys.org/pycontrol).
 
 For information about synchronising pyControl with other hardware such as electrophysiology or video cameras see the [synchronisation](synchronisation.md) user guide.
 
@@ -22,7 +22,7 @@ As electronic devices pyControl hardware could pose a fire risk if used inapprop
 
 ## Hardware definitions
 
-Hardware objects can be instantiated directly in a state machine definition file (as in the [button](https://github.com/pyControl/code/blob/master/tasks/example/button.py) example), however the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is  typically used for many different tasks so seperating out the hardware and task definition code into seperate files avoids repeating the hardware definition in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are specified in the setup's hardware definitions.
+Hardware objects can be instantiated directly in a state machine definition file (as in the [button](https://github.com/pyControl/code/blob/master/tasks/example/button.py) example), however the recomended way of specifying hardware is to create a *hardware definition* file which is imported by the state machine.  The rationale for this is twofold: Firstly, the same hardware setup is typically used for many different tasks so seperating out the hardware and task definition code into seperate files avoids repeating the hardware definition in each task file.  Secondly, the same task may be used on different setups without modifying the task code as long as the required hardware devices are specified in the setup's hardware definitions.
 
 The hardware definition tells the pyControl system what inputs and outputs are available for use by state machines.  A simple hardware definition file might read:
 
@@ -67,7 +67,7 @@ hw.off()  # Turn off all outputs.
 
 ## Inputs and outputs
 
-The following hardware classes control the behaviour of a single pin on the micropython microcontroller.
+The following hardware classes control the behaviour of a single pin on the Micropython microcontroller.
 
 ---
 
@@ -99,7 +99,7 @@ class Digital_input(pin, rising_event=None, falling_event=None, debounce=5, deci
 
 *Methods:*
 
-`Digital_input.value()`  Get the current state of the input, returns True if pin is high, False if low.
+`Digital_input.value()` Get the current state of the input, returns True if pin is high, False if low.
 
 ---
 
@@ -148,7 +148,7 @@ class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, 
 
 *Arguments:*
 
-`pin` Micropython pin to use. Only a subset of micropython pins support analog to digital conversion (ADC) (see pyboard [quickref](https://docs.micropython.org/en/latest/pyboard/pyboard/quickref.html)).
+`pin` Micropython pin to use. Only a subset of Micropython pins support analog to digital conversion (ADC) (see pyboard [quickref](https://docs.Micropython.org/en/latest/pyboard/pyboard/quickref.html)).
 
 `name` Name of the analog input, used to identify data files generated when input is recorded.
 
@@ -162,21 +162,21 @@ class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, 
 
 *Methods:*
 
-`Analog_input.record()`  Start streaming analog input measurements to computer.  If the computer is logging pyControl data the analog data will be saved to disk.  Analog data is saved in seperate files from the main pyControl data log, with a seperate data file for each analog input.  Analog data is saved in binary files with a *.pca* file extension, for information on how to read these files see [pyControl data](pycontrol-data.md#analog-data).
+`Analog_input.record()` Start streaming analog input measurements to computer.  If the computer is logging pyControl data the analog data will be saved to disk.  Analog data is saved in seperate files from the main pyControl data log, with a seperate data file for each analog input.  Analog data is saved in binary files with a *.pca* file extension, for information on how to read these files see [pyControl data](pycontrol-data.md#analog-data).
 
-`Analog_input.stop()`  Stop streaming analog data to computer.  You can start and stop streaming analog data multples times in a framework run.  If rising or falling events are specified for the analog input these will be generated regardless of whether or not the input is streaming data to the computer.
+`Analog_input.stop()` Stop streaming analog data to computer.  You can start and stop streaming analog data multples times in a framework run.  If rising or falling events are specified for the analog input these will be generated regardless of whether or not the input is streaming data to the computer.
 
 ---
 
 ### Analog outputs
 
-Pyboard pins 'X5' and 'X6' support analog output.  On the breakout board they are connected to the BNC connectors labled DAC-1 and DAC-2 and also to the special function pins on behaviour ports 3 and 4 respectively.  To use these pins as analog outputs see the [pyb.DAC](https://docs.micropython.org/en/latest/library/pyb.DAC.html) class in the micropython docs.
+Pyboard pins 'X5' and 'X6' support analog output.  On the breakout board they are connected to the BNC connectors labled DAC-1 and DAC-2 and also to the special function pins on behaviour ports 3 and 4 respectively.  To use these pins as analog outputs see the [pyb.DAC](https://docs.Micropython.org/en/latest/library/pyb.DAC.html) class in the Micropython docs.
 
 ---
 
 ## Breakout boards
 
-Typically when pyControl is used to run a behavioural experiment, the micropython microcontroller is mounted on a breakout board, which interfaces it with *behaviour ports*, BNC connectors, indicator LEDs and user pushbuttons. 
+Typically when pyControl is used to run a behavioural experiment, the Micropython microcontroller is mounted on a breakout board, which interfaces it with *behaviour ports*, BNC connectors, indicator LEDs and user pushbuttons. 
 
 > #### !!! Electrical safety !!!
 > When connecting devices to breakout boards it is important to consider the amount of current they will draw.  Several components limit the maximum current that can safely be drawn: 
@@ -200,9 +200,9 @@ Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 o
 | Power driver (POW) B         | 7                    |
 | Special function             | 5                    |
 
-The digital input/output (DIO) lines connect directly to pins on the micropython microcontroller. The microcontroller uses 3.3V logic so when these pins are used as outputs they switch from 0 to 3.3V in the off and on states respectively. The DIO lines are 5V tolerant and can recieve 5V logic signals as inputs.  Some DIO lines have additional functionality such as analog to digital conversion (ADC) or serial communication (I2C or UART).  If you need a digital output with a higher voltage, this can be achieved by using one of the power driver lines with a pull up resistor (see below).
+The digital input/output (DIO) lines connect directly to pins on the Micropython microcontroller. The microcontroller uses 3.3V logic so when these pins are used as outputs they switch from 0 to 3.3V in the off and on states respectively. The DIO lines are 5V tolerant and can recieve 5V logic signals as inputs.  Some DIO lines have additional functionality such as analog to digital conversion (ADC) or serial communication (I2C or UART).  If you need a digital output with a higher voltage, this can be achieved by using one of the power driver lines with a pull-up resistor (see below).
 
-The power driver lines are for controlling loads that need higher currents or voltages than can be provided directly from a microcontroller pin.  These lines are connected to low side driver ICs ([datasheet](https://toshiba.semicon-storage.com/info/docget.jsp?did=29893)) on the breakout board, which are in turn controlled by pins on the microcontroller.  Low side drivers connect the negative side of the load to ground when turned on:
+The power driver lines are for controlling loads that need higher currents or voltages than can be provided directly from a microcontroller pin.  These lines are connected to low side driver ICs ([datasheet](https://toshiba.semicon-storage.com/info/docget.jsp?did=29893)) on the breakout board, which are in turn controlled by pins on the microcontroller. Low side drivers connect the negative side of the load to ground when turned on:
 
 ![Driver diagram](../media/hardware/driver-diagram.jpg)
 
@@ -212,7 +212,7 @@ The driver lines can be used as digital outputs by connecting them to a positive
 
 ![POW as digital diagram](../media/hardware/POW_as_digital_out_diagram.png)
 
-When the driver line (POW) is off the output will be pulled up to 5V, when the driver line is  on it will pull the output down to 0V.  This can be useful if you need to control devices that require a digital logic signal with a voltage higher than 3.3V (though many 5V logic devices work fine with 3.3V inputs), or if you just need more digital outputs.  
+When the driver line (POW) is off the output will be pulled up to 5V, when the driver line is on it will pull the output down to 0V.  This can be useful if you need to control devices that require a digital logic signal with a voltage higher than 3.3V (though many 5V logic devices work fine with 3.3V inputs), or if you just need more digital outputs.  
 
 The special function pin has different functions on different ports, for example it may be an extra driver line or a pin with digital to analog (DAC) functionality, see below for more information.
 
@@ -359,7 +359,7 @@ left_poke.SOL.off() # Turn off the solenoid.
 
 ### Audio board
 
-Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the micropython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.
+Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the Micropython [DAC](https://docs.Micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.
 
 In addition to the digital volume control there is a manual volume control knob (the small blue potentiometer on the board) that can be used to calibrate the audio volume.
 
@@ -502,7 +502,7 @@ motor_2 = Stepper_motor(step_pin='X1', direction_pin='X2') # Instantiating drive
 
 ### Rotary encoder
 
-Class for acquiring data from a rotary encoder, used e.g. to measure the speed of a running wheel.  The encoder must be an incremental rotary encoder that outputs a quadrature signal. The rotary encoder class can stream the position or velocity of the encoder to the computer at a specified sampling rate, and generate framework events when the position/velocity goes above/below a specified threshold.  Currently the rotary encoder class expects the two lines carrying the quadrature signal to be connected to micropython pins 'X1' and 'X2' (Port 1 DIO_A and DIO_B on breakout board 1.2).
+Class for acquiring data from a rotary encoder, used e.g. to measure the speed of a running wheel.  The encoder must be an incremental rotary encoder that outputs a quadrature signal. The rotary encoder class can stream the position or velocity of the encoder to the computer at a specified sampling rate, and generate framework events when the position/velocity goes above/below a specified threshold.  Currently the rotary encoder class expects the two lines carrying the quadrature signal to be connected to Micropython pins 'X1' and 'X2' (Port 1 DIO_A and DIO_B on breakout board 1.2).
 
 The rotary encoder adaptor board connects an Avago HEDM-55xx series rotary encoder ([datasheet](https://docs.broadcom.com/docs/AV02-1046EN)) to a pyControl behaviour port.  The rotary encoder adaptor must be plugged into port_1 on breakout board 1.2.
 
@@ -539,9 +539,9 @@ class Rotary_encoder(name, sampling_rate, output='velocity', threshold=None,
 
 *Methods:*
 
-`Rotary_encoder.record()`  Start streaming position/velocity measurements to computer. Data is saved in the same file format as data generated by [analog inputs](#analog-input).
+`Rotary_encoder.record()` Start streaming position/velocity measurements to computer. Data is saved in the same file format as data generated by [analog inputs](#analog-input).
 
-`Rotary_encoder.stop()`  Stop streaming data to computer. If rising or falling events are specified for the rotary en position of the encoder.coder these will be generated regardless of whether or not the encoder is streaming data to the computer.
+`Rotary_encoder.stop()` Stop streaming data to computer. If rising or falling events are specified for the rotary en position of the encoder.coder these will be generated regardless of whether or not the encoder is streaming data to the computer.
 
 *Attributes:*
 
@@ -583,7 +583,7 @@ Each port on the port expander works like a standard behaviour port, with 2 DIO 
 
 > #### !!! Electrical safety !!!
 
-> The port expander can draw power either from the the behaviour port or from a 12V power supply connected to the expander board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If the devices plugged into the port expander may draw more than 0.6A current in total, connect a power supply directly to the port expander board.
+> The port expander can draw power either from the behaviour port or from a 12V power supply connected to the expander board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If the devices plugged into the port expander may draw more than 0.6A current in total, connect a power supply directly to the port expander board.
 
 
 **Required driver files:** *_port_expander.py*, *_MCP.py*
@@ -613,7 +613,7 @@ button = Digital_input(pin=port_exp.port_3.DIO_B, rising_event='button_press') #
 
 ### Five Poke
 
-The Five Poke board is a set of five nose pokes on a single PCB, each with an IR beam and stimulus LED.  The Five Poke connects to 2 behaviour ports on the breakout board.  Port 1 on the Five Poke must be connected to a behaviour port with 3 driver lines (port 1 or 2 on Breakout board 1.2). Port 2 on the Five Poke must be connected to a behaviour port with 3 DIO lines (port 3 or 4 on Breakout board 1.2).  The events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc by default, and the events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` by default.  Different event names can be specified when the Five poke is instantiated.
+The Five Poke board is a set of five nose pokes on a single PCB, each with an IR beam and stimulus LED.  The Five Poke connects to 2 behaviour ports on the breakout board.  Port 1 on the Five Poke must be connected to a behaviour port with 3 driver lines (port 1 or 2 on Breakout board 1.2). Port 2 on the Five Poke must be connected to a behaviour port with 3 DIO lines (port 3 or 4 on Breakout board 1.2).  The events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc. by default, and the events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` by default.  Different event names can be specified when the Five poke is instantiated.
 
 **Required driver files:** *_five_poke.py*
 
@@ -700,7 +700,7 @@ nine_poke.poke_4.SOL.on()              # Turn on the solenoid that has been assi
 ---
 ### Lickometer
 
-An electrical lickometer board which has two lick detection circuits and two solenoid ports.  The outputs LCK 1 and LCK 2 should be connected to the  reward delivery tubes and the GND output should be connected to the (conductive) floor of the setup.  The lick detection circuits detect when the reward delivery tube is electrically connected to ground by the subject licking.  The maximum current  through the lick detection circuit is 1uA.  The default event names generated by licking are 'lick_1' and 'lick_2' when the contact is made, and 'lick_1_off' and 'lick_2_off' when the contact is broken.  Different event names can be specified when the Lickometer is instantiated.  By default debouncing is used on lick events with a 5ms debounce window.
+An electrical lickometer board which has two lick detection circuits and two solenoid ports.  The outputs LCK 1 and LCK 2 should be connected to the reward delivery tubes and the GND output should be connected to the (conductive) floor of the setup.  The lick detection circuits detect when the reward delivery tube is electrically connected to ground by the subject licking.  The maximum current through the lick detection circuit is 1uA.  The default event names generated by licking are 'lick_1' and 'lick_2' when the contact is made, and 'lick_1_off' and 'lick_2_off' when the contact is broken.  Different event names can be specified when the Lickometer is instantiated.  By default, debouncing is used on lick events with a 5ms debounce window.
 
 **Required driver files:** *_lickometer.py*
 
@@ -726,7 +726,7 @@ Lickometer.SOL_2.off() # Turn off solenoid 2.
 
 ### Analog LED driver
 
-An LED driver board with analog control of the LED current from 1 - 400mA using the micropython DAC.  The Analog LED driver needs to be connected to a behaviour port that has a DAC output (ports 3 and 4 on breakout board 1.2).
+An LED driver board with analog control of the LED current from 1 - 400mA using the Micropython DAC.  The Analog LED driver needs to be connected to a behaviour port that has a DAC output (ports 3 and 4 on breakout board 1.2).
 
 **Required driver files:** *_analog_LED.py*
 
@@ -747,7 +747,7 @@ LED.off()                 # Turn off the LED
 
 ### Audio_player
 
-An audio board which uses the [DFPlayer](https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299) audio module to play .wav files from an SD card, allowing arbitrary audio stimuli to be presented.  The board has two speaker outputs allowing stereo audio files to be played. Mono files are played played from both outputs, but the amplifiers for each output can be independently enabled or disabled allowing files to be played from either or both speakers.  The DFPlayer module requires the SD card to be formated in FAT16 or FAT32 and expects a specific folder and file name structure - the folders must be named *01*, *02* etc, and the files in each folder *001.wav*, *002.wav* etc.  The Audio_player needs a behaviour port with UART serial connectivity so can be plugged into ports 1, 3 or 4 on *Breakout_1_2*.  There is a short latency (approximately 15ms) between issuing the play command and the sound starting to play.
+An audio board which uses the [DFPlayer](https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299) audio module to play .wav files from an SD card, allowing arbitrary audio stimuli to be presented.  The board has two speaker outputs allowing stereo audio files to be played. Mono files are played from both outputs, but the amplifiers for each output can be independently enabled or disabled allowing files to be played from either or both speakers.  The DFPlayer module requires the SD card to be formated in FAT16 or FAT32 and expects a specific folder and file name structure - the folders must be named *01*, *02* etc., and the files in each folder *001.wav*, *002.wav* etc. The Audio_player needs a behaviour port with UART serial connectivity so can be plugged into ports 1, 3 or 4 on *Breakout_1_2*.  There is a short latency (approximately 15ms) between issuing the play command and the sound starting to play.
 
 Sending multple commands to the audio player without any delay in between (e.g. setting the volume and then playing a sound on subsequent lines of the task) may crash or fail becaues the audio player has not finshed processing the first command when the second arrives.  
 
@@ -804,5 +804,3 @@ The MCP23008 IC is also supported using the same syntax.  The MCP23017 has 16 DI
 ```python 
 class  MCP23008(I2C_bus=1, interrupt_pin='X5', addr=0x20)
 ```
-
----

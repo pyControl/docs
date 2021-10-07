@@ -4,13 +4,13 @@ The page details how to fix common problems that can occur when using pyControl.
 
 ### Can't open GUI
 
-To open the GUI you need to run the file *pyControl_GUI.py* using Python.  One way to do this is to set the file association for *.py* files to Python 3 so that you can run the file by double clicking it.  Alternatively you can open a command prompt, change directory to the folder containing *pyControl_GUI.py* and run the file with the command `python pyControl_GUI.py`.
+To open the GUI you need to run the file *pyControl_GUI.py* using Python.  One way to do this is to set the file association for *.py* files to Python 3 so that you can run the file by double-clicking it.  Alternatively you can open a command prompt, change directory to the folder containing *pyControl_GUI.py* and run the file with the command `python pyControl_GUI.py`.
 
 If the GUI does not open this is probably because you do not have the required [dependencies](../index.md#dependencies) installed, you should see an error message indicating which dependency could not be loaded. 
 
 ### Board does not show up in GUI.
 
-If no pyboards that you connect to the computer show up in the GUI's board select dropdown menu, the problem may be caused by the computers operating system langauge being set to something other than English.  This changes the name that pyboards are given in the computers list of connected serial devices, which is used by the GUI to identify connected boards.  There are two possible ways to fix this problem:
+If no pyboards that you connect to the computer show up in the GUI's board select dropdown menu, the problem may be caused by the computers operating system language being set to something other than English.  This changes the name that pyboards are given in the computers list of connected serial devices, which is used by the GUI to identify connected boards.  There are two possible ways to fix this problem:
 
 - Use the Micropython USB drivers rather than the generic windows USB serial device drivers.  This should ensure that pyboards are listed by the computers operating system as *Pyboard* irrespective of the operating system language.  Information on how to install the Micropython USB drivers is provided below in section *How to install the Micropython USB drivers*.
 #
@@ -21,11 +21,11 @@ If no pyboards that you connect to the computer show up in the GUI's board selec
 
 If the GUI status says 'Connection Failed' when you try to connect to the board, reset the board using the *Reset* button on the breakout board or micropython microcontroller, then try connecting again.
 
-### Can' transfer files to pyboard
+### Can't transfer files to pyboard
 
 If you get a message saying *Error: Unable to transfer file.* this usually means that the filesystem on the pyboard has got corrupted. To fix this problem, reset the filesystem by following the instructions [here](https://docs.micropython.org/en/latest/pyboard/tutorial/reset.html#factory-reset-the-filesystem).  
 
-The instructions say to use the *Reset* and *USR* buttons and LEDs on the micropython board for the file system reset.  Depending on how the pyControl breakout board is mounted it may be hard to access these.  However the *Reset* and *USR* buttons on the front of pyControl breakout board 1.2 have identical functionality to those on the pyboard, and indicator LEDs 3 and 4 from the left on the breakout board have the same behaviour as the orange and green LEDs on the pyboard, so the filesystem can be reset with access only to the front of the breakout board.  
+The instructions say to use the *Reset* and *USR* buttons and LEDs on the micropython board for the file system reset.  Depending on how the pyControl breakout board is mounted it may be hard to access these.  However, the *Reset* and *USR* buttons on the front of pyControl breakout board 1.2 have identical functionality to those on the pyboard, and indicator LEDs 3 and 4 from the left on the breakout board have the same behaviour as the orange and green LEDs on the pyboard, so the filesystem can be reset with access only to the front of the breakout board.  
 
 After the filesystem reset has finished, reset the board again using the *Reset* button, then connect to the board with the GUI.  The filesystem reset removes both the pyControl framework and any hardware definition from the pyboard so you will have to reload them using the board config menu.  
 
@@ -66,7 +66,7 @@ If you get a message saying *Error during framework run* while the framework is 
 Micropython boards (pyboards) need to be running a fairly recent version of the Micropython to work with pyControl.  When you connect to a pyboard with the GUI, the micropython version installed on the board is displayed.  If the micropython version is <1.9 update micropython by doing the following (windows):
 
 1.  Download and install the software [DfuSe demo](https://www.st.com/en/development-tools/stsw-stm32080.html).
-2.  Download the latest numbered release of the firmware (e.g. v1.10) from the micropython [download](http://micropython.org/download) page.  Note, there are two different version of the pyboard microcontroller, *PYBv1.0* and *PYBv1.1*, which require different versions of the firmware.  The board version will be printed on the microcontroller, make sure to download the matching version of the firmware.  There are various different versions of the firmware for each board with names like *standard* and *double FP* - download the *standard* version.
+2.  Download the latest numbered release of the firmware (e.g. v1.10) from the micropython [download](http://micropython.org/download) page.  Note, there are two different versions of the pyboard microcontroller, *PYBv1.0* and *PYBv1.1*, which require different versions of the firmware.  The board version will be printed on the microcontroller, make sure to download the matching version of the firmware.  There are various different versions of the firmware for each board with names like *standard* and *double FP* - download the *standard* version.
 3.  Open the pyControl GUI and connect to your board.  Open the *Config* menu and select the option *Device firmware update (DFU) mode*.  The pyControl GUI will put the board in DFU mode and disconnect from it.
 4.  Open the program *DfuSe demo*, in the *Available DFU Devices* drop down menu it should say *STM Device in DFU Mode*, indicating it has found the board and it is in DFU mode.  In the *Upgrade or Verify Action* box, press the button *Choose*, then select the micropython firmware file you downloaded.
 5.  Press *Upgrade* and then *Yes* in the dialog box.  *DfuSe demo* will upload the new firmware to the board. When you see a message saying *Upgrade successful*, quit *DfuSe demo*.

@@ -26,7 +26,7 @@ D 10423 2
 
 Lines begining `I` contain infomation about the session including subject, task and experiment names, start date and time.
 
-The single line begining `S` is a JSON object (also a Python dict)  containing the state names and corresponding IDs.
+The single line begining `S` is a JSON object (also a Python dict) containing the state names and corresponding IDs.
 
 The single line begining `E` is a JSON object (also a Python dict) containing the event names and corresponding IDs.
 
@@ -48,7 +48,7 @@ analog_data_array = load_analog_data('path//to//analog_data_file.pca')
 
 ## Versioned task files
 
-Task files used to generate data are also stored in the data folder, with a file hash appended to the task file name to uniquely identify the file version.  The file hash of the task file used for each session is recorded in that session's data file so the exact task file version used to run each session can be identified.  We encourage users to treat these versioned task files as part of the experiments data, and to include them in data repositories to promote replicability of pyControl experiments.
+Task files used to generate data are also stored in the data folder, with a file hash appended to the task file name to uniquely identify the file version.  The file hash of the task file used for each session is recorded in that session's data file so the exact task file version used to run each session can be identified.  We encourage users to treat these versioned task files as part of the experiments' data, and to include them in data repositories to promote replicability of pyControl experiments.
 
 ---
 
@@ -84,7 +84,7 @@ sp.play_session('path//to//session//file', start_time=30) # Scrolling animation 
 
 # Importing data
 
-The [data_import](https://github.com/pyControl/code/blob/master/tools/data_import.py) module in the *tools* folder contains Python classes for importing and representing pyControl data.  A `Session` class represents data from a single session.  An `Experiment` class represents data from an experiment consisting of multiple sessions and subjects. A `load_analog_data` function loads analog signals.
+The [data_import](https://github.com/pyControl/code/blob/master/tools/data_import.py) module in the *tools* folder contains Python classes for importing and representing pyControl data.  A `Session` class represents data from a single session. An `Experiment` class represents data from an experiment consisting of multiple sessions and subjects. A `load_analog_data` function loads analog signals.
 
 The data import module has dependencies:
 
@@ -131,7 +131,7 @@ class Session(file_path, int_subject_IDs=True)
 
 `file_path` Path of the pyControl data file to import.
 
-`int_subject_IDs` If *True*, subject ID is converted to integer, e.g. *'m012'* is converted to *12*.  Otherwise subject ID is a string.
+`int_subject_IDs` If *True*, subject ID is converted to integer, e.g. *'m012'* is converted to *12*.  Otherwise, subject ID is a string.
 
 *Attributes:*
 
@@ -191,7 +191,7 @@ class Experiment(folder_path, int_subject_IDs=True)
 
 `folder_path` Path of the pyControl data folder to import.
 
-`int_subject_IDs` If *True*, subject ID is converted to integer, e.g. *'m012'* is converted to *12*.  Otherwise subject ID is a string.
+`int_subject_IDs` If *True*, subject ID is converted to integer, e.g. *'m012'* is converted to *12*. Otherwise, subject ID is a string.
 
 *Attributes:*
 

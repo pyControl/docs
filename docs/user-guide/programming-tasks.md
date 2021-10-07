@@ -4,7 +4,7 @@
 
 Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a *task definition file* written in Python.  Example task definition files are provided in the [tasks](https://github.com/pyControl/code/tree/master/tasks/example) folder.
 
-Task definition files run directly on the Micropython microcontroller, not on the computer.   Python modules such as *Numpy* that are installed on the computer will therefore not be available in the task definition.  For a list of the modules available in Micropython see the [Micropython docs](https://docs.micropython.org/en/latest/library/index.html).
+Task definition files run directly on the Micropython microcontroller, not on the computer. Python modules such as *Numpy* that are installed on the computer will therefore not be available in the task definition.  For a list of the modules available in Micropython see the [Micropython docs](https://docs.micropython.org/en/latest/library/index.html).
 
 ## Imports
 
@@ -85,7 +85,7 @@ def state_A(event):
         # Code here executes when state_A is exited.
 ```
 
-Calling `goto_state` in response to an `'entry'` or  `'exit'` event will cause an error because the state machine is already in transition to a new state when these events occur.
+Calling `goto_state` in response to an `'entry'` or `'exit'` event will cause an error because the state machine is already in transition to a new state when these events occur.
 
 It is not recomended to put any code in a state behaviour function that executes after a `goto_state` because it will be executed following the state transition when the task is in the subsequent state, potentially causing hard to identify bugs.
 
@@ -241,7 +241,7 @@ As pyControl task definition files are just Python modules, you can define arbit
 goto_state(next_state)
 ```
 
-Transition to state `next state`.  An  `'exit'` event is processed in the state that is being left, and an `'entry'` event is processed in the state that is being entered.
+Transition to state `next state`.  An `'exit'` event is processed in the state that is being left, and an `'entry'` event is processed in the state that is being entered.
 
 *Example usage:*  
 
@@ -257,7 +257,7 @@ goto_state('state_A') # Transition to state 'state_A'
 timed_goto_state(next_state, interval)
 ```
 
-Transition to state `next state` after `interval` milliseconds have elapsed.  The current state will behave as normal till the state transition occurs.  `'entry'` and  `'exit'`  actions will be processed when the state transition occurs as with `goto_state`.  If a state transition occurs for any reason before the `timed_goto_state` triggers, the  `timed_goto_state` is canceled and will have no effect.  Constants `ms`, `second`, `minute` and  `hour` can be used in specifying the interval as shown in an example below.
+Transition to state `next state` after `interval` milliseconds have elapsed.  The current state will behave as normal till the state transition occurs.  `'entry'` and `'exit'` actions will be processed when the state transition occurs as with `goto_state`.  If a state transition occurs for any reason before the `timed_goto_state` triggers, the `timed_goto_state` is canceled and will have no effect.  Constants `ms`, `second`, `minute` and `hour` can be used in specifying the interval as shown in an example below.
 
 *Example usage:*  
 
@@ -527,7 +527,7 @@ Class for calculating exponential moving average with specified time constant `t
 
 *Methods:*
 
-`exp_mov_ave.update(sample)`    Update the moving average with a new sample.
+`exp_mov_ave.update(sample)` Update the moving average with a new sample.
 
 *Atributes:*
 
