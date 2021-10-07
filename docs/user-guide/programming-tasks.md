@@ -229,13 +229,13 @@ The `print()` function has modified behavour when called within the context of a
 
 As pyControl task definition files are just Python modules, you can define arbitrary functions that can be called from within state behaviour functions.  A useful application of this is to seperate code that defines the behaviour of the state machine from code which implements other aspects of the task, such as block structure or stimulus selection.  Organising task code in this way is recommended as it makes task definitions easier to understand and maintain. The [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/example/reversal_learning.py) example uses this structure.
 
-# Function reference
+## Function reference
 
-## State machine functions
+### State machine functions
 
----
+#### goto_state
 
-**goto_state**
+
 
 ```python
 goto_state(next_state)
@@ -251,7 +251,7 @@ goto_state('state_A') # Transition to state 'state_A'
 
 ---
 
-**timed_goto_state**
+#### timed_goto_state
 
 ```python
 timed_goto_state(next_state, interval)
@@ -269,7 +269,7 @@ timed_goto_state('state_C', 10*second) # Transition to state 'state_C' after 10 
 
 ---
 
-**set_timer**
+#### set_timer
 
 ```python
 set_timer(event, interval, output_event=False)
@@ -285,7 +285,7 @@ set_timer('event_X', 5*second) # Trigger event 'event_X' after 5 seconds
 
 ---
 
-**disarm_timer**
+#### disarm_timer
 
 ```python
 disarm_timer(event)
@@ -301,7 +301,7 @@ disarm_timer('event_X') # Disarm all timers set to trigger event 'event_X'
 
 ---
 
-**reset_timer**
+#### reset_timer
 
 ```python
 reset_timer(event, interval, output_event=False)
@@ -315,9 +315,10 @@ Disable any timers due to trigger specified `event` and set new timer to return 
 reset_timer('event_X', 5*minute) # Disable any timers due to trigger event 'event_X' and
                                  # set a timer to trigger 'event_X' in 5 minutes.
 ```
+
 ---
 
-**pause_timer**
+#### pause_timer
 
 ```python
 pause_timer(event)
@@ -327,7 +328,7 @@ Pause any timers due to trigger specified `event`.  While a timer is paused the 
 
 ---
 
-**unpause_timer**
+#### unpause_timer
 
 ```python
 unpause_timer(event)
@@ -337,7 +338,7 @@ Unpause any timers due to trigger specified `event`.  When a timer is unpaused i
 
 ---
 
-**timer_remaining**
+#### timer_remaining
 
 ```python
 timer_remaining(event)
@@ -347,7 +348,7 @@ Return the time in ms until a timer set to trigger the specified `event` elapses
 
 ---
 
-**get_current_time**
+#### get_current_time
 
 ```python
 get_current_time()
@@ -357,7 +358,7 @@ Returns the number of milliseconds since the framework started running.
 
 ---
 
-**publish_event**
+#### publish_event
 
 ```python
 publish_event(event)
@@ -367,7 +368,7 @@ Trigger the specified event.  The principal use case is to generate an event in 
 
 ---
 
-**print**
+#### print
 
 ```python
 print(print_string)
@@ -377,7 +378,7 @@ Print `print_string` to the data output.  Printed strings are given a time-stamp
 
 ---
 
-**stop_framework**
+#### stop_framework
 
 ```python
 stop_framework()
@@ -387,13 +388,13 @@ Stop the framework running.
 
 ---
 
-## Random functions and classes
+### Random functions and classes
 
 Functions and classes for random number generation.
 
 ---
 
-**random**
+#### random
 
 ```python
 random()
@@ -403,7 +404,7 @@ Return a random float between 0 and 1.
 
 ---
 
-**withprob**
+#### withprob
 
 ```python
 withprob(p)
@@ -413,7 +414,7 @@ Return a random boolean that is True with probability `p`.
 
 ---
 
-**shuffled**
+#### shuffled
 
 
 ```python
@@ -424,7 +425,7 @@ Return a shuffled copy of list `L`.
 
 ---
 
-**choice**
+#### choice
 
 
 ```python
@@ -436,7 +437,7 @@ Return a randomly selected element from list `L`.
 ---
 
 
-**randint**
+#### randint
 
 ```python
 randint(a,b)
@@ -446,7 +447,7 @@ Return a random integer `N` such that `a` <= `N` <= `b`.
 
 ---
 
-**exp_rand**
+#### exp_rand
 
 ```python
 exp_rand(m)
@@ -456,7 +457,7 @@ Return a random number drawn from an exponential distribution with mean `m`.
 
 ---
 
-**gauss_rand**
+#### gauss_rand
 
 ```python
 gauss_rand(m,s)
@@ -467,7 +468,7 @@ Return a random number drawn from a gaussian distribution with mean `m` and stan
 ---
 
 
-**sample_without_replacement**
+#### sample_without_replacement
 
 ```python
 class sample_without_replacement(items)
@@ -487,9 +488,10 @@ x = sample_without_replacement(['a','b','c']) # Instantiate with list ['a','b','
 
 next_sample = x.next() # Get the next sample.
 ```
+
 ---
 
-## Math functions and classes.
+### Math functions and classes.
 
 The Micropython [math](https://docs.micropython.org/en/latest/pyboard/library/math.html) module provides many math functions:
 
@@ -507,7 +509,7 @@ pyControl provides the following additional maths functions and classes:
 
 ---
 
-**mean**
+#### mean
 
 ```python
 mean(x)
@@ -517,9 +519,9 @@ Return the mean value of x.
 
 ---
 
-**exp_mov_ave**
+#### exp_mov_ave
 
-```
+```python
 class exp_mov_ave(tau, init_value=0)
 ```
 
@@ -543,4 +545,3 @@ y.update(sample)  # Update the value of the moving average with a new sample.
 
 current_value = y.value  # Get the current value of the moving average.
 ```
-
