@@ -52,7 +52,7 @@ Task files used to generate data are also stored in the data folder, with a file
 
 ---
 
-# Visualising data
+## Visualising data
 
 The [session_plot](https://github.com/pyControl/code/blob/master/tools/session_plot.py) module in the *tools* folder contains functions for visualising pyControl data offline.
 
@@ -82,7 +82,7 @@ sp.play_session('path//to//session//file', start_time=30) # Scrolling animation 
 
 --- 
 
-# Importing data
+## Importing data
 
 The [data_import](https://github.com/pyControl/code/blob/master/tools/data_import.py) module in the *tools* folder contains Python classes for importing and representing pyControl data.  A `Session` class represents data from a single session. An `Experiment` class represents data from an experiment consisting of multiple sessions and subjects. A `load_analog_data` function loads analog signals.
 
@@ -93,7 +93,7 @@ The data import module has dependencies:
 
 ---
 
-## Session
+### Session
 
 The `Session` class is used to import a pyControl data file and represent it as a Python object.  
 
@@ -153,9 +153,8 @@ class Session(file_path, int_subject_IDs=True)
 
 `Session.print_lines` List of all the lines output by print statements during the framework run, each line starts with the time in milliseconds at which it was printed.
 
----
 
-## Experiment
+### Experiment
 
 The `Experiment` class is used to import all data files from a given experiment (stored in a single folder) and represent the experiment as a Python object. The experiment class has a method *get_sessions* which can be used to flexibly select sessions from specific subjects and times.
 
