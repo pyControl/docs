@@ -4,7 +4,7 @@ The pyControl GUI is a graphical interface for running experiments, configuring 
 
 To run the GUI, run the file *pyControl_GUI.py* in the pyControl root directory.
 
-# Run task tab
+## Run task tab
 
 ![run_task_GUI.jpg](../media/GUI/run_task_tab.png)
 
@@ -18,12 +18,12 @@ The **Task** control box is used to select and upload a task and configure task 
 
 The *Variables* button opens a dialog for setting or getting the value of task variables.  It can be used either before a run starts or while a task is running.  Variables must be defined in the task definition file using the `v.my_variable` syntax (see [programming tasks](programming-tasks.md#variables)).  Variables can be set to numbers, or to Python objects including strings, lists and dictionaries.  The constants `ms`, `second`, `minute` and `hour` can be used, e.g. a variable can be set to `30*minute`.  You can make task variables invisible to the GUI by ending their name in three underscores (e.g. `v.my_private_variable___`).  Such 'private' variables work as normal in the task file but do not show up in the GUI.  This can be useful if you have a lot of task variables, making it hard to find the ones you need to change in the GUI.
 
-# Experiments tab
+## Experiments tab
 
 The experiments tab is used to configure, save, load and run experiments on one or more hardware setups at the same time.  An experiment is a set of subjects, each with a corresponding hardware setup, run on the same task, potentially with variables set to non-default values for some or all subjects.  When you run an experiment you can run all the subjects or select
 only a subset to run, and can start and stop different subjects at different times.
 
-## Configuring experiments
+### Configuring experiments
 
 ![run_task_GUI.jpg](../media/GUI/configure_experiment_tab.png)
 
@@ -41,7 +41,7 @@ Summary variables can be specified by ticking the *summary* check-box. The value
 
 The *save* button saves the current experiment configuration.  Saved experiments can be loaded by selecting them with the drop down menu. Saved experiments can be deleted with the delete button.  Each experiment is saved as a seperate file in the folder *pyControl/experiments*.  Experiment configurations are saved as JSON objects in text files with a *.pcx* file extension.
 
-## Running experiments
+### Running experiments
 
 To run an experiment, press the *run* button on the configure experiments tab.
 
@@ -57,7 +57,7 @@ The *Show plots* button opens a tabbed window where the behaviour of each subjec
 
 ![run_task_GUI.jpg](../media/GUI/experiment_plots.png)
 
-# Setups tab
+## Setups tab
 
 The setups tab is used to name and configure hardware setups.
 
@@ -67,18 +67,15 @@ If a name is specified for a setup the name will appear instead of the setups se
 
 The configure button next to each setup bring up a menu of configuration options for that board.  Alternatively multiple boards can be selected with the checkboxes and configured with the *configure selected* buttons.
 
-# Board configuration
+## Board configuration
 
 The board configuration menu has the following options to configure pyboards.
 
 - *Load framework:* Reload the pyControl framework and pyControl device driver files onto the pyboard.
-#  
 - *Load hardware definition:* Load a [hardware definition](hardware.md#hardware-definition) file onto the pyboard.  The selected file is renamed *hardware_definition.py* on the pyboard filesystem irrespective of it's name on the computer, so the hardware definition is always imported into the task file with:
 
 ```python
 import hardware_definition as hw
 ```
-#  
 - *Device Firmware Update (DFU) mode:* Put the pyboard into DFU mode used for upgrading the version of Micropython running on the board.  For more information on upgrading Micropython see [here](http://micropython.org/download).
-#  
 - *Enable/disable USB flash drive:*  Disabling the USB flash drive prevents the pyboard from showing up on the computers filesystem as a USB storage device. This can be useful if you are connecting a large number of pyboards to a computer and run out of space on the USB bus. With the flashdrive enabled each pyboard shows up as two USB devices - a flash drive and a USB serial port.
