@@ -76,5 +76,7 @@ The board configuration menu has the following options to configure pyboards.
 ```python
 import hardware_definition as hw
 ```
+
 - *Device Firmware Update (DFU) mode:* Put the pyboard into DFU mode used for upgrading the version of Micropython running on the board.  For more information on upgrading Micropython see [here](http://micropython.org/download).
+
 - *Enable/disable USB flash drive:*  Disabling the USB flash drive prevents the pyboard from showing up on the computer's filesystem as a USB storage device. This can be useful if you are connecting a large number of pyboards to a computer and run out of space on the USB bus. With the flashdrive enabled each pyboard shows up as two USB devices - a flash drive and a USB serial port.

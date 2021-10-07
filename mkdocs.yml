@@ -3,28 +3,58 @@ site_url: https://pycontrol.readthedocs.io/
 site_description: Open source, Python based, behavioural experiment control.
 site_author: Champalimaud Foundation
 
+repo_url: https://github.com/pyControl?type=source
+repo_name: pyControl
+edit_uri: ""
+
 theme:
-    name: readthedocs
+    name: material
+    icon:
+        repo: fontawesome/brands/github
+    features:
+        - navigation.top
+        - navigation.expand
+    palette:
+        primary: blue
 
 markdown_extensions:
     - admonition
+    - toc:
+          permalink: "#"
+          toc_depth: 4
+    - pymdownx.highlight
+    - pymdownx.superfences
+    - attr_list
+    - pymdownx.emoji:
+          emoji_index: !!python/name:materialx.emoji.twemoji
+          emoji_generator: !!python/name:materialx.emoji.to_svg
+    - pymdownx.keys
 
-repo_url: https://github.com/pycontrol/pycontrol-docs
+extra:
+    social:
+        - icon: material/forum
+          link: https://groups.google.com/forum/#!forum/pycontrol
+        - icon: fontawesome/brands/github
+          link: https://github.com/pyControl
+        - icon: material/cart
+          link: https://open-ephys.org/pycontrol
+
+extra_css:
+    - stylesheets/extra.css
 
 nav:
-- Home: index.md
-- User Guide:
-    - Graphical user interface (GUI): user-guide/graphical-user-interface.md
-    - Programming tasks: user-guide/programming-tasks.md
-    - Hardware: user-guide/hardware.md
-    - Synchronisation: user-guide/synchronisation.md 
-    - pyControl data: user-guide/pycontrol-data.md
-    - Troubleshooting: user-guide/troubleshooting.md
-- Contributing: contributing.md
-
-- About:
-    - Release Notes: about/release-notes.md
-    - License: about/license.md
+    - Overview: index.md
+    - Getting Started: getting_started.md
+    - User Guide:
+          - Graphical user interface (GUI): user-guide/graphical-user-interface.md
+          - Programming tasks: user-guide/programming-tasks.md
+          - Hardware: user-guide/hardware.md
+          - Synchronisation: user-guide/synchronisation.md
+          - pyControl data: user-guide/pycontrol-data.md
+          - Troubleshooting: user-guide/troubleshooting.md
+    - Contributing: contributing.md
+    - About:
+          - Release Notes: about/release-notes.md
+          - License: about/license.md
 
 copyright: Copyright &copy; 2016 - 2021 Thomas Akam
-
