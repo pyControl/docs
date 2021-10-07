@@ -230,7 +230,7 @@ pushbutton = Digital_input(pin=board.button, falling_event='button', pull='up')
 
 ### Behaviour ports
 
-Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 or 6 network cables), with the following set of lines:
+Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 or 6 network cables), with the following pinout:
 
 | Function                     | RJ45 connector pin # |
 | ---------------------------- | -------------------- |
