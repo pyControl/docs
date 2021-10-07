@@ -6,7 +6,7 @@
 
 A typical pyControl hardware setup consists of one or more breakout boards connected to a computer by USB, each of which runs a single behavioural setup.  The breakout board connects to a set of devices such as nosepokes, audio boards and LED drivers which make up the setup. USB hubs can be used between the computer and breakout boards such that many setups can be controlled from a single computer.
 
-All pyControl hardware is open source and design files for the hardware detailed below are available in the [pyControl hardware repository](https://github.com/pyControl/hardware) on Github.  In addition to pyControl electronics, the repository has designs for a [behaviour box](https://github.com/pyControl/hardware/tree/master/Behaviour_box_small) and [sound attenuating chamber](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small), and a list of [useful parts](https://github.com/pyControl/hardware/blob/master/useful-parts-list.md) such as cables, solenoids, mounting hardware etc for building setups.  Assembled pyControl hardware is available from the [OpenEphys store](http://www.open-ephys.org/pycontrol).
+All pyControl hardware is open source, design files are in the [hardware repository](https://github.com/pyControl/hardware) on Github.  In addition to pyControl electronics, the repository has designs for a [behaviour box](https://github.com/pyControl/hardware/tree/master/Behaviour_box_small) and [sound attenuating chamber](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small), and a list of [useful parts](https://github.com/pyControl/hardware/blob/master/useful-parts-list.md) such as cables, solenoids, mounting hardware etc for building setups.  Assembled pyControl hardware is available from the [OpenEphys store](http://www.open-ephys.org/pycontrol).
 
 For information about synchronising pyControl with other hardware such as electrophysiology or video cameras see the [synchronisation](synchronisation.md) user guide.
 
@@ -73,7 +73,7 @@ The following hardware classes control the behaviour of a single pin on the Micr
 
 ### Digital input
 
-The digital input class generates pyControl framework events when a specified pin on the Micropython board changes state. Seperate events can be specified for rising and falling edges. 
+The digital input class generates pyControl framework events when a specified pin on the Micropython board changes state. Seperate events can be specified for rising and/or falling edges. 
 
 By defalt debouncing is used to prevent multiple events being triggered very close together in time if the edges are not clean.  The debouncing method used ensures that transient inputs shorter than the debounce duration still generate rising and falling edges.  Debouncing incurs some overheads so should be turned off for inputs with clean edges and high event rates.
 
@@ -228,7 +228,7 @@ pushbutton = Digital_input(pin=board.button, falling_event='button', pull='up')
 ```
 
 
-## Behaviour ports
+### Behaviour ports
 
 Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 or 6 network cables), with the following set of lines:
 
@@ -243,13 +243,15 @@ Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 o
 | Power driver (POW) B         | 7                    |
 | Special function             | 5                    |
 
-> #### !!! Electrical safety !!!
+---
+> ** !!! Electrical safety !!! **
+>
 > When connecting custom devices to behaviour ports it is important to consider the amount of current they will draw.  Several components limit the maximum current that can safely be drawn: 
 >
 > - The driver ICs on driver lines (see below) can sink up to 150mA per driver line.
 > - Cat 5 network cable (used to connect devices to behaviour ports) can carry up to 0.6A per conductor.  The maximum current that can safely be drawn in total from the 12V and 5V lines on the behaviour port is 0.6A as all the current returns via the ground line.
 > - The voltage regulator on the breakout board that powers the behaviour port 5V lines can source aproximately 300mA of current, which is shared by the 5V lines on all behaviour ports.  
-
+---
 
 The power driver lines are for controlling loads that need higher currents or voltages than can be provided directly from a microcontroller pin.  These lines are connected to low side driver ICs ([datasheet](https://toshiba.semicon-storage.com/info/docget.jsp?did=29893)) on the breakout board, which are in turn controlled by pins on the microcontroller. Low side drivers connect the negative side of the load to ground when turned on:
 
@@ -301,18 +303,16 @@ The easiest way to make an electrical connection to pins on a behavioural port i
 
 ![Port adapter](../media/hardware/port_adapter.png)
 
-
-
 ---
 
-# Interfacing with external hardware
+## Interfacing with external hardware
 
 Behavioural setups often comprise a mixture of pyControl hardware devices (see below) and external user-created or commercial hardware.  Interfacing pyControl with external hardware requires both creating a physical electrical connection between the devices, and instantiating Python objects representing the device in the hardware definition or task file. 
 
 Options for creating an electrical connection are:
 
 - The BNC connectors on the breakout board, which can be used for analog or digital input or output (see above).  Each connector carries one signal line and one ground connection.  They are often used for triggering external devices from pyControl or triggering pyControl events from external devices.  They can also be used to output sync pulses for synchronising  pyControl data with video or physiology data, as detailed in the [synchronisation](synchronisation.md) user guide.
-- Connect to one or more lines on a behaviour port.  The easiest way to do this is usually using the screw terminal connector on the port adapter board (see above).  This is a good option of you need to connect multiple signals, and the 5V or 12V lines can be used to power small external devices.  For example, we typically mount a port adapter board on the inside of the setup's sound attenuating chamber to control the house light, power the fan and send sync pulses to the camera, as shown [here](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small).
+- Connect to one or more lines on a behaviour port.  The easiest way to do this is usually using the screw terminal connector on the port adapter board (see above).  This is a good option if you need to connect multiple signals, and the 5V or 12V lines can be used to power small external devices.  For example, we typically mount a port adapter board on the inside of the setup's sound attenuating chamber to control the house light, power the fan and send sync pulses to the camera, as shown [here](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small).
 - Design a custom printed circuit board (PCB) with an RJ45 connector to connect to a breakout board behaviour port.   This requires more work initially, but may make sense if you need to implement custom circuitry and want to scale to multiple setups.   Complete design files for all the pyControl devices are in the hardware repository and provide a good starting point for thinking about your own designs.  They were created in [Eagle](https://www.autodesk.co.uk/products/eagle/overview) PCB, which is available as a freeware version (with a restriction on board size, but still sufficient for many applications) and also is free for academic use.
 
 To define custom external hardware in your hardware definition or task file there are two options.  The simplest is to instantiate the individual inputs and/or outputs directly in the hardware definition.  These may be pyControl `Digital_input`, `Analog_input` or `Digital_output` objects (see above), or Micropython objects; [pyb.DAC](https://docs.micropython.org/en/latest/library/pyb.DAC.html)  for analog output, and [pyb.I2C](https://docs.micropython.org/en/latest/library/pyb.I2C.html) or [pyb.UART](https://docs.micropython.org/en/latest/library/pyb.UART.html) for serial communication.  
@@ -507,9 +507,10 @@ Class for controlling an [EasyDriver](http://www.schmalzhaus.com/EasyDriver/) st
 
 The stepper motor adaptor board connects an Easydriver to a pyControl behaviour port.
 
-> #### !!! Electrical safety !!!
 
-> The stepper motor driver can draw power either from the 12V line on the behaviour port or from a 12V power supply connected to the stepper motor board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If your stepper motor requires more current, connect a 12V power supply directly to the stepper motor driver.  The current requirements for some common stepper motors are detailed in the EasyDriver documentation.
+> ** !!! Electrical safety !!! **
+
+>The stepper motor driver can draw power either from the 12V line on the behaviour port or from a 12V power supply connected to the stepper motor board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If your stepper motor requires more current, connect a 12V power supply directly to the stepper motor driver.  The current requirements for some common stepper motors are detailed in the EasyDriver documentation.
 
 
 [Github](https://github.com/pyControl/hardware/tree/master/Stepper_driver)
@@ -628,7 +629,7 @@ The port expander board uses serial to parallel IO expander ICs ([datasheet](htt
 Each port on the port expander works like a standard behaviour port, with 2 DIO lines, 2 driver lines for high current loads, as well as ground, 5V and 12V lines.  Digital outputs on the port expander do not support the `Digital_output.pulse()` method.
 
 
-> #### !!! Electrical safety !!!
+> ** !!! Electrical safety !!! **
 
 > The port expander can draw power either from the behaviour port or from a 12V power supply connected to the expander board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If the devices plugged into the port expander may draw more than 0.6A current in total, connect a power supply directly to the port expander board.
 
@@ -826,7 +827,7 @@ player.set_enabled(left=True, right=False) # Enable left speaker output, disable
 
 ---
 
-## MCP23017 
+### MCP23017 
 
 The MCP23017 is a serial to parallel IO expander IC ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) which can be used to add additional digital input/output lines to the Micropython microcontroller. The IC must be connected to the Micropython via an I2C serial connection, which are available on the DIO pins of ports 3 and 4 of breakout board 1.2.  If you plan to use MCP23017 pins as pyControl digital inputs the INTA interrupt pin on the MCP23017 must be connected to a DIO pin on the Micropython. The pins on the MCP23017 can be used as standard pyControl Digital_input and Digital_output objects as shown in the usage example below.
 

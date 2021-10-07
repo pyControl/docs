@@ -6,9 +6,9 @@
 
 ## Overview
 
-pyControl is a system of open source hardware and software for controlling behavioural experiments, built around the [Micropython](https://micropython.org/) microcontroller.
+pyControl is a system of open source hardware and software for controlling behavioural experiments in neuroscience and psychology, built around the [Micropython](https://micropython.org/) microcontroller.
 
-pyControl makes it easy to program complex behavioural tasks using a clean, intuitive, and flexible syntax for specifying tasks as state machines. User created task definition files, written in Python, run directly on the microcontroller, supported by pyControl framework code.  This gives users the power and simplicity of Python for specifying task behaviour, while allowing advanced users low-level access to the microcontroller hardware.  For more information see [programming tasks](user-guide/programming-tasks.md).
+pyControl makes it easy to program complex behavioural tasks using a clean, intuitive, and flexible syntax for specifying tasks as state machines. User created task definition files, written in Python, run directly on the microcontroller, supported by pyControl framework code.  This gives users the power and simplicity of Python for specifying task behaviour, while allowing low-level access to the microcontroller hardware directly from task code.  For more information see [programming tasks](user-guide/programming-tasks.md).
 
 ![Hardware overview](media/hardware/hardware-overview.png)
 
@@ -74,9 +74,7 @@ python -m pip install pyqtgraph
 
 You should then be able to launch the GUI by double-clicking the file *pyControl_GUI.py* in the pyControl root directory.  
 
-pyControl has been tested primarily on Windows 7 and 10 but in principle should be cross-platform and has been used on Mac and Linux. 
-
-Micropython boards (pyboards) need to be running a fairly recent version of the Micropython firmware to work with pyControl.  When you connect to a pyboard with the GUI, the micropython version installed on the board is displayed.  If the micropython version is <1.9 upgrade micropython using the instructions [here](user-guide/troubleshooting.md#upgrading-micropython).
+pyControl has been tested primarily on Windows 10 but in principle should be cross-platform and has been used on Mac and Linux. 
 
 ### Updating pyControl
 
@@ -90,11 +88,11 @@ Either way, after updating pyControl reload the framework onto your pyboards usi
 
 Run the file *pyControl_GUI.py* in the pyControl root directory, you will see a GUI window like that shown above, with the *Run Task* tab selected.
 # 
-Plug in a pyboard and it will appear in the *Select* drop down menu in the *Setup*  box.  Select the board and press the *Connect* button.  The GUI will connect to the board.  
+Plug in a pyboard and it will appear in the drop down menu in the *Setup*  box.  Select the board and press the *Connect* button.  The GUI will connect to the board.  
 #
 If the pyControl framework is not already installed on the board, you will see a message saying *Load pyControl framework using 'Config' button.* Press the *Config* button to bring up the config menu and select *Load framework*.  If you see a message prompting you to disable the pyboard filesystem from acting as a USB flash drive, click *Yes*, then reconnect to the board (the serial port may have changed when you disable the flash drive) and load the framework.
 #
-Once the pyControl framework is installed on the board, from the *Tasks* drop down menu, select the task [*blinker*](https://github.com/pyControl/code/blob/master/tasks/example/blinker.py).  Press the *Upload* button to upload the task to the pyboard.
+Once the pyControl framework is installed on the board, from the *Tasks* drop down menu, select the task [*blinker*](https://github.com/pyControl/code/blob/master/tasks/example/blinker.py) in the *example* folder.  Press the *Upload* button to upload the task to the pyboard.
 # 
 Press the *Start* button.  The task will run causing the blue LED on the pyboard to start blinking.
 # 

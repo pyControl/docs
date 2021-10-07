@@ -1,6 +1,6 @@
 # pyControl GUI
 
-The pyControl GUI is a graphical interface for running experiments, configuring setups and visualising behaviour. The GUI is a tabbed window with tabs *Run task*, *Experiments* and *Setups*.  The *Run task* tab controls one hardware setup at a time i.e. one pyboard and its connected hardware.  It is designed for quickly prototyping tasks and testing hardware setups, but can also be used to acquire data from one setup.  The *Experiments* tab is used to configure and run experiments on many setups in parallel.  The *Setups* tab is used to name and configure the hardware setups connected to the computer.
+The pyControl GUI is a graphical interface for running experiments, configuring setups and visualising behaviour. The GUI is a tabbed window with *Run task*, *Experiments* and *Setups* tabs.  The *Run task* tab controls one hardware setup at a time i.e. one pyboard and its connected hardware.  It is designed for quickly prototyping tasks and testing hardware setups, but can also be used to acquire data from one setup.  The *Experiments* tab is used to configure and run experiments on many setups in parallel.  The *Setups* tab is used to name and configure the hardware setups connected to the computer.
 
 To run the GUI, run the file *pyControl_GUI.py* in the pyControl root directory.
 
@@ -8,7 +8,7 @@ To run the GUI, run the file *pyControl_GUI.py* in the pyControl root directory.
 
 ![run_task_GUI.jpg](../media/GUI/run_task_tab.png)
 
-The run task tab consists of controls, a log text box and plot panels.  See the [getting started](../index.md#getting-started) section of the home page for a step-by-step guide to running a task.  When a task is run the output is printed to the log and the behaviour is plotted.  If a valid data directory and a subject ID are provided, the *Start* button changes to *Record* and the GUI will save the data generated when the task is run.
+The run task tab consists of controls, a log text box and plot panels.  See the [Running a task](../index.md#running-a-task) section of the home page for a step-by-step guide to running a task.  When a task is run the output is printed to the log and the behaviour is plotted.  If a valid data directory and a subject ID are provided, the *Start* button changes to *Record* and the GUI will save the data generated when the task is run.
 
 The **Setup** control box is used to select a pyboard, connect and disconnect from the board, and configure the board.  Pressing the *config* button brings up a menu with options detailed below in the section *Board configuration*.
 
@@ -20,7 +20,7 @@ The *Variables* button opens a dialog for setting or getting the value of task v
 
 ## Experiments tab
 
-The experiments tab is used to configure, save, load and run experiments on one or more hardware setups at the same time.  An experiment is a set of subjects, each with a corresponding hardware setup, run on the same task, potentially with variables set to non-default values for some or all subjects.  When you run an experiment you can run all the subjects or select only a subset to run, and can start and stop different subjects at different times.
+The experiments tab is used to configure, save, load and run experiments on one or more hardware setups at the same time.  An experiment is a set of subjects, each with a corresponding hardware setup, run on the same task, with variables optionally set to non-default values for some or all subjects.  When you run an experiment you can run all subjects, or select only a subset to run, and can start and stop different subjects at different times.
 
 ### Configuring experiments
 
@@ -30,9 +30,9 @@ When the experiments tab is opened it shows the configure experiment dialog.  To
 
 Optionally a hardware test can be specified for the experiment.  The hardware test is a task that is run before the main task, allowing the user to check whether the hardware is working as intended.  The hardware test can be the same task as that used for the experiment, or another task designed specifically to test the hardware.  No data is saved during the hardware test.
 
-The subjects table is used to specify which subjects will run in which hardware setups.  To add a subject to the experiment, press the *add* button, select the setup and enter a name for the subject.  The *Run* checkbox determines whether on not a particular subject will be run when the experiment is run.  You can assign multiple subjects to the same setup in the variables table but can only run a single subject on a given setup at a time.
+The *Subjects* table is used to specify which subjects will run in which hardware setups.  To add a subject to the experiment, press the *add* button, select the setup and enter a name for the subject.  The *Run* checkbox determines whether on not a particular subject will be run when the experiment is run.  You can assign multiple subjects to the same setup in the variables table but can only run a single subject on a given setup at a time.
 
-The variables table is used to set the value of variables before the task starts.  Variables can be set to the same value for all subjects or to different values for different subjects. Variables can be set to numbers, or Python objects including strings, lists and dictionaries.  The constants `ms`, `second`, `minute` and `hour` can be used, e.g. a variable can be set to `5*second`.  
+The *Variables* table is used to set the value of variables before the task starts.  Variables can be set to the same value for all subjects or to different values for different subjects. Variables can be set to numbers, or Python objects including strings, lists and dictionaries.  The constants `ms`, `second`, `minute` and `hour` can be used, e.g. a variable can be set to `5*second`.  
 
 A variable can be set as persistent by ticking the *persistent* check-box. If a variable is persistent it's value is saved at the end of the session. The next time the experiment is run, if the variable is still set as persistent, its value will be set to the previously stored value.  Persistent variables are saved as a [JSON](https://www.json.org/) object in a file *persistent_variables.json* in the experiments data folder. JSON is a human-readable format so the stored values can be inspected and edited using a text editor.
 
@@ -62,7 +62,7 @@ The setups tab is used to name and configure hardware setups.
 
 ![run_task_GUI.jpg](../media/GUI/setups_tab.png)
 
-If a name is specified for a setup the name will appear instead of the setups serial port in the board select drop down menu in the *Run task* and *Configure experiment* tabs.
+If a name is specified for a setup, the name will appear instead of the setups serial port in the board select drop down menu in the *Run task* and *Configure experiment* tabs.
 
 The configure button next to each setup bring up a menu of configuration options for that board.  Alternatively multiple boards can be selected with the checkboxes and configured with the *configure selected* buttons.
 

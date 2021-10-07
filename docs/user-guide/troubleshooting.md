@@ -2,26 +2,26 @@
 
 The page details how to fix common problems that can occur when using pyControl.  If you encounter a problem that is not covered on this page, please contact the [google group](https://groups.google.com/forum/#!forum/pycontrol).
 
-### Can't open GUI
+## Can't open GUI
 
 To open the GUI you need to run the file *pyControl_GUI.py* using Python.  One way to do this is to set the file association for *.py* files to Python 3 so that you can run the file by double-clicking it.  Alternatively you can open a command prompt, change directory to the folder containing *pyControl_GUI.py* and run the file with the command `python pyControl_GUI.py`.
 
 If the GUI does not open this is probably because you do not have the required [dependencies](../index.md#dependencies) installed, you should see an error message indicating which dependency could not be loaded. 
 
-### Board does not show up in GUI.
+## Board does not show up in GUI.
 
 If no pyboards that you connect to the computer show up in the GUI's board select dropdown menu, the problem may be caused by the computers operating system language being set to something other than English.  This changes the name that pyboards are given in the computers list of connected serial devices, which is used by the GUI to identify connected boards.  There are two possible ways to fix this problem:
 
-- Use the Micropython USB drivers rather than the generic windows USB serial device drivers.  This should ensure that pyboards are listed by the computers operating system as *Pyboard* irrespective of the operating system language.  Information on how to install the Micropython USB drivers is provided below in section *How to install the Micropython USB drivers*.
-#
+- Use the Micropython USB drivers rather than the generic windows USB serial device drivers.  This should ensure that pyboards are listed by the computers operating system as *Pyboard* irrespective of the operating system language.  Information on how to install the Micropython USB drivers is provided below in section [Installing Micropython USB drivers](#installing-micropython-usb-drivers).
+
 - Alternatively, change the computers operating system language to English.
 
 
-### Can't connect to acquisition board.
+## Can't connect to acquisition board.
 
 If the GUI status says 'Connection Failed' when you try to connect to the board, reset the board using the *Reset* button on the breakout board or Micropython microcontroller, then try connecting again.
 
-### Can't transfer files to pyboard
+## Can't transfer files to pyboard
 
 If you get a message saying *Error: Unable to transfer file.* this usually means that the filesystem on the pyboard has got corrupted. To fix this problem, reset the filesystem by following the instructions [here](https://docs.micropython.org/en/latest/pyboard/tutorial/reset.html#factory-reset-the-filesystem).  
 
@@ -31,21 +31,23 @@ After the filesystem reset has finished, reset the board again using the *Reset*
 
 To reduce the likelihood of filesystem corruption, it is strongly recommended to disable the pyboards filesystem from acting as a USB flash drive before loading the framework.  This can be done using the *'Disable USB flash drive'* option in the board config menu.
 
-### Board acting funny / reliability problems
+## Board acting funny / reliability problems
 
 If a board is acting strangely, e.g. giving error messages like *PyboardError('could not exec command')* or *pyControl Framework:Import error* try the following steps to fix the problem:
 
 - Disconnect from the board using the GUI and reset it using the *Reset* button either on the pyboard or on the pyControl breakout board.
-#
+
 -  If resetting the board does not solve the problem, it is possible the pyboard's filesystem has got corrupted.  Follow the instructions above under *Can' transfer files to pyboard* to reset the pyboard filesystem.
 
 These two steps will solve the great majority of board misbehavior.  If you continue to have reliabilty problems:
 
 - Make sure you have disabled the pyboard from acting as a USB flash drive using the 'Disable USB flash drive' option in the board config menu. This stops the computers from trying to access or modify the boards file system which can otherwise cause reliability issues.
-#
+
 - Use the Micropython USB drivers rather than the generic windows USB serial device drivers (see below).
 
-### How to install the Micropython USB drivers
+- If the version of Micropython running on the pyboard is <1.9 (version number is printed when the GUI connects to the board), [update Micropython](#updating-micropython).
+
+## Installing Micropython USB drivers
 
 By default windows will use generic USB serial device drivers for connected pyboards.  Normally this works fine, but if you are having reliability problems, or the GUI is not recognising connected pyboards due the computers operating system language being set to something other than English (see above), it is recommended to use the Micropython USB drivers.  
 
@@ -53,17 +55,17 @@ To check which drivers you are using, look in the windows device manager under *
 
 The Micropython USB driver is stored on the pyboards flash drive, so if you have disabled the pyboard from acting as a flash drive using the GUI's board config menu, you will need to re-enable it in order to access the driver file from windows. 
 
-### Unable to setup state machine
+## Unable to setup state machine
 
 If you get a message saying *Error: Unable to setup state machine* when you upload a task, this usually means that there is a problem with the task definition file which gives an error when it is imported.  The error message will be followed by a traceback saying the line in the task file where the error occurred and what the error was.  Task definition files are renamed *task_file.py* when they are transferred to the pyboard, so the traceback will refer to errors in the task definition file using this name.
 
-### Error during framework run
+## Error during framework run
 
 If you get a message saying *Error during framework run* while the framework is running, this usually indicates there is a problem with the task file that does not prevent the file being imported but only occurs while the task is running.  This is often due to errors in state behaviour functions which only occur when the function is called.  The error message will include a traceback indicating the line number in the task file where the error occurred and what the error was.
 
-### Upgrading Micropython
+## Updating Micropython
 
-Micropython boards (pyboards) need to be running a fairly recent version of the Micropython to work with pyControl.  When you connect to a pyboard with the GUI, the Micropython version installed on the board is displayed.  If the Micropython version is <1.9 update Micropython by doing the following (windows):
+Micropython boards (pyboards) need to be running Micropython version 1.9 (released May 2017) or later. When you connect to a pyboard with the GUI, the Micropython version installed on the board is displayed.  You can update Micropython by doing the following (Windows):
 
 1.  Download and install the software [DfuSe demo](https://www.st.com/en/development-tools/stsw-stm32080.html).
 2.  Download the latest numbered release of the firmware (e.g. v1.10) from the Micropython [download](http://micropython.org/download) page.  Note, there are two different versions of the pyboard microcontroller, *PYBv1.0* and *PYBv1.1*, which require different versions of the firmware.  The board version will be printed on the microcontroller, make sure to download the matching version of the firmware.  There are various different versions of the firmware for each board with names like *standard* and *double FP* - download the *standard* version.
