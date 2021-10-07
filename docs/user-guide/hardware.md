@@ -10,15 +10,15 @@ All pyControl hardware is open source, design files are in the [hardware reposit
 
 For information about synchronising pyControl with other hardware such as electrophysiology or video cameras see the [synchronisation](synchronisation.md) user guide.
 
+
 ## Safety
+!!! danger "Attention"
 
-As electronic devices pyControl hardware could pose a fire risk if used inappropriately.
-
-- All boards should be securely mounted using M3 bolts and insulating spacers to prevent short circuits due to contact with metal objects. 
-
-- Power down hardware when not in use.
-
-- When connecting external devices consider the amount of current they will draw.  See the [Breakout boards](hardware.md#breakout-boards) section below for more information.
+    As electronic devices, pyControl hardware could pose a fire risk if used inappropriately.
+    
+    - All boards should be securely mounted using M3 bolts and insulating spacers to prevent short circuits due to contact with metal objects. 
+    - Power down hardware when not in use.
+    - When connecting external devices consider the amount of current they will draw.  See the [Breakout boards](hardware.md#breakout-boards) section below for more information.
 
 ## Hardware definitions
 
@@ -243,15 +243,12 @@ Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 o
 | Power driver (POW) B         | 7                    |
 | Special function             | 5                    |
 
----
-> ** !!! Electrical safety !!! **
->
-> When connecting custom devices to behaviour ports it is important to consider the amount of current they will draw.  Several components limit the maximum current that can safely be drawn: 
->
-> - The driver ICs on driver lines (see below) can sink up to 150mA per driver line.
-> - Cat 5 network cable (used to connect devices to behaviour ports) can carry up to 0.6A per conductor.  The maximum current that can safely be drawn in total from the 12V and 5V lines on the behaviour port is 0.6A as all the current returns via the ground line.
-> - The voltage regulator on the breakout board that powers the behaviour port 5V lines can source aproximately 300mA of current, which is shared by the 5V lines on all behaviour ports.  
----
+!!! note "Current draw"
+    When connecting custom devices to behaviour ports it is important to consider the amount of current they will draw.  Several components limit the maximum current that can safely be drawn: 
+
+    - The driver ICs on driver lines (see below) can sink up to 150mA per driver line.
+    - Cat 5 network cable (used to connect devices to behaviour ports) can carry up to 0.6A per conductor.  The maximum current that can safely be drawn in total from the 12V and 5V lines on the behaviour port is 0.6A as all the current returns via the ground line.
+    - The voltage regulator on the breakout board that powers the behaviour port 5V lines can source aproximately 300mA of current, which is shared by the 5V lines on all behaviour ports.  
 
 The power driver lines are for controlling loads that need higher currents or voltages than can be provided directly from a microcontroller pin.  These lines are connected to low side driver ICs ([datasheet](https://toshiba.semicon-storage.com/info/docget.jsp?did=29893)) on the breakout board, which are in turn controlled by pins on the microcontroller. Low side drivers connect the negative side of the load to ground when turned on:
 
@@ -508,9 +505,8 @@ Class for controlling an [EasyDriver](http://www.schmalzhaus.com/EasyDriver/) st
 The stepper motor adaptor board connects an Easydriver to a pyControl behaviour port.
 
 
-> ** !!! Electrical safety !!! **
-
->The stepper motor driver can draw power either from the 12V line on the behaviour port or from a 12V power supply connected to the stepper motor board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If your stepper motor requires more current, connect a 12V power supply directly to the stepper motor driver.  The current requirements for some common stepper motors are detailed in the EasyDriver documentation.
+!!! note "Maximum current"
+    The stepper motor driver can draw power either from the 12V line on the behaviour port or from a 12V power supply connected to the stepper motor board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If your stepper motor requires more current, connect a 12V power supply directly to the stepper motor driver.  The current requirements for some common stepper motors are detailed in the EasyDriver documentation.
 
 
 [Github](https://github.com/pyControl/hardware/tree/master/Stepper_driver)
@@ -629,9 +625,8 @@ The port expander board uses serial to parallel IO expander ICs ([datasheet](htt
 Each port on the port expander works like a standard behaviour port, with 2 DIO lines, 2 driver lines for high current loads, as well as ground, 5V and 12V lines.  Digital outputs on the port expander do not support the `Digital_output.pulse()` method.
 
 
-> ** !!! Electrical safety !!! **
-
-> The port expander can draw power either from the behaviour port or from a 12V power supply connected to the expander board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If the devices plugged into the port expander may draw more than 0.6A current in total, connect a power supply directly to the port expander board.
+!!! note "Maximum current"
+    The port expander can draw power either from the behaviour port or from a 12V power supply connected to the expander board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If the devices plugged into the port expander may draw more than 0.6A current in total, connect a power supply directly to the port expander board.
 
 
 **Required driver files:** *_port_expander.py*, *_MCP.py*
