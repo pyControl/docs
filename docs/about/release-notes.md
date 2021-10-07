@@ -82,22 +82,6 @@ Tools:
 
 ---
 
-**Version 1.3.2** 27/07/2018
-
-
-CLI/GUI:
-
-- Bug fixes and reliability improvements.
-
-Framework:
-
-- Added Lickometer and Analog LED driver devices.
-
-Tools:
-
-- Added Rsync alignment code
-
----
 
 **Version 1.3.2** 27/07/2018
 
