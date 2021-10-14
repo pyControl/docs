@@ -6,6 +6,9 @@ site_author: Champalimaud Foundation
 theme:
     name: readthedocs
 
+markdown_extensions:
+    - admonition
+
 repo_url: https://github.com/pycontrol/pycontrol-docs
 
 nav:
