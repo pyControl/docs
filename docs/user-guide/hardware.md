@@ -176,6 +176,8 @@ Pyboard pins 'X5' and 'X6' support analog output.  On the breakout board they ar
 
 ## Breakout boards
 
+![Breakout 1.2 bracket](../media/hardware/breakout-1-2-bracket.jpg)
+
 Typically when pyControl is used to run a behavioural experiment, the pyboard microcontroller is mounted on a breakout board, which interfaces it with *behaviour ports*, BNC connectors, indicator LEDs and user pushbuttons. 
 
 The current version 1.2 of the pyControl Breakout board has 6 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and user pushbuttons.  
@@ -183,6 +185,8 @@ The current version 1.2 of the pyControl Breakout board has 6 RJ45 behaviour por
 The BNC connectors connect directly to pins on the microcontroller.  All 4 BNC connectors can be used as digital inputs or outputs.  When used as digital outputs they have a 3.3V high logic level, which can typically be used directly as an input for systems with 5V logic.  When used as digital inputs, BNC-1 and BNC-2 work with 5V  or 3.3V logic level input signals, but DAC-1 and DAC-2 are not 5V tolerant and should not be used with signals >3.3V.   All 4 BNC connectors can also be used as analog inputs, but when used in this mode the input signal should not exceed 3.3V.  Connectors DAC-1 and DAC-2 can also be used as analog ouputs.
 
 See below for information about pinout and function of lines on the behaviour ports.  On breakout board 1.2, all six behaviour ports have the standard 2 digital input/output (DIO) lines, 2 POW driver lines, and 5V, 12V and ground lines.  Ports 1 & 2 have an additional driver line *POW_C*.  Ports 3 and 4 have an additional DIO line *DIO_C* which also supports analog output (DAC).  Ports 3 and 4 support I2C and ports 1,3 & 4 support UART serial communication over their DIO lines.  Useful resources for understanding the additional functionallity of the lines on each port are the [Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf) and [device definition file](https://github.com/pyControl/code/blob/master/devices/_breakout_1_2.py) for the breakout board and the [pyboard quick reference](https://docs.micropython.org/en/latest/pyboard/quickref.html).
+
+The hardware repository has designs for [enclosures and brackets](https://github.com/pyControl/hardware/tree/master/Breakout_board/enclosures%20and%20brackets) for mounting the breakout board PCB.
 
 [Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf)     [Github](https://github.com/pyControl/hardware/tree/master/Breakout_board)
 
