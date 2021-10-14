@@ -178,13 +178,20 @@ Pyboard pins 'X5' and 'X6' support analog output.  On the breakout board they ar
 === "Overview"
     Typically when pyControl is used to run a behavioural experiment, the micropython microcontroller is mounted on a breakout board, which interfaces it with *behaviour ports* (see below), BNC connectors, indicator LEDs and user pushbuttons. 
 
-    The current version 1.2 of the pyControl Breakout board has 6 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and user pushbutton.  
+    ![Breakout 1.2 bracket](../media/hardware/breakout-1-2-bracket.jpg)
 
-    All 4 of the BNC connectors can be used as digital inputs or outputs.  When used as digital outputs they have a 3.3V high logic level, which can typically be used directly as an input for systems with 5V logic.  When used as digital inputs, BNC-1 and BNC-2 work with 5V  or 3.3V logic level input signals, but DAC-1 and DAC-2 are not 5V tolerant and should not be used with signals >3.3V.   All 4 BNC connectors can also be used as analog inputs, but when used in this mode the input signal should not exceed 3.3V.  Connectors DAC-1 and DAC-2 can also be used as analog ouputs.
+    Typically when pyControl is used to run a behavioural experiment, the pyboard microcontroller is mounted on a breakout board, which interfaces it with *behaviour ports*, BNC connectors, indicator LEDs and user pushbuttons. 
 
-    All six behaviour ports have the standard 2 DIO lines, 2 POW driver lines, and 5V, 12V and ground lines.  Ports 1 & 2 have an additional driver line *POW_C*.  Ports 3 and 4 have an additional DIO line *DIO_C* which also supports analog output (DAC).  Ports 3 and 4 support I2C and ports 1,3 & 4 support UART serial communication over their DIO lines.
+    The current version 1.2 of the pyControl Breakout board has 6 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and user pushbuttons.  
 
-    [Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf)     [GitHub](https://github.com/pyControl/hardware/tree/master/Breakout_board)
+    The BNC connectors connect directly to pins on the microcontroller.  All 4 BNC connectors can be used as digital inputs or outputs.  When used as digital outputs they have a 3.3V high logic level, which can typically be used directly as an input for systems with 5V logic.  When used as digital inputs, BNC-1 and BNC-2 work with 5V  or 3.3V logic level input signals, but DAC-1 and DAC-2 are not 5V tolerant and should not be used with signals >3.3V.   All 4 BNC connectors can also be used as analog inputs, but when used in this mode the input signal should not exceed 3.3V.  Connectors DAC-1 and DAC-2 can also be used as analog ouputs.
+
+    See below for information about pinout and function of lines on the behaviour ports.  On breakout board 1.2, all six behaviour ports have the standard 2 digital input/output (DIO) lines, 2 POW driver lines, and 5V, 12V and ground lines.  Ports 1 & 2 have an additional driver line *POW_C*.  Ports 3 and 4 have an additional DIO line *DIO_C* which also supports analog output (DAC).  Ports 3 and 4 support I2C and ports 1,3 & 4 support UART serial communication over their DIO lines.  Useful resources for understanding the additional functionallity of the lines on each port are the [Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf) and [device definition file](https://github.com/pyControl/code/blob/master/devices/_breakout_1_2.py) for the breakout board and the [pyboard quick reference](https://docs.micropython.org/en/latest/pyboard/quickref.html).
+
+    The hardware repository has designs for [enclosures and brackets](https://github.com/pyControl/hardware/tree/master/Breakout_board/enclosures%20and%20brackets) for mounting the breakout board PCB.
+
+    [Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf)     [Github](https://github.com/pyControl/hardware/tree/master/Breakout_board)
+
 
     **Front:**
     ![Breakout 1.2 front](../media/hardware/breakout-1-2-front.jpg)
@@ -244,17 +251,19 @@ Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 o
 | Special function             | 5                    |
 
 !!! note "Current draw"
-    When connecting custom devices to behaviour ports it is important to consider the amount of current they will draw.  Several components limit the maximum current that can safely be drawn: 
+    When connecting custom devices to behaviour ports it is important to consider the amount of current they will draw.  Several factors limit the maximum current that can safely be drawn: 
 
-    - The driver ICs on driver lines (see below) can sink up to 150mA per driver line.
-    - Cat 5 network cable (used to connect devices to behaviour ports) can carry up to 0.6A per conductor.  The maximum current that can safely be drawn in total from the 12V and 5V lines on the behaviour port is 0.6A as all the current returns via the ground line.
+    - Cat 5 network cable (used to connect devices to behaviour ports) uses 24AWG wires for each conductor.  600mA is a conservative estimate for the maximum safe current per conductor (see [here](https://www.powerstream.com/Wire_Size.htm)).  
+    - The ICs which control the driver (POW) lines (see below) can only sink a certain amount of current without overheating.  The maximum safe current depends on the number of driver lines on a single IC that are on at the same time.  Currents up to 200mA are OK irrespective of the number of driver lines on.  The maximum current with 4 lines on continuously is 300mA, and with a single line 400mA. One IC controls the driver lines for ports 1-3 and annother for ports 4-6. For more information see this [application note](https://toshiba.semicon-storage.com/info/docget.jsp?did=30610).
     - The voltage regulator on the breakout board that powers the behaviour port 5V lines can source aproximately 300mA of current, which is shared by the 5V lines on all behaviour ports.  
+
+The behaviour port digital input/output (DIO) lines connect directly to pins on the microcontroller.  All DIO lines can be used as either digital inputs or outputs. These lines use 3.3V logic but can generally be interfaced directly with 5V logic systems and are 5V tolerant.  Some of the microcontroller pins on DIO lines have additional analog input/output or serial communication capability (see above).
 
 The power driver lines are for controlling loads that need higher currents or voltages than can be provided directly from a microcontroller pin.  These lines are connected to low side driver ICs ([datasheet](https://toshiba.semicon-storage.com/info/docget.jsp?did=29893)) on the breakout board, which are in turn controlled by pins on the microcontroller. Low side drivers connect the negative side of the load to ground when turned on:
 
 ![Driver diagram](../media/hardware/driver-diagram.jpg)
 
-The positive side of the load can be connected to any voltage up to +12V.  Each driver line can sink up to 150mA of current. Putting more current through the driver lines can damage the driver IC, and could pose a fire risk.  The driver ICs are mounted in sockets and can be easily replaced if damaged.  The driver ICs have built in clamp diodes connected to the +12V supply so can be used directly to drive inductive loads such as solenoids.
+The positive side of the load can be connected to any voltage up to +12V.  Each driver line can sink 200mA of current, with higher currents possible under some conditions (see above).  The driver ICs are mounted in sockets and can be easily replaced if damaged.  They have built in clamp diodes connected to the +12V supply so can be used directly to drive inductive loads such as solenoids.
 
 The driver lines can be used as digital outputs by connecting them to a positive voltage via a pull-up resistor:
 
@@ -262,7 +271,7 @@ The driver lines can be used as digital outputs by connecting them to a positive
 
 When the driver line (POW) is off the output will be pulled up to 5V, when the driver line is on it will pull the output down to 0V.  This can be useful if you need to control devices that require a digital logic signal with a voltage higher than 3.3V (though many 5V logic devices work fine with 3.3V inputs), or if you just need more digital outputs.  
 
-The special function pin has different functions on different ports, for example it may be an extra driver line or a pin with digital to analog (DAC) functionality, see below for more information.
+The special function pin has different functions on different ports, for example it may be an extra driver line or a pin with digital to analog (DAC) functionality, see above for more information.
 
 Typically devices which plug into a behaviour port have several inputs and outputs, for example the [Poke](#poke) device comprises an IR beam, stimulus LED and solenoid. Rather than having to specify each input and output on a hardware device separately, each device has its own Python class which takes a behaviour port as an argument, allowing it to be instantiated with a single command. For example the hardware definition below specifies that 3 nose pokes are plugged into ports 1-3 of Breakout board 1.2.
 
