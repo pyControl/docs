@@ -506,9 +506,9 @@ stim.pulse(freq=20, duty_cycle=10, n_pulses=10) # Turn on 10 pulse train at 20Hz
 
 ### Stepper motor
 
-Class for controlling an [EasyDriver](http://www.schmalzhaus.com/EasyDriver/) stepper motor driver or any driver which takes a *step* and *direction* pin as control inputs.
+Class for controlling an EasyDriver stepper motor driver or any driver which takes a *step* and *direction* pin as control inputs.
 
-The stepper motor adaptor board connects an Easydriver to a pyControl behaviour port.
+The stepper motor adaptor board connects an Easydriver to a pyControl behaviour port.  It can drive bipolar stepper motors with up to 750mA per phase.  The maximum current can be adjusted from 150mA to 750mA using the potentiometer on the easy driver board.  The stepper motor driver is powered with a 12V supply, but as it is a controlled current driver it can safely be used with lower voltage stepper motors as long as the motors maximum current is not exceeded.  For more information see the Questions and Answers section of the [EasyDriver](http://www.schmalzhaus.com/EasyDriver/) documentation.
 
 
 !!! note "Maximum current"
