@@ -1,5 +1,27 @@
 # Release Notes
 
+
+## Version 1.6.1 --- 22/11/2021
+
+NOTE: **You will need to reload the framework onto your pyboards** (using the board config menu) after updating the GUI to this release, due to changes in the communication protocol between the board and the GUI.
+
+GUI:
+
+- Run task tab now displays current state, most recent event and print line.
+
+- GUI style unified across platforms.
+
+- GUI font sizes now configurable in gui_settings.py.
+
+- Fixed bug which prevented events from plotting in Pyqtgraph version > 0.11.0.
+
+- Made communication from pyboard to computer during framework run more robust
+  to unexpected output from pyboard.
+
+- Various minor bug fixes.
+
+---
+
 ## Version 1.6 --- 25/11/2020
 GUI: 
 

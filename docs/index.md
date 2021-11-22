@@ -69,7 +69,7 @@ Once you have a working Python 3 installation on the computer, run the windows c
 python -m pip install numpy
 python -m pip install pyserial
 python -m pip install pyqt5
-python -m pip install pyqtgraph==0.11.0
+python -m pip install pyqtgraph
 ```
 
 You should then be able to launch the GUI by double-clicking the file *pyControl_GUI.py* in the pyControl root directory.  
