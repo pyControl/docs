@@ -107,4 +107,4 @@ If you encounter problems take a look at the [troubleshooting](user-guide/troubl
 
 ## Developer's guide
 
-Do you want to contribute for the pyControl project? You can find more information [here](/contributing).
+Do you want to contribute for the pyControl project? You can find more information [here](contributing.md).
