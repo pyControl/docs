@@ -6,7 +6,7 @@
 
 ## Overview
 
-pyControl is a system of open source hardware and software for controlling behavioural experiments in neuroscience and psychology, built around the [Micropython](https://micropython.org/) microcontroller.
+pyControl is a system of open source hardware and software for controlling behavioural experiments in neuroscience and psychology, built around the [MicroPython](https://micropython.org/) microcontroller.
 
 pyControl makes it easy to program complex behavioural tasks using a clean, intuitive, and flexible syntax for specifying tasks as state machines. User created task definition files, written in Python, run directly on the microcontroller, supported by pyControl framework code.  This gives users the power and simplicity of Python for specifying task behaviour, while allowing low-level access to the microcontroller hardware directly from task code.  For more information see [programming tasks](user-guide/programming-tasks.md).
 
@@ -29,7 +29,6 @@ If you do fiber photometry experiments, you may be interested in pyControl's sis
 ---
 
 ## Getting started
-
 
 ### Installation
 
@@ -61,7 +60,7 @@ pyControl has the following dependencies:
 - pyqt5
 - pyqtgraph 
 
- On a windows machine that does not already have Python installed, the simplest way to install Python is to download an installer from [python.org](https://www.python.org/downloads/). To ensure you can run Python files (including the pyControl GUI) by double-clicking on them, select the options 'Add Python to PATH', 'Add Python to environment variables', and 'Associate files with Python' during installation.  Note; selecting these options when installing Python will cause the Python version you are installing to take precedence over any other version of Python installed on the computer, so may break previous Python based workflows on the computer.
+ On a Windows machine that does not already have Python installed, the simplest way to install Python is to download an installer from [python.org](https://www.python.org/downloads/). To ensure you can run Python files (including the pyControl GUI) by double-clicking on them, select the options 'Add Python to PATH', 'Add Python to environment variables', and 'Associate files with Python' during installation.  Note; selecting these options when installing Python will cause the Python version you are installing to take precedence over any other version of Python installed on the computer, so may break previous Python based workflows on the computer.
 
 Once you have a working Python 3 installation on the computer, run the windows command prompt (cmd.exe) as an administrator and enter the following commands to install the required packages:
 

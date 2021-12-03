@@ -19,7 +19,7 @@ class Rsync(pin, event_name='rsync', mean_IPI=5000, pulse_dur=50)
 
 Arguments:
 
-`pin` Micropython pin to output sync pulses on.
+`pin` MicroPython pin to output sync pulses on.
 
 `event_name` Name of the sync pulse events in pyControl data output.
 
