@@ -8,6 +8,8 @@ theme:
 
 markdown_extensions:
     - admonition
+    - toc:
+        permalink: True
 
 repo_url: https://github.com/pycontrol/pycontrol-docs
 

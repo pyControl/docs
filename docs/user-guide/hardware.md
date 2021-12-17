@@ -67,13 +67,13 @@ hw.off()  # Turn off all outputs.
 
 ## Inputs and outputs
 
-The following hardware classes control the behaviour of a single pin on the Micropython microcontroller.
+The following hardware classes control the behaviour of a single pin on the MicroPython microcontroller.
 
 ---
 
 ### Digital input
 
-The digital input class generates pyControl framework events when a specified pin on the Micropython board changes state. Seperate events can be specified for rising and/or falling edges. 
+The digital input class generates pyControl framework events when a specified pin on the MicroPython board changes state. Seperate events can be specified for rising and/or falling edges. 
 
 By defalt debouncing is used to prevent multiple events being triggered very close together in time if the edges are not clean.  The debouncing method used ensures that transient inputs shorter than the debounce duration still generate rising and falling edges.  Debouncing incurs some overheads so should be turned off for inputs with clean edges and high event rates.
 
@@ -85,7 +85,7 @@ class Digital_input(pin, rising_event=None, falling_event=None, debounce=5, deci
 
 *Arguments:*
 
-`pin` Micropython pin to use
+`pin` MicroPython pin to use
 
 `rising_event` Name of event triggered on rising edges.
 
@@ -113,7 +113,7 @@ class Digital_output(pin, inverted=False, pulse_enabled=False)
 
 *Arguments:*
 
-`pin` Micropython pin to use.
+`pin` MicroPython pin to use.
 
 `inverted` If `True`, the pin voltage is set high when the input is turned off and low when turned on.
 
@@ -148,7 +148,7 @@ class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, 
 
 *Arguments:*
 
-`pin` Micropython pin to use. Only a subset of Micropython pins support analog to digital conversion (ADC) (see pyboard [quickref](https://docs.micropython.org/en/latest/pyboard/pyboard/quickref.html)).
+`pin` MicroPython pin to use. Only a subset of MicroPython pins support analog to digital conversion (ADC) (see pyboard [quickref](https://docs.micropython.org/en/latest/pyboard/pyboard/quickref.html)).
 
 `name` Name of the analog input, used to identify data files generated when input is recorded.
 
@@ -170,7 +170,7 @@ class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, 
 
 ### Analog outputs
 
-Pyboard pins 'X5' and 'X6' support analog output.  On the breakout board they are connected to the BNC connectors labeled DAC-1 and DAC-2 and also to the special function pins on behaviour ports 3 and 4 respectively.  To use these pins as analog outputs see the [pyb.DAC](https://docs.micropython.org/en/latest/library/pyb.DAC.html) class in the Micropython docs.
+Pyboard pins 'X5' and 'X6' support analog output.  On the breakout board they are connected to the BNC connectors labeled DAC-1 and DAC-2 and also to the special function pins on behaviour ports 3 and 4 respectively.  To use these pins as analog outputs see the [pyb.DAC](https://docs.micropython.org/en/latest/library/pyb.DAC.html) class in the MicroPython docs.
 
 ---
 
@@ -318,7 +318,7 @@ Options for creating an electrical connection are:
 - Connect to one or more lines on a behaviour port.  The easiest way to do this is usually using the screw terminal connector on the port adapter board (see above).  This is a good option if you need to connect multiple signals, and the 5V or 12V lines can be used to power small external devices.  For example, we typically mount a port adapter board on the inside of the setup's sound attenuating chamber to control the house light, power the fan and send sync pulses to the camera, as shown [here](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small).
 - Design a custom printed circuit board (PCB) with an RJ45 connector to connect to a breakout board behaviour port.   This requires more work initially, but may make sense if you need to implement custom circuitry and want to scale to multiple setups.   Complete design files for all the pyControl devices are in the hardware repository and provide a good starting point for thinking about your own designs.  They were created in [Eagle](https://www.autodesk.co.uk/products/eagle/overview) PCB, which is available as a freeware version (with a restriction on board size, but still sufficient for many applications) and also is free for academic use.
 
-To define custom external hardware in your hardware definition or task file there are two options.  The simplest is to instantiate the individual inputs and/or outputs directly in the hardware definition.  These may be pyControl `Digital_input`, `Analog_input` or `Digital_output` objects (see above), or Micropython objects; [pyb.DAC](https://docs.micropython.org/en/latest/library/pyb.DAC.html)  for analog output, and [pyb.I2C](https://docs.micropython.org/en/latest/library/pyb.I2C.html) or [pyb.UART](https://docs.micropython.org/en/latest/library/pyb.UART.html) for serial communication.  
+To define custom external hardware in your hardware definition or task file there are two options.  The simplest is to instantiate the individual inputs and/or outputs directly in the hardware definition.  These may be pyControl `Digital_input`, `Analog_input` or `Digital_output` objects (see above), or MicroPython objects; [pyb.DAC](https://docs.micropython.org/en/latest/library/pyb.DAC.html)  for analog output, and [pyb.I2C](https://docs.micropython.org/en/latest/library/pyb.I2C.html) or [pyb.UART](https://docs.micropython.org/en/latest/library/pyb.UART.html) for serial communication.  
 
 Alternatively, if an external hardware device comprises several inputs and/or outputs, or if there is additional code needed to control it, it may be worthwhile writing a Python class representing it.  For example, the nose-poke device comprises an IR beam,  a stimulus LED and a solenoid, all connected to a single behaviour port.  You could instantiate and use the individual inputs and outputs like this:
 
@@ -407,7 +407,7 @@ left_poke.SOL.off() # Turn off the solenoid.
 
 ### Audio board
 
-Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the Micropython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.
+Audio amplifier board for driving a speaker to produce auditory stimuli.  The board uses the MicroPython [DAC](https://docs.micropython.org/en/latest/pyboard/library/pyb.DAC.html) for stimulus generation.  The audio board must be plugged into a port on the breakout board which supports DAC output and I2C serial communication (used to set the volume) - ports 3 and 4 on breakout board 1.2 are suitable.
 
 In addition to the digital volume control there is a manual volume control knob (the small blue potentiometer on the board) that can be used to calibrate the audio volume.
 
@@ -550,7 +550,7 @@ motor_2 = Stepper_motor(step_pin='X1', direction_pin='X2') # Instantiating drive
 
 ### Rotary encoder
 
-Class for acquiring data from a rotary encoder, used e.g. to measure the speed of a running wheel.  The encoder must be an incremental rotary encoder that outputs a quadrature signal. The rotary encoder class can stream the position or velocity of the encoder to the computer at a specified sampling rate, and generate framework events when the position/velocity goes above/below a specified threshold.  Currently the rotary encoder class expects the two lines carrying the quadrature signal to be connected to Micropython pins 'X1' and 'X2' (Port 1 DIO_A and DIO_B on breakout board 1.2).
+Class for acquiring data from a rotary encoder, used e.g. to measure the speed of a running wheel.  The encoder must be an incremental rotary encoder that outputs a quadrature signal. The rotary encoder class can stream the position or velocity of the encoder to the computer at a specified sampling rate, and generate framework events when the position/velocity goes above/below a specified threshold.  Currently the rotary encoder class expects the two lines carrying the quadrature signal to be connected to MicroPython pins 'X1' and 'X2' (Port 1 DIO_A and DIO_B on breakout board 1.2).
 
 The rotary encoder adaptor board connects an Avago HEDM-55xx series rotary encoder ([datasheet](https://docs.broadcom.com/docs/AV02-1046EN)) to a pyControl behaviour port.  The rotary encoder adaptor must be plugged into port_1 on breakout board 1.2.
 
@@ -775,7 +775,7 @@ Lickometer.SOL_2.off() # Turn off solenoid 2.
 
 ### Analog LED driver
 
-An LED driver board with analog control of the LED current from 1 - 400mA using the Micropython DAC.  The Analog LED driver needs to be connected to a behaviour port that has a DAC output (ports 3 and 4 on breakout board 1.2).
+An LED driver board with analog control of the LED current from 1 - 400mA using the MicroPython DAC.  The Analog LED driver needs to be connected to a behaviour port that has a DAC output (ports 3 and 4 on breakout board 1.2).
 
 **Required driver files:** *_analog_LED.py*
 
@@ -830,7 +830,7 @@ player.set_enabled(left=True, right=False) # Enable left speaker output, disable
 
 ### MCP23017 
 
-The MCP23017 is a serial to parallel IO expander IC ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) which can be used to add additional digital input/output lines to the Micropython microcontroller. The IC must be connected to the Micropython via an I2C serial connection, which are available on the DIO pins of ports 3 and 4 of breakout board 1.2.  If you plan to use MCP23017 pins as pyControl digital inputs the INTA interrupt pin on the MCP23017 must be connected to a DIO pin on the Micropython. The pins on the MCP23017 can be used as standard pyControl Digital_input and Digital_output objects as shown in the usage example below.
+The MCP23017 is a serial to parallel IO expander IC ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) which can be used to add additional digital input/output lines to the MicroPython microcontroller. The IC must be connected to the MicroPython via an I2C serial connection, which are available on the DIO pins of ports 3 and 4 of breakout board 1.2.  If you plan to use MCP23017 pins as pyControl digital inputs the INTA interrupt pin on the MCP23017 must be connected to a DIO pin on the MicroPython. The pins on the MCP23017 can be used as standard pyControl Digital_input and Digital_output objects as shown in the usage example below.
 
 **Required driver files:** *_MCP.py*
 
