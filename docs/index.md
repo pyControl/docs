@@ -38,7 +38,7 @@ Either way you obtain the code, you will have the following folder structure:
 
 ```
 - pyControl
-	- gui          # Graphical user interface
+    - gui          # Graphical user interface
     - com          # Serial communication and data logging
     - config       # Configuration files
     - data         # Behavioural data.
