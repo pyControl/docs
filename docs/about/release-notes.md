@@ -1,9 +1,20 @@
 # Release Notes
+[Releases on GitHub](https://github.com/pyControl/code/releases)
+## Version 1.6.2 --- 23/12/2021
 
+!!! note "Note"
+    **You will need to reload the framework onto your pyboards** (using the board config menu) after updating the GUI to this release, due to changes in the communication protocol between the board and the GUI.
+
+Framework:
+
+- All pyControl specific functions are now imported by the user into the task file from the pyControl.utility module, rather than some functions being patched onto the task file after it has been imported by the framework.
+
+- The button example task has been modified to match the example task in the pyControl manuscript.  An additional version of the button task using named rather than * imports has been added for comparison of the two import methods
 
 ## Version 1.6.1 --- 22/11/2021
 
-NOTE: **You will need to reload the framework onto your pyboards** (using the board config menu) after updating the GUI to this release, due to changes in the communication protocol between the board and the GUI.
+!!! note "Note"
+    **You will need to reload the framework onto your pyboards** (using the board config menu) after updating the GUI to this release, due to changes in the communication protocol between the board and the GUI.
 
 GUI:
 
