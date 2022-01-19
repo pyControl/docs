@@ -4,11 +4,11 @@
 
 Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a *task definition file* written in Python.  Example task definition files are provided in the [tasks/example](https://github.com/pyControl/code/tree/master/tasks/example) folder.
 
-Task definition files run directly on the Micropython microcontroller, not on the computer. Python modules such as *Numpy* that are installed on the computer will therefore not be available in the task definition.  For a list of the modules available in Micropython see the [Micropython docs](https://docs.micropython.org/en/latest/library/index.html).
+Task definition files run directly on the MicroPython microcontroller, not on the computer. Python modules such as *Numpy* that are installed on the computer will therefore not be available in the task definition.  For a list of the modules available in MicroPython see the [MicroPython docs](https://docs.micropython.org/en/latest/library/index.html).
 
 ## Imports
 
-Every task definition file starts by importing some utility functions and constants:
+Every task definition file starts by importing a set of pyControl specific functions and variables contained in the [pyControl.utility](https://github.com/pyControl/code/blob/master/pyControl/utility.py) module.  These are typically imported as:
 
 ```python
 from pyControl.utility import *
@@ -20,13 +20,23 @@ If you are using a hardware definition file to specify external hardware you als
 import hardware_definition as hw
 ```
 
-Alternatively if you want to instantiate hardware directly in the task file you can import the hardware classes directly with:
+Alternatively, if you want to instantiate hardware directly in the task file you can import the hardware classes directly with:
 
 ```python
 from devices import *
 ```
 
 See the [hardware](hardware.md) docs for more information about defining hardware used in a task.
+
+The `from module import *` syntax imports the contents of the module directly into the namespace of the task definition file, so e.g. to use the `goto_state` function contained in the `pyControl.utility` module you simply write `goto_state` in the task file.  This is not generally considered good practice in Python programming because it can create ambiguity about which function comes from which module, and can cause collisions where imported functions overwrite those already defined if they have the same name (see discussion [here](https://stackoverflow.com/questions/2360724/what-exactly-does-import-import)).  An alternative is to import modules under a specific name and then access their contents as attributes:
+
+```python
+import pyControl.utility as pc # Import the pyControl.utility module and give it the name pc
+
+pc.goto_state('state_A') # Call the goto_state fuction from the pyControl.utility module.
+```
+
+We typically use `from pyControl.utility import *` as we think it results in a cleaner task file syntax, and given the simplicity of typical task file imports, name collisions are unlikely to cause problems in practice. You can use whichever import style you prefer. The example tasks folder contains a version of the button example using [* imports](https://github.com/pyControl/code/blob/master/tasks/example/button.py) and a version using [named imports](https://github.com/pyControl/code/blob/master/tasks/example/button_named_imports.py), so you can compare the resulting code.
 
 ## States
 
@@ -72,7 +82,7 @@ def state_A(event):
         # do something else.
 ```
 
-Any valid Micropython code can be put in state behaviour functions, though the code should execute fast as it will block any other behaviour of the state machine while it is executing.
+Any valid MicroPython code can be put in state behaviour functions, though the code should execute fast as it will block any other behaviour of the state machine while it is executing.
 
 ## Changing state
 
@@ -243,34 +253,21 @@ The following do's and don'ts are good practice for ensuring that tasks run stab
 
 - **Avoid polling:** Polling is the process of regularly checking the state of an input to detect when to do something.  It is rarely the right thing to do in pyControl tasks, as polling an input at high frequency ties up processor time which could affect framework performance.  For digital inputs it is always preferably to detect changes in the state of the input using framework events generated on rising and/or falling edges by the [Digital_input](hardware.md#digital-input) class, as no resources are used except when the change actually occurs.  For analog inputs,  where possible use the [Analog_input](hardware.md#analog-input)'s ability to generate framework events when a specified threshold is crossed rather than polling the value of the input.  Polling may be necessary if you need to respond to events send over a serial connection (e.g. from an external device that communicates via UART).  In this case either poll at the lowest frequency necessary to ensure an acceptable response latency to the serial input, or if possible trigger the serial read using a separate digital input from the external device.
 - **Input debouncing:** By default, pyControl digital inputs implement debouncing which prevents edges occurring closer together than a specified threshold (default 5ms) from generating multiple framework events.  For inputs generated by sensing physical processes (e.g. a switch closing or IR beam break), this is usually what you want, as the edges generated may be ragged, causing multiple logic level threshold crossings on a single physical event.  However debouncing incurs some additional processing cost when edges occur, so should be turned off on digital inputs that will receive events at high rates with clean edges (e.g. from a camera on each frame of a video), by using the argument `debounce=False` when the digital input is instantiated.
-- **Garbage collection** Micropython has a garbage collector which runs when needed to free up memory by removing variables that are no longer in use.  Garbage collection takes several ms to run and events generated by external inputs or expiring timers that occur during garbage collection will be processed once it has finished.  If an occasional delay of a couple of ms would be an issue in your task, it is possible to manually trigger garbage collection at a time when it will not cause problems (e.g in the inter-trial interval).  To do this, import the garbage collection module into the task file with `import gc` and call garbage collection with `gc.collect()`.
-
-## Where do pyControl functions come from
-
-If you are familiar with Python you may be wondering where the pyControl specific functions used in task files, such as `goto_state` etc, come from.   Some of these functions are imported from the modules [pyControl.utility](https://github.com/pyControl/code/blob/master/pyControl/utility.py) and [devices](https://github.com/pyControl/code/blob/master/devices/__init__.py) using the `from x import *` syntax, which imports the contents of the module directly into the namespace of the importing script:
-
-```python
-from pyControl.utility import *
-from devices import *
-```
-
-The *utility* module contains the random number and math functions detailed below, variables used to define time intervals (e.g. `second`, `minute`, etc), and the `v` object which user task variables are defined as attribute of (see above).   The *devices* module contains hardware classes  representing inputs and outputs (e.g.  `Digital_input`) and the classes representing devices such as breakout boards nose-pokes.  Though it is not generally recommended in Python to use the  `from x import *` syntax because it creates ambiguity about where function come from and can lead to collisions where imported functions overwrite those already defined (see discussion [here](https://stackoverflow.com/questions/2360724/what-exactly-does-import-import)),  we think that the resulting cleaner task file syntax justifies its use here.
-
-The state machine specific functions (e.g. `goto_state`, `set_timer` etc.) are not imported at all but rather added to the module after it is imported when the [State_machine](https://github.com/pyControl/code/blob/master/pyControl/state_machine.py) object is instantiated, a process known as [monkey patching](https://stackoverflow.com/questions/5626193/what-is-monkey-patching).  This is a holdover from early pyControl development and is not particularly Pythonic, but in practice works reliably so has not been changed.
+- **Garbage collection** MicroPython has a garbage collector which runs when needed to free up memory by removing variables that are no longer in use.  Garbage collection takes several ms to run and events generated by external inputs or expiring timers that occur during garbage collection will be processed once it has finished.  If an occasional delay of a couple of ms would be an issue in your task, it is possible to manually trigger garbage collection at a time when it will not cause problems (e.g in the inter-trial interval).  To do this, import the garbage collection module into the task file with `import gc` and call garbage collection with `gc.collect()`.
 
 ## Function reference
+
+The functions and classes detailed below are contained in the `pyControl.utility` module.
 
 ### State machine functions
 
 #### goto_state
 
-
-
 ```python
 goto_state(next_state)
 ```
 
-Transition to state `next state`.  An `'exit'` event is processed in the state that is being left, and an `'entry'` event is processed in the state that is being entered.
+Transition to state `next_state`.  An `'exit'` event is processed in the state that is being left, and an `'entry'` event is processed in the state that is being entered.
 
 *Example usage:*  
 
@@ -286,7 +283,7 @@ goto_state('state_A') # Transition to state 'state_A'
 timed_goto_state(next_state, interval)
 ```
 
-Transition to state `next state` after `interval` milliseconds have elapsed.  The current state will behave as normal till the state transition occurs.  `'entry'` and `'exit'` actions will be processed when the state transition occurs as with `goto_state`.  If a state transition occurs for any reason before the `timed_goto_state` triggers, the `timed_goto_state` is canceled and will have no effect.  Constants `ms`, `second`, `minute` and `hour` can be used in specifying the interval as shown in an example below.
+Transition to state `next_state` after `interval` milliseconds have elapsed.  The current state will behave as normal till the state transition occurs.  `'entry'` and `'exit'` actions will be processed when the state transition occurs as with `goto_state`.  If a state transition occurs for any reason before the `timed_goto_state` triggers, the `timed_goto_state` is canceled and will have no effect.  Constants `ms`, `second`, `minute` and `hour` can be used in specifying the interval as shown in an example below.
 
 *Example usage:*  
 
@@ -472,7 +469,7 @@ Return a randomly selected element from list `L`.
 randint(a,b)
 ```
 
-Return a random integer `N` such that `a` <= `N` <= `b`.
+Return a random integer `N` such that `a` ≤ `N` ≤ `b`.
 
 ---
 
@@ -522,7 +519,7 @@ next_sample = x.next() # Get the next sample.
 
 ### Math functions and classes.
 
-The Micropython [math](https://docs.micropython.org/en/latest/pyboard/library/math.html) module provides many math functions:
+The MicroPython [math](https://docs.micropython.org/en/latest/pyboard/library/math.html) module provides many math functions:
 
 ```python
 
@@ -534,7 +531,7 @@ math.sin(x) # Return the sine of x
 
 ```
 
-pyControl provides the following additional maths functions and classes:
+The `pyControl.utility` module provides the following additional maths functions and classes:
 
 ---
 

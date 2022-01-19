@@ -25,7 +25,7 @@ GUI:
 ## Version 1.6 --- 25/11/2020
 GUI: 
 
-- Experiments that uses multiple setups now load the task in parallel on all the setups at once, rather than serially on one setup after annother, giving a large speedup when many setups are used.
+- Experiments that use multiple setups now load the task in parallel on all the setups at once, rather than serially on one setup after annother, giving a large speedup when many setups are used.
 
 - The experiments tab now allows a subset of the subjects in an experiment to be selected to run, and allows different subjects to be started and stopped at different times.
 

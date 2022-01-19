@@ -1,13 +1,15 @@
 site_name: pyControl
 site_url: https://pycontrol.readthedocs.io/
 site_description: Open source, Python based, behavioural experiment control.
-site_author: Champalimaud Foundation
+site_author: Thomas Akam
 
 theme:
     name: readthedocs
 
 markdown_extensions:
     - admonition
+    - toc:
+        permalink: True
 
 repo_url: https://github.com/pycontrol/pycontrol-docs
 
@@ -28,3 +30,9 @@ nav:
 
 copyright: Copyright &copy; 2016 - 2021 Thomas Akam
 
+# Uncomment to generate PDF version of docs using mkdocs-with-pdf
+# plugins: 
+#    - with-pdf:
+#        cover_title: pyControl
+#        cover_subtitle: Open source, Python based, behavioural experiment control.
+#        output_path: C:\Users\thoma\Downloads\pyControl_docs.pdf
