@@ -22,7 +22,7 @@ The pyControl [google group](https://groups.google.com/forum/#!forum/pycontrol) 
 
 pyControl hardware, software and documentation repositories are on [GitHub](https://github.com/pyControl).
 
-The pyControl [manuscript](https://www.biorxiv.org/content/10.1101/2021.02.22.432227v1) gives a high level overview of the system design and it's rationale and has validation experiments and example use cases.  If you use pyControl in a publication, please cite it.
+The pyControl [manuscript](https://elifesciences.org/articles/67846) gives a high level overview of the system design and it's rationale and has validation experiments and example use cases.  If you use pyControl in a publication, please cite it.
 
 If you do fiber photometry experiments, you may be interested in pyControl's sister project [pyPhotometry](https://pyphotometry.readthedocs.io).
 
