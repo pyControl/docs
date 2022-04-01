@@ -77,9 +77,9 @@ pyControl has been tested primarily on Windows 10 but in principle should be cro
 
 ### Updating pyControl
 
-If you installed  pyControl by cloning it with git, you can update it by simply pulling the latest version from the code repository.
+If you installed pyControl by cloning it with git, you can update it by simply pulling the latest version from the code repository.
 
-Alternatively, you can download the latest version from the download page, unzip it, and copy across the *tasks* directory and *config* directory from your old installation to keep your tasks and configuration settings.  
+Alternatively, you can download the latest version from the download page, unzip it, and copy across the *tasks* directory, *config* directory, and *gui/user_variable_dialogs* directory from your old installation to keep your tasks and configuration settings.
 
 Either way, after updating pyControl reload the framework onto your pyboards using the GUI's board config menu.
 
@@ -87,7 +87,7 @@ Either way, after updating pyControl reload the framework onto your pyboards usi
 
 Run the file *pyControl_GUI.py* in the pyControl root directory, you will see a GUI window like that shown above, with the *Run Task* tab selected.
 
-Plug in a pyboard and it will appear in the drop down menu in the *Setup*  box.  Select the board and press the *Connect* button.  The GUI will connect to the board.  
+Plug in a pyboard and it will appear in the drop down menu in the *Setup* box.  Select the board and press the *Connect* button.  The GUI will connect to the board.  
 
 If the pyControl framework is not already installed on the board, you will see a message saying *Load pyControl framework using 'Config' button.* Press the *Config* button to bring up the config menu and select *Load framework*.  If you see a message prompting you to disable the pyboard filesystem from acting as a USB flash drive, click *Yes*, then reconnect to the board (the serial port may have changed when you disable the flash drive) and load the framework.
 
