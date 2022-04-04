@@ -79,7 +79,7 @@ pyControl has been tested primarily on Windows 10 but in principle should be cro
 
 If you installed pyControl by cloning it with git, you can update it by simply pulling the latest version from the code repository.
 
-Alternatively, you can download the latest version from the download page, unzip it, and copy across the *tasks* directory, *config* directory, and *gui/user_variable_dialogs* directory from your old installation to keep your tasks and configuration settings.
+Alternatively, you can download the latest version from the download page, unzip it, and copy across the *tasks* directory and *config* directory from your old installation to keep your tasks and configuration settings.
 
 Either way, after updating pyControl reload the framework onto your pyboards using the GUI's board config menu.
 
