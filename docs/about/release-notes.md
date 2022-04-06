@@ -1,5 +1,18 @@
 # Release Notes
 [Releases on GitHub](https://github.com/pyControl/code/releases)
+
+## Version 1.7 --- 06/04/2022
+
+GUI:
+
+- Added functionality for users to create custom dialogs for setting task
+  variables.
+
+Tools:
+
+- Modified Rsyn_aligner code to remove the need for users to manually specify
+  the units pulse times are measured in.
+
 ## Version 1.6.2 --- 23/12/2021
 
 !!! note "Note"
