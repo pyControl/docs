@@ -28,7 +28,12 @@ nav:
     - Release Notes: about/release-notes.md
     - License: about/license.md
 
-copyright: Copyright &copy; 2016 - 2021 Thomas Akam
+- Quick Links:
+    - Google group: https://groups.google.com/forum/#!forum/pycontrol
+    - GitHub repositories: https://github.com/pycontrol
+    - Manuscript:  https://elifesciences.org/articles/67846
+
+copyright: Copyright &copy; 2016 - 2022 Thomas Akam
 
 # Uncomment to generate PDF version of docs using mkdocs-with-pdf
 # plugins: 
