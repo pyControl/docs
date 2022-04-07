@@ -39,7 +39,7 @@ If a board is acting strangely, e.g. giving error messages like *PyboardError('c
 
 -  If resetting the board does not solve the problem, it is possible the pyboard's filesystem has got corrupted.  Follow the instructions above under *Can' transfer files to pyboard* to reset the pyboard filesystem.
 
-These two steps will solve the great majority of board misbehavior.  If you continue to have reliabilty problems:
+These two steps will solve the great majority of board misbehavior.  If you continue to have reliability problems:
 
 - Make sure you have disabled the pyboard from acting as a USB flash drive using the 'Disable USB flash drive' option in the board config menu. This stops the computers from trying to access or modify the boards file system which can otherwise cause reliability issues.
 
