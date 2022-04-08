@@ -83,6 +83,8 @@ Alternatively, you can download the latest version from the download page, unzip
 
 Either way, after updating pyControl reload the framework onto your pyboards using the GUI's board config menu.
 
+Get notified of new [releases](about/release-notes.md) by either joining/subscribing to the [pyControl google group](https://groups.google.com/g/pycontrol) or going to the [pyControl code repository](https://github.com/pyControl/code)  and in the upper right corner choosing Watch->Custom->Releases->Apply.
+
 ### Running a task
 
 Run the file *pyControl_GUI.py* in the pyControl root directory, you will see a GUI window like that shown above, with the *Run Task* tab selected.

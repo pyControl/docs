@@ -10,8 +10,10 @@ GUI:
 
 Tools:
 
-- Modified Rsyn_aligner code to remove the need for users to manually specify
+- Modified Rsync_aligner code to remove the need for users to manually specify
   the units pulse times are measured in.
+
+---
 
 ## Version 1.6.2 --- 23/12/2021
 
@@ -37,7 +39,7 @@ GUI:
 
 - GUI font sizes now configurable in gui_settings.py.
 
-- Fixed bug which prevented events from plotting in Pyqtgraph version > 0.11.0.
+- Fixed bug which prevented events from plotting in PyQtGraph version > 0.11.0.
 
 - Made communication from pyboard to computer during framework run more robust
   to unexpected output from pyboard.
@@ -55,7 +57,7 @@ GUI:
 
 - Task files can now be organised into subfolders within the tasks folder, to create a nested task select menu in the GUI.
 
-- Buttons now have icons indicating their functionallity.
+- Buttons now have icons indicating their functionality.
 
 - Various minor bug fixes.
 
@@ -169,10 +171,10 @@ CLI:
 Framework:
 
 - Added Port_expander hardware device driver.
-- All data now tranmtted from pyboard to computer as binary rather than printed 
+- All data now transmitted from pyboard to computer as binary rather than printed 
   strings.
-- Data logging moved to seperate Data_logger class.
-- Setting / getting variables modifed to work while framework running.
+- Data logging moved to separate Data_logger class.
+- Setting / getting variables modified to work while framework running.
 
 ---
 
@@ -251,7 +253,7 @@ Framework:
 
 - Added six_poke hardware device.
 - removed .wav playback for audio outputs.
-- Moved rarely used device drivers to seperate 'more devices' folder for 
+- Moved rarely used device drivers to separate 'more devices' folder for 
   faster framework upload.
 
 CLI:
@@ -259,10 +261,10 @@ CLI:
 - Faster and more reliable file upload to boards.
 - Data file names now include start time.
 - Improved information output to data file before run start.
-- Post run file transfer now uses seperate directories in transfer folder
+- Post run file transfer now uses separate directories in transfer folder
   for each experiment.
 - Error tracebacks during run_experiment are now written to file.  Warning
-  is dispayed at end of run if error has occured.
+  is displayed at end of run if error has occurred.
 - Added disable_mass_storage and enable_mass_storage to board config menus.
 - Simplified run_task menus for getting and setting variables.
 
