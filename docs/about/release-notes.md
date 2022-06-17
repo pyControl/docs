@@ -1,6 +1,14 @@
 # Release Notes
 [Releases on GitHub](https://github.com/pyControl/code/releases)
 
+## Version 1.7.1 --- 20/04/2022
+
+GUI:
+
+- Bug fix and improvements in custom variables dialog editor.
+
+---
+
 ## Version 1.7 --- 06/04/2022
 
 GUI:
@@ -25,6 +33,8 @@ Framework:
 - All pyControl specific functions are now imported by the user into the task file from the pyControl.utility module, rather than some functions being patched onto the task file after it has been imported by the framework.
 
 - The button example task has been modified to match the example task in the pyControl manuscript.  An additional version of the button task using named rather than * imports has been added for comparison of the two import methods
+
+---
 
 ## Version 1.6.1 --- 22/11/2021
 

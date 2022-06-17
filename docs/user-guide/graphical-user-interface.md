@@ -31,7 +31,7 @@ The *Variables* button opens a dialog for setting or getting the value of task v
     Any remaining variables that don't get assigned a custom control will automatically be placed in an extra "..." tab.
     Future edits can be made by opening the variables dialog in the Run task tab when the task is not running and pressing the *edit* button.
 
-    This feature can be useful for tasks that have many variables that you would otherwise have to scroll/search through and type in edits for. The *example/custom_variables_dialog.py* task is a good reference for this feature that can be viewed and run on any setup.
+    This feature can be useful for tasks that have many variables that you would otherwise have to scroll/search through and type in edits for. The included [*example/custom_variables_dialog.py*](https://github.com/pyControl/code/blob/master/tasks/example/custom_variables_dialog.py) task is a good reference for this feature that can be viewed and run on any setup.
 
     ![custom variable dialog](../media/GUI/custom_variable_dialog.png)
 
