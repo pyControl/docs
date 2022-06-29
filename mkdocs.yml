@@ -5,6 +5,7 @@ site_author: Thomas Akam
 
 theme:
     name: readthedocs
+    logo: logo.png
 
 markdown_extensions:
     - admonition
