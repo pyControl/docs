@@ -4,9 +4,9 @@ The page details how to fix common problems that can occur when using pyControl.
 
 ## Can't open GUI
 
-To open the GUI you need to run the file *pyControl_GUI.py* using Python.  One way to do this is to set the file association for *.py* files to Python 3 so that you can run the file by double-clicking it.  Alternatively you can open a command prompt, change directory to the folder containing *pyControl_GUI.py* and run the file with the command `python pyControl_GUI.py`.
+To open the GUI you need to run the file *pyControl_GUI.pyw* using Python.  One way to do this is to set the file association for *.pyw* files to Python 3 so that you can run the file by double-clicking it.  Alternatively you can open a command prompt, change directory to the folder containing *pyControl_GUI.py* and run the file with the command `python pyControl_GUI.pyw`.
 
-If the GUI does not open this is probably because you do not have the required [dependencies](../index.md#dependencies) installed, you should see an error message indicating which dependency could not be loaded. 
+If the GUI does not open this is probably because you do not have the required [dependencies](../index.md#dependencies) installed, a file will be generate in the pyControl root folder called *'ErrorLog.txt'* specifying which dependency is missing.
 
 ## Board does not show up in GUI.
 

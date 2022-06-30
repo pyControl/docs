@@ -47,7 +47,7 @@ Either way you obtain the code, you will have the following folder structure:
     - pyControl    # pyControl framework        (uploaded to pyboard).
     - tasks        # Task definition files
     - tools        # Tools for importing and visualising pycontrol data
-    - pyControl_GUI.py # Python script to launch the GUI.
+    - pyControl_GUI.pyw # Python script to launch the GUI.
 ```
 
 ### Dependencies
@@ -71,7 +71,7 @@ python -m pip install pyqt5
 python -m pip install pyqtgraph
 ```
 
-You should then be able to launch the GUI by double-clicking the file *pyControl_GUI.py* in the pyControl root directory.  
+You should then be able to launch the GUI by double-clicking the file *pyControl_GUI.pyw* in the pyControl root directory.  
 
 pyControl has been tested primarily on Windows 10 but in principle should be cross-platform and has been used on Mac and Linux. 
 
