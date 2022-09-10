@@ -15,6 +15,10 @@ The default branch of the repository contains the last numbered release. The dev
 
 Please include as much detail as you can. Let us know your platform and pyControl version, and ideally include a screenshot of the error message.
 
+- [code issues](https://github.com/pyControl/code/issues)
+- [hardware issues](https://github.com/pyControl/hardware/issues)
+- [documentation issues](https://github.com/pyControl/docs/issues)
+
 ## Submitting Pull Requests
 
 Once you are happy with your changes, or you are ready for some feedback, push it to your fork and send a pull request.
