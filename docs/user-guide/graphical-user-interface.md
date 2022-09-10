@@ -2,7 +2,7 @@
 
 The pyControl GUI is a graphical interface for running experiments, configuring setups and visualising behaviour. The GUI is a tabbed window with *Run task*, *Experiments* and *Setups* tabs.  The *Run task* tab controls one hardware setup at a time i.e. one pyboard and its connected hardware.  It is designed for quickly prototyping tasks and testing hardware setups, but can also be used to acquire data from one setup.  The *Experiments* tab is used to configure and run experiments on many setups in parallel.  The *Setups* tab is used to name and configure the hardware setups connected to the computer.
 
-To run the GUI, run the file *pyControl_GUI.py* in the pyControl root directory.
+To run the GUI, run the file *pyControl_GUI.pyw* in the pyControl root directory.
 
 ## Run task tab
 
@@ -32,7 +32,7 @@ The *Variables* button opens a dialog for setting or getting the value of task v
     Future edits can be made by opening the variables dialog in the Run task tab when the task is not running and pressing the *edit* button.
 
     This feature can be useful for tasks that have many variables that you would otherwise have to scroll/search through and type in edits for. The included [*example/custom_variables_dialog.py*](https://github.com/pyControl/code/blob/master/tasks/example/custom_variables_dialog.py) task is a good reference for this feature that can be viewed and run on any setup.
-
+    
     ![custom variable dialog](../media/GUI/custom_variable_dialog.png)
 
 
