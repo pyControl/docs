@@ -233,12 +233,12 @@ You can make task variables invisible to the GUI by ending their name in three u
 
 ## Data output
 
-Whenever an external event occurs it is output to the data log along with a timestamp. Whenever a state transition occurs the state that is entered is output with a timestamp.  Events triggered by timers are not logged in the data output by default, but any state transitions they generate are logged as normal.  If you want an event triggered by a timer to be recorded in the data output, set the `output_event` argument to `True` when setting the timer:
+Whenever an external event occurs it is output to the data log along with a timestamp. Whenever a state transition occurs the state that is entered is output with a timestamp.  Events triggered by timers are output to the data log by default, but you can prevent this by setting the  `output_event` argument to `False` when setting the timer:
 
 ```python
-set_timer('event_A', 3*second, output_event=True)
+set_timer('event_A', 3*second, output_event=False) 
 
-reset_timer('event_B', 3*second, output_event=True)
+reset_timer('event_B', 3*second, output_event=False)
 ```
 
 The `print()` function has modified behaviour when called within the context of a task definition file - the printed string is output to the data log along with a timestamp.  The print function can therefore be used to output arbitrary data with timestamps consistent with those of events and state transitions.  The [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/example/reversal_learning.py) example shows one approach to using print statements to output task data. One line is printed for each trial summarising what happened on that trial and the current state of the task.

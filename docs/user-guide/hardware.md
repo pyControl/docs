@@ -77,10 +77,8 @@ The digital input class generates pyControl framework events when a specified pi
 
 By defalt debouncing is used to prevent multiple events being triggered very close together in time if the edges are not clean.  The debouncing method used ensures that transient inputs shorter than the debounce duration still generate rising and falling edges.  Debouncing incurs some overheads so should be turned off for inputs with clean edges and high event rates.
 
-Setting the decimate argument to an integer N causes only every N'th input pulse to generate an event.  Input pulses that are ignored due to decimation incur minimal overheads.  Decimation is designed for inputs like camera sync pulses where the input occurs at a high rate and recording 1 out of every N pulses is sufficient. Decimate can be used only with debouncing off and an event specified for a single edge.  
-
 ```python
-class Digital_input(pin, rising_event=None, falling_event=None, debounce=5, decimate=False, pull=None)
+class Digital_input(pin, rising_event=None, falling_event=None, debounce=5, pull=None)
 ```
 
 *Arguments:*
@@ -92,8 +90,6 @@ class Digital_input(pin, rising_event=None, falling_event=None, debounce=5, deci
 `falling_event` Name of event triggered on falling edges.
 
 `debounce` Minimum time interval between events (ms), set to False to deactive debouncing.
-
-`decimate` Set to N to only generate 1 event for every N input pulses.
 
 `pull` Set to `'up'` or `'down'` to enable internal pullup or pulldown resistor.
 
@@ -108,7 +104,7 @@ class Digital_input(pin, rising_event=None, falling_event=None, debounce=5, deci
 The digital output class is used to control a pyboard pin used as a digital output.
 
 ```python
-class Digital_output(pin, inverted=False, pulse_enabled=False)
+class Digital_output(pin, inverted=False)
 ```
 
 *Arguments:*
@@ -116,8 +112,6 @@ class Digital_output(pin, inverted=False, pulse_enabled=False)
 `pin` MicroPython pin to use.
 
 `inverted` If `True`, the pin voltage is set high when the input is turned off and low when turned on.
-
-`pulse_enabled` Set to `True` to enable squarewave pulsed output using the `pulse` method.  Pulsed output uses one of the pyboard hardware timers and as there are a limited number of these pulsed output is by default disabled.
 
 *Methods:*
 
@@ -129,13 +123,11 @@ class Digital_output(pin, inverted=False, pulse_enabled=False)
 
 `Digital_output.pulse(freq, duty_cycle=50, n_pulses=False)` Turn on a pulse train with specified frequency (Hz). The duty cycle (percentage of the period for which the signal is high) can be specified as 10, 25, 50 or 75.  If the n_pulses argument is set to an integer the pulse train will stop after this number of pulses has been delivered.
 
-`Digital_output.enable_pulse()` Setup output to support pulsed output.
-
 ---
 
 ### Analog input
 
-The analog input class measures the voltage on a pin at a specified sampling rate, can stream these measurements to the host computer to be saved to disk, and can generate pyControl framework events when the voltage rises above or falls below a specified threshold.  
+The analog input class measures the voltage on a pin at a specified sampling rate, streams these measurements to the host computer to be saved to disk, and can generate pyControl framework events when the voltage rises above or falls below a specified threshold.  
 
 The input voltage is measured with 12 bit resolution giving a number between 0 and 4095, corresponding to the voltage range 0 to 3.3V relative to the pyboard ground.
 
@@ -159,12 +151,6 @@ class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, 
 `rising_event` Name of event triggered when voltage crosses threshold in rising direction.
 
 `falling_event` Name of event triggered when voltage crosses threshold in falling direction.
-
-*Methods:*
-
-`Analog_input.record()` Start streaming analog input measurements to computer.  If the computer is logging pyControl data the analog data will be saved to disk.  Analog data is saved in seperate files from the main pyControl data log, with a seperate data file for each analog input.  Analog data is saved in binary files with a *.pca* file extension, for information on how to read these files see [pyControl data](pycontrol-data.md#analog-data).
-
-`Analog_input.stop()` Stop streaming analog data to computer.  You can start and stop streaming analog data multples times in a framework run.  If rising or falling events are specified for the analog input these will be generated regardless of whether or not the input is streaming data to the computer.
 
 ---
 
@@ -333,7 +319,7 @@ poke_LED.on()  # Turn on the LED
 poke_SOL.off() # Turn off the Solenoid.
 ```
 
-However the device has a `Poke` class representing it, defined in the file [_poke.py](https://github.com/pyControl/code/blob/master/devices/_poke.py) in the [devices](https://github.com/pyControl/code/tree/master/devices) folder, which instantiates all the individual inputs and outputs as attributes, simplifying instantiating and using the device:
+However the device has a `Poke` class representing it, defined in the file [poke.py](https://github.com/pyControl/code/blob/master/devices/poke.py) in the [devices](https://github.com/pyControl/code/tree/master/devices) folder, which instantiates all the individual inputs and outputs as attributes, simplifying instantiating and using the device:
 
 ```python 
 # Instantiate Poke object connected to behaviour port 1.
@@ -345,13 +331,13 @@ poke.SOL.off() # Turn off the SOL
 
 ```
 
-In addition to instantiating inputs or outputs, device classes can also contain code needed to control the hardware.   For example the `Audio_player` class, defined in [_audio_player.py](https://github.com/pyControl/code/blob/master/devices/more%20devices/_audio_player.py), instantiates a UART for serial communication with the module, but also has methods to send the serial commands needed to control the module.  
+In addition to instantiating inputs or outputs, device classes can also contain code needed to control the hardware.   For example the `Audio_player` class, defined in [audio_player.py](https://github.com/pyControl/code/blob/master/devices/audio_player.py), instantiates a UART for serial communication with the module, but also has methods to send the serial commands needed to control the module.  
 
-Once you have written a file containing the class representing the device, put the file in the devices folder and reload the pyControl framework to the board, using the board config menu.  This transfers all the files in the devices folder (but not subfolders) to the board, and all classes defined in these files can then be imported in a task file or hardware definition with `from devices import *`
+Once you have written a file containing the class representing the device, put the file in the devices folder, then load your task or hardware definition to the board and the device driver file will be transferred automatically.
 
 ## Devices
 
-The following Python classes define devices which plug into behaviour ports.
+The following Python classes define devices which plug into behaviour ports.  Device classes are defined in files in the [devices](https://github.com/pyControl/code/tree/master/devices) folder, which are automatically transferred to the pyboard as needed when a task file or hardware definition file is uploaded.
 
 ### Poke
 
@@ -618,24 +604,14 @@ current_speed = running_wheel.velocity # Get the current speed of the encoder.
 
 ---
 
-## More devices
-
-To save space on the pyboards file system and reduce framework loading times, the driver files for the following devices are not uploaded to the pyboard by default.  To use them copy the required driver file(s) from *pyControl/devices/more devices* to *pyControl/devices*, then reload the framework to the pyboard using the GUI's config menu.
-
----
-
 ### Port expander
 
 The port expander board uses serial to parallel IO expander ICs ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) to run 8 behaviour ports from a single behaviour port on the breakout board.  The port expander must be connected to a behaviour port that supports I2C serial communication (ports 3 and 4 on breakout 1.2).
 
 Each port on the port expander works like a standard behaviour port, with 2 DIO lines, 2 driver lines for high current loads, as well as ground, 5V and 12V lines.  Digital outputs on the port expander do not support the `Digital_output.pulse()` method.
 
-
 !!! note "Maximum current"
     The port expander can draw power either from the behaviour port or from a 12V power supply connected to the expander board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If the devices plugged into the port expander may draw more than 0.6A current in total, connect a power supply directly to the port expander board.
-
-
-**Required driver files:** *_port_expander.py*, *_MCP.py*
 
 [Github](https://github.com/pyControl/hardware/tree/master/Port_expander)
 
@@ -663,8 +639,6 @@ button = Digital_input(pin=port_exp.port_3.DIO_B, rising_event='button_press') #
 ### Five Poke
 
 The Five Poke board is a set of five nose pokes on a single PCB, each with an IR beam and stimulus LED.  The Five Poke connects to 2 behaviour ports on the breakout board.  Port 1 on the Five Poke must be connected to a behaviour port with 3 driver lines (port 1 or 2 on Breakout board 1.2). Port 2 on the Five Poke must be connected to a behaviour port with 3 DIO lines (port 3 or 4 on Breakout board 1.2).  The events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc. by default, and the events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` by default.  Different event names can be specified when the Five poke is instantiated.
-
-**Required driver files:** *_five_poke.py*
 
 [Github](https://github.com/pyControl/hardware/tree/master/Five_poke)
 
@@ -702,8 +676,6 @@ five_poke.poke_1.LED.on() # Turn on poke 1's LED.
 The nine poke board is a set of nine nose pokes on a single PCB, each with an IR beam and stimulus LED.  The pokes are controlled from a single behaviour port using i2c serial communication (supported by ports 3 & 4 on breakout board 1.2). Events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc. by default, and events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` etc. by default.
 
 An optional solenoid driver daughter board can be connected to the nine poke board to control up to 8 solenoids.  If the solenoid driver board is not connected, the *solenoid_driver* argument must be set to False when the *Nine_poke* is instantiated.
-
-**Required driver files:** *_nine_poke.py*, *_MCP.py*
 
 [Github](https://github.com/pyControl/hardware/tree/master/Nine_poke)
 
@@ -751,8 +723,6 @@ nine_poke.poke_4.SOL.on()              # Turn on the solenoid that has been assi
 
 An electrical lickometer board which has two lick detection circuits and two solenoid ports.  The outputs LCK 1 and LCK 2 should be connected to the reward delivery tubes and the GND output should be connected to the (conductive) floor of the setup.  The lick detection circuits detect when the reward delivery tube is electrically connected to ground by the subject licking.  The maximum current through the lick detection circuit is 1uA.  The default event names generated by licking are 'lick_1' and 'lick_2' when the contact is made, and 'lick_1_off' and 'lick_2_off' when the contact is broken.  Different event names can be specified when the Lickometer is instantiated.  By default, debouncing is used on lick events with a 5ms debounce window.
 
-**Required driver files:** *_lickometer.py*
-
 [Github](https://github.com/pyControl/hardware/tree/master/Lickometer)
 
 ![Five_poke mounted](../media/hardware/lickometer_photo.jpg)
@@ -777,8 +747,6 @@ Lickometer.SOL_2.off() # Turn off solenoid 2.
 
 An LED driver board with analog control of the LED current from 1 - 400mA using the MicroPython DAC.  The Analog LED driver needs to be connected to a behaviour port that has a DAC output (ports 3 and 4 on breakout board 1.2).
 
-**Required driver files:** *_analog_LED.py*
-
 ```python 
 class Analog_LED(port)
 ```
@@ -799,9 +767,6 @@ LED.off()                 # Turn off the LED
 An audio board which uses the [DFPlayer](https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299) audio module to play .wav files from an SD card, allowing arbitrary audio stimuli to be presented.  The board has two speaker outputs allowing stereo audio files to be played. Mono files are played from both outputs, but the amplifiers for each output can be independently enabled or disabled allowing files to be played from either or both speakers.  The DFPlayer module requires the SD card to be formatted in FAT16 or FAT32 and expects a specific folder and file name structure - the folders must be named *01*, *02* etc., and the files in each folder *001.wav*, *002.wav* etc. The Audio_player needs a behaviour port with UART serial connectivity so can be plugged into ports 1, 3 or 4 on *Breakout_1_2*.  There is a short latency (approximately 15ms) between issuing the play command and the sound starting to play.
 
 Sending multiple commands to the audio player without any delay in between (e.g. setting the volume and then playing a sound on subsequent lines of the task) may crash or fail because the audio player has not finished processing the first command when the second arrives.  
-
-
-**Required driver files:** *_audio_player.py*
 
 [Github](https://github.com/pyControl/hardware/tree/master/Audio_player)
 
@@ -826,13 +791,28 @@ player.set_enabled(left=True, right=False) # Enable left speaker output, disable
 
 ```
 
+### uRFID
+
+Class for using the Priority 1 Design [Micro RFID module](http://www.priority1design.com.au/rfid_reader_modules.html) to read FDX-B tags.  The UART serial connection on the module should be connected to the DIO A and B pins on a port that supports UART (ports 1,3 and 4 on breakout board 1.2).
+
+```python 
+class uRFID(port)
+```
+
+*Example usage:*
+
+```python
+rfid = uRFID(port=board.port_3) # Instantiate RFID module.
+
+rfid.read_tag() # Return the ID of the most recent tag read, if no tag has been read return None.
+
+```
+
 ---
 
 ### MCP23017 
 
 The MCP23017 is a serial to parallel IO expander IC ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) which can be used to add additional digital input/output lines to the MicroPython microcontroller. The IC must be connected to the MicroPython via an I2C serial connection, which are available on the DIO pins of ports 3 and 4 of breakout board 1.2.  If you plan to use MCP23017 pins as pyControl digital inputs the INTA interrupt pin on the MCP23017 must be connected to a DIO pin on the MicroPython. The pins on the MCP23017 can be used as standard pyControl Digital_input and Digital_output objects as shown in the usage example below.
-
-**Required driver files:** *_MCP.py*
 
 ```python 
 class  MCP23017(I2C_bus=1, interrupt_pin='X5', addr=0x20)

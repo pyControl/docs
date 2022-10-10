@@ -1,6 +1,40 @@
 # Release Notes
 [Releases on GitHub](https://github.com/pyControl/code/releases)
 
+## Version 1.8rc1 --- 07/10/2022
+
+Release candidate for pyControl version 1.8.
+
+GUI:
+
+- GUI is now compatible with PyQt 6 and Python 3.10.
+
+- New GUI settings dialog.
+
+- Required device driver files are now automatically transferred to the pyboard when a task or hardware definition is uploaded.
+
+- Various small improvements and bug fixes.
+
+Framework:
+
+- Major refactoring of framework code to make it simpler and more readable.
+
+- Analog inputs now stream data to the computer continously while the framework is running rather than having record() and stop() methods to start and stop data streaming.  
+
+- Events triggered by timers are now output to the data log by default.
+
+- Removed decimate argument from digital input as it was not used in practice.
+
+- Added Frame_trigger device class for triggering camera frames as a specified frequency and recording the frame times to an analog data file.
+
+- Added uRFID device class for controlling Priority 1 Designs RFID module.
+
+Data import:
+
+- Added session_dataframe function for generating a pandas dataframe from a pyControl data file.
+
+---
+
 ## Version 1.7.2 --- 30/06/2022
 
 GUI:
