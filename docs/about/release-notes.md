@@ -7,7 +7,7 @@ Release candidate for pyControl version 1.8.
 
 GUI:
 
-- GUI is now compatible with PyQt 6 and Python 3.10.
+- GUI is now compatible with PyQt6 and Python 3.10.
 
 - New GUI settings dialog.
 
