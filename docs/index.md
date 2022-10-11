@@ -32,7 +32,7 @@ If you do fiber photometry experiments, you may be interested in pyControl's sis
 
 ### Installation
 
-Get the latest version of the pyControl GUI, either by downloading it at a zip file from the [releases](https://github.com/pyControl/code/releases) page or by cloning the [code repository](https://github.com/pyControl/code) to your computer with Git.  Cloning the repository is recommended as it makes it easier to update pyControl in the future.
+Get the latest version of the pyControl GUI, either by downloading it at a zip file from the [releases](https://github.com/pyControl/code/releases) page or by cloning the [code repository](https://github.com/pyControl/code) to your computer with Git.  pyControl is in active development with new versions released from time to time.   The default documentation is for the latest release, but the dropdown menu in the bottom right corner of the docs lets you access documentation for earlier versions, and for the *dev* branch of the code repository where new features are developed.  Cloning the repository is recommended as it makes it easier to update pyControl in the future.
 
 Either way you obtain the code, you will have the following folder structure:
 
