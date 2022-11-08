@@ -233,15 +233,29 @@ You can make task variables invisible to the GUI by ending their name in three u
 
 ## Data output
 
-Whenever an external event occurs it is output to the data log along with a timestamp. Whenever a state transition occurs the state that is entered is output with a timestamp.  Events triggered by timers are not logged in the data output by default, but any state transitions they generate are logged as normal.  If you want an event triggered by a timer to be recorded in the data output, set the `output_event` argument to `True` when setting the timer:
+Whenever an external event occurs it is output to the data log along with a timestamp. Whenever a state transition occurs the state that is entered is output with a timestamp.  Events triggered by timers are output to the data log by default, but you can prevent this by setting the  `output_event` argument to `False` when setting the timer:
 
 ```python
-set_timer('event_A', 3*second, output_event=True)
+set_timer('event_A', 3*second, output_event=False) 
 
-reset_timer('event_B', 3*second, output_event=True)
+reset_timer('event_B', 3*second, output_event=False)
 ```
 
-The `print()` function has modified behaviour when called within the context of a task definition file - the printed string is output to the data log along with a timestamp.  The print function can therefore be used to output arbitrary data with timestamps consistent with those of events and state transitions.  The [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/example/reversal_learning.py) example shows one approach to using print statements to output task data. One line is printed for each trial summarising what happened on that trial and the current state of the task.
+The `print()` function can be used in task definition files to printed a string to the data output along with a timestamp.  
+
+```python
+print('Hello world')
+```
+
+A `print_variables` function can be used to output the value of task variables to the data log along with a timestamp.  By default it prints the value of all task variables but you can also specify a subset of variables to print by providing a list of variable names:
+
+```python
+print_variables() # Print the value of all task variables.
+
+print_variables(['n_trials', 'n_rewards']) # Print the value of task variables v.n_trials and v.n_rewards.
+```
+
+Variables are printed as a [JSON](https://www.json.org/json-en.html) formatted string as this both human readable and easy to parse in most programming languages, e.g. in python using the [JSON module](https://docs.python.org/3/library/json.html).   In decision making tasks it is often sensible to print the value of task variables once each trial, as done in the [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/example/reversal_learning.py) example.  
 
 ## Structuring task files
 
@@ -401,6 +415,16 @@ print(print_string)
 ```
 
 Print `print_string` to the data output.  Printed strings are given a time-stamp so that the time the print statement was executed is recorded in the data file.
+
+---
+
+#### print_variables
+
+```python
+print_variables(variables='all')
+```
+
+Print the specified variables to the data output as a JSON formatted string along with a timestamp.  By default the value of all task variables are printed, but a subset of variables can be printed by providing a list of variable names as an argument.
 
 ---
 

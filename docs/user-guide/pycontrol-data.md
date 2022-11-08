@@ -52,44 +52,19 @@ Task files used to generate data are also stored in the data folder, with a file
 
 ---
 
-## Visualising data
-
-The [session_plot](https://github.com/pyControl/code/blob/master/tools/session_plot.py) module in the *tools* folder contains functions for visualising pyControl data offline.
-
-The session plot module has dependencies:
-
-- Python 3
-- numpy
-- matplotlib
-
-**Example usage:**
-
-```python
-import session_plot as sp # Import the session plot module.
-
-sp.session_plot('path//to//session//file') # Plot a session.
-
-sp.session_plot('path//to//session//file', fig_no=2) # Plot a session in figure 2.
-
-sp.play_session('path//to//session//file') # Scrolling animation of session.
-
-sp.play_session('path//to//session//file', start_time=30) # Scrolling animation of session starting at 30 seconds.
-```
-
-**Session plot**
-
-![session_plot.png](../media/session_plot.png)
-
----
-
 ## Importing data
 
-The [data_import](https://github.com/pyControl/code/blob/master/tools/data_import.py) module in the *tools* folder contains Python classes for importing and representing pyControl data.  A `Session` class represents data from a single session. An `Experiment` class represents data from an experiment consisting of multiple sessions and subjects. A `load_analog_data` function loads analog signals.
+The [data_import](https://github.com/pyControl/code/blob/master/tools/data_import.py) module in the *tools* folder contains Python classes for importing and representing pyControl data.   It implements two different approaches for representing pyControl data in Python.  The first uses custom Python classes to represent pyControl data;  a `Session` class represents data from a single session, and an  `Experiment` class represents data from an experiment consisting of multiple sessions and subjects.  The second uses [Pandas](https://pandas.pydata.org/) dataframes to represent data, with a `session_dataframe` function to generates a dataframe from a single sessions data file, and an `experiment_dataframe` function to generate a dataframe containing data from multiple sessions and subjects.   
+
+
+
+A `load_analog_data` function is also provided to loads analog signals saved as pyControl analog `.pca` datafiles.
 
 The data import module has dependencies:
 
 - Python 3
-- numpy
+- Numpy
+- Pandas
 
 ---
 
@@ -153,10 +128,12 @@ class Session(file_path, int_subject_IDs=True)
 
 `Session.print_lines` List of all the lines output by print statements during the framework run, each line starts with the time in milliseconds at which it was printed.
 
+---
+
 
 ### Experiment
 
-The `Experiment` class is used to import all data files from a given experiment (stored in a single folder) and represent the experiment as a Python object. The experiment class has a method *get_sessions* which can be used to flexibly select sessions from specific subjects and times.
+The `Experiment` class is used to import all data files from a given experiment (stored in a single folder) and represent the experiment as a Python object. The experiment class has a method *get_sessions* which can be used to flexibly select sessions from specific subjects and times.   Individual sessions in the Experiment are represented as instances of the `Session` object detailed above.
 
 **Example usage:**
 
@@ -230,4 +207,116 @@ when = ['2017-07-07','2017-07-08'] # Select specified list of dates
 when = [...,'2017-07-07'] # Select session with date <= '2017-07-07'
 when = ['2017-07-01',...,'2017-07-07'] # Select session with '2017-07-01' <= date <= '2017-07-07'.
 ```
+
+---
+
+### Session dataframe
+
+The `session_dataframe` function can be used to create a pandas dataframe from a pyControl data file.  The dataframe has the following columns:
+
+`type`  Whether the row contains session *'info'*, a *'state'* entry, *'event'* or *'print'* line.
+
+`name`  The name of the state, event or session information.
+
+`time` Time in ms since the start of the session.
+
+`duration` The duration in ms of states and paired events (see below).
+
+`value` The contents of info and print rows.
+
+Optionally events can be specified as coming in pairs corresponding to the start and end of an action, e.g. pressing and releasing a lever. When a start-event end-event pair occurs in the data, only the start_event generates a row in the dataframe, with the end event used to compute the duration. 
+
+**Example usage:**
+
+```python
+import data_import as di # Import the data import module.
+
+# Create Pandas dataframe from session data file.
+df = di.session_dataframe('path//to//session//file')
+
+# Create dataframe specifying that lick on/off events and lever press/release events are paired.
+df = di.session_dataframe('path//to//session//file', paired_events={'lick_on':'lick_off', 'lever_press':'lever_release'})
+
+# Create dataframe specifying that all events that end in '_out' (e.g. 'left_poke_out') are pair-end events.
+df = di.session_dataframe('path//to//session//file', pair_end_suffix='_out')
+```
+
+**Function reference** 
+
+```python
+session_dataframe(file_path, paired_events={}, pair_end_suffix=None)
+```
+
+*Arguments:*
+
+`file_path` Path of the pyControl data file to import.
+
+`paired_events` Dictionary of `{'start_event': 'end_event'}`  that indicates events that come in pairs corresponding to the start and end of an action.
+
+`pair_end_suffix` String indicating that all events that end with this suffix are the end event of event pairs corresponding to the start and end of an action.  The corresponding start event name is found by matching the stem of the event name. For example if the task had events *'left_poke'*, *'right_poke_in'*, *'left_poke_out'* and *'right_poke_out'*, specifying  `pair_end_suffix='_out'` would be equivalent to explicitly specifying `paired_events={'left_poke':'left_poke_out','right_poke_in':'right_poke_out'}`
+
+---
+
+### Experiment dataframe
+
+The `experiment_dataframe` function can be used to create a pandas dataframe from a folder containing pyControl data files from multiple sessions and subjects.  The experiment dataframe has the same columns as the session dataframe (*'type', 'name', 'time', 'duration', 'value'*), plus additional columns specifying  the subject_ID, start data and time etc, generated from the info lines in the pyControl data file.  Each row of the dataframe corresponds to a single state entry, event or print line from a single session. 
+
+As with the `session_dataframe` function, events can optionally  be specified as coming in pairs corresponding to the start and end of an action, e.g. entering and exiting a nosepoke. When a start-event end-event pair occurs in the data, only the start_event generates a row in the dataframe, with the end event used to compute the duration. 
+
+**Example usage:**
+
+```python
+import data_import as di # Import the data import module.
+
+# Create Pandas dataframe from an experiment data folder.
+df = di.experiment_dataframe('path//to//experiment//folder')
+
+# Create dataframe specifying that lick on/off events and lever press/release events are paired.
+df = di.experiment_dataframe('path//to//experiment//folder', paired_events={'lick_on':'lick_off', 'lever_press':'lever_release'})
+
+# Create dataframe specifying that all events that end in '_out' (e.g. 'left_poke_out') are pair-end events.
+df = di.experiment_dataframe('path//to//experiment//folder', pair_end_suffix='_out')
+```
+
+**Function reference** 
+
+```python
+experiment_dataframe(folder_path, paired_events={}, pair_end_suffix=None)
+```
+
+*Arguments:*
+
+`folder_path` Path of the experiment folder containing pyControl data files to import.
+
+`paired_events` Dictionary of `{'start_event': 'end_event'}`  that indicates events that come in pairs corresponding to the start and end of an action.
+
+`pair_end_suffix` String indicating that all events that end with this suffix are the end event of event pairs corresponding to the start and end of an action.  The corresponding start event name is found by matching the stem of the event name. For example if the task had events *'left_poke'*, *'right_poke_in'*, *'left_poke_out'* and *'right_poke_out'*, specifying  `pair_end_suffix='_out'` would be equivalent to explicitly specifying `paired_events={'left_poke':'left_poke_out','right_poke_in':'right_poke_out'}`
+
+## Visualising data
+
+The [session_plot](https://github.com/pyControl/code/blob/master/tools/session_plot.py) module in the *tools* folder contains functions for visualising pyControl data offline.
+
+The session plot module has dependencies:
+
+- Python 3
+- numpy
+- matplotlib
+
+**Example usage:**
+
+```python
+import session_plot as sp # Import the session plot module.
+
+sp.session_plot('path//to//session//file') # Plot a session.
+
+sp.session_plot('path//to//session//file', fig_no=2) # Plot a session in figure 2.
+
+sp.play_session('path//to//session//file') # Scrolling animation of session.
+
+sp.play_session('path//to//session//file', start_time=30) # Scrolling animation of session starting at 30 seconds.
+```
+
+**Session plot**
+
+![session_plot.png](../media/session_plot.png)
 

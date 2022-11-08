@@ -1,7 +1,41 @@
 # Release Notes
 [Releases on GitHub](https://github.com/pyControl/code/releases)
 
-## Version 1.7.2 --- 30/06/2022
+## Version 1.8rc1 (2022-10-07)
+
+Release candidate for pyControl version 1.8.
+
+GUI:
+
+- GUI is now compatible with PyQt6 and Python 3.10.
+
+- New GUI settings dialog.
+
+- Required device driver files are now automatically transferred to the pyboard when a task or hardware definition is uploaded.
+
+- Various small improvements and bug fixes.
+
+Framework:
+
+- Major refactoring of framework code to make it simpler and more readable.
+
+- Analog inputs now stream data to the computer continously while the framework is running rather than having record() and stop() methods to start and stop data streaming.  
+
+- Events triggered by timers are now output to the data log by default.
+
+- Removed decimate argument from digital input as it was not used in practice.
+
+- Added Frame_trigger device class for triggering camera frames as a specified frequency and recording the frame times to an analog data file.
+
+- Added uRFID device class for controlling Priority 1 Designs RFID module.
+
+Data import:
+
+- Added session_dataframe function for generating a pandas dataframe from a pyControl data file.
+
+---
+
+## Version 1.7.2 (2022-06-30)
 
 GUI:
 
@@ -16,7 +50,7 @@ GUI:
 
 ---
 
-## Version 1.7.1 --- 20/04/2022
+## Version 1.7.1 (2022-04-20)
 
 GUI:
 
@@ -24,7 +58,7 @@ GUI:
 
 ---
 
-## Version 1.7 --- 06/04/2022
+## Version 1.7 (2022-04-06)
 
 GUI:
 
@@ -38,7 +72,7 @@ Tools:
 
 ---
 
-## Version 1.6.2 --- 23/12/2021
+## Version 1.6.2 (2021-12-23)
 
 !!! note "Note"
     **You will need to reload the framework onto your pyboards** (using the board config menu) after updating the GUI to this release, due to changes in the communication protocol between the board and the GUI.
@@ -51,7 +85,7 @@ Framework:
 
 ---
 
-## Version 1.6.1 --- 22/11/2021
+## Version 1.6.1 (2021-11-22)
 
 !!! note "Note"
     **You will need to reload the framework onto your pyboards** (using the board config menu) after updating the GUI to this release, due to changes in the communication protocol between the board and the GUI.
@@ -73,7 +107,7 @@ GUI:
 
 ---
 
-## Version 1.6 --- 25/11/2020
+## Version 1.6 (2020-11-25)
 GUI: 
 
 - Experiments that use multiple setups now load the task in parallel on all the setups at once, rather than serially on one setup after annother, giving a large speedup when many setups are used.
@@ -88,7 +122,7 @@ GUI:
 
 ---
 
-## Version 1.5 --- 11/02/2020
+## Version 1.5 (2020-02-11)
 GUI: 
 
 - Task files used in an experiment are now automatically saved in the experiments data folder with a file hash appended to the task file name to uniquely identify the file version.  Whenever a task file used in the experiment is modified the new version will be saved to the data folder when the experiment is run.  The task file hash used for each session is recorded in the session's data file so the exact task file used to run each session can be identified.
@@ -121,7 +155,7 @@ CLI:
 
 ---
 
-## Version 1.4 --- 03/02/2019
+## Version 1.4 (2019-02-03)
 
 GUI: 
 
@@ -133,7 +167,7 @@ Tools:
 
 ---
 
-## Version 1.3.3 --- 12/12/2018
+## Version 1.3.3 (2018-12-12)
 
 
 GUI:
@@ -152,7 +186,7 @@ Tools:
 
 ---
 
-## Version 1.3.2 --- 27/07/2018
+## Version 1.3.2 (2018-07-27)
 
 CLI/GUI:
 
@@ -168,7 +202,7 @@ Tools:
 
 ---
 
-## Version 1.3.1 --- 16/05/2018
+## Version 1.3.1 (2018-05-16)
 
 GUI: 
 
@@ -180,7 +214,7 @@ Framework:
 
 ---
 
-## Version 1.3 --- 16/04/2018
+## Version 1.3 (2018-04-16)
 
 GUI: 
 
@@ -203,7 +237,7 @@ Framework:
 
 ---
 
-## Version 1.2.1 --- 29/03/2018
+## Version 1.2.1 (2018-03-29)
 
 CLI:
 
@@ -216,7 +250,7 @@ Framework:
 
 ---
 
-## Version 1.2 --- 31/01/2018
+## Version 1.2 (2018-01-31)
 
 CLI:
 
@@ -234,7 +268,7 @@ Framework:
 
 ---
 
-## Version 1.1.4 --- 21/12/2017
+## Version 1.1.4 (2017-12-21)
 
 Framework:
 
@@ -251,7 +285,7 @@ Bug fixes:
 
 ---
 
-## Version 1.1.3 --- 28/07/2017
+## Version 1.1.3 (2017-07-28)
 
 - Added data_import.py, a module for importing pyControl sessions and experiments
    into Python for analysis. 
@@ -272,7 +306,7 @@ Bug fixes:
 
 ---
 
-## Version 1.1.2 ---  08/05/2017
+## Version 1.1.2 (2017-05-08)
 
 Framework:
 
@@ -301,7 +335,7 @@ Bug fixes:
 
 ---
 
-## Version 1.1 --- 06/02/2017
+## Version 1.1 (2017-02-06)
 
 
 Framework:
@@ -316,6 +350,6 @@ CLI:
 
 ---
 
-## Version 1.0 --- 30/12/2016
+## Version 1.0 (2016-12-30)
 
 - Initial release of pyControl CLI

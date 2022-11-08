@@ -80,7 +80,7 @@ The setups tab is used to name and configure hardware setups.
 
 ![run_task_GUI.jpg](../media/GUI/setups_tab.png)
 
-If a name is specified for a setup, the name will appear instead of the setups serial port in the board select drop down menu in the *Run task* and *Configure experiment* tabs.
+If a name is specified for a setup, the name will appear instead of the setup's serial port in the board select drop down menu in the *Run task* and *Configure experiment* tabs.  If you have pyboards connected to your computer that are not pyControl setups (e.g. pyPhotometry systems), you can hide them from appearing in the board select drop down menus by naming them `_hidden_` in the Setups tab.
 
 The configure button next to each setup bring up a menu of configuration options for that board.  Alternatively multiple boards can be selected with the checkboxes and configured with the *configure selected* buttons.
 

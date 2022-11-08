@@ -2,11 +2,17 @@
 
 The page details how to fix common problems that can occur when using pyControl.  If you encounter a problem that is not covered on this page, please contact the [google group](https://groups.google.com/forum/#!forum/pycontrol).
 
+## The docs are wrong
+
+If the docs (hosted here on readthedocs) don't seem to match your experience with pyControl, it may be that you are using a different version of pyControl from the one shown by default in the docs.  You can select a different version of the docs using the dropdown menu in the bottom right.  By default the docs show the latest official release.  You can get the documentation for the development branch (where new features are developed prior to being officially released) by selecting the *dev* version of the docs, or select versions for older numbered releases of pyControl.
+
 ## Can't open GUI
 
 To open the GUI you need to run the file *pyControl_GUI.pyw* using Python.  One way to do this is to set the file association for *.pyw* files to Python 3 so that you can run the file by double-clicking it.  Alternatively you can open a command prompt, change directory to the folder containing *pyControl_GUI.py* and run the file with the command `python pyControl_GUI.pyw`.
 
-If the GUI does not open this is probably because you do not have the required [dependencies](../index.md#dependencies) installed, a file will be generate in the pyControl root folder called *'ErrorLog.txt'* specifying which dependency is missing.
+If the GUI does not open this is probably because you do not have the required [dependencies](../index.md#dependencies) installed, a file will be generate in the pyControl root folder called *'ErrorLog.txt'* specifying which dependency is missing.  
+
+If the GUI does not run and no *'ErrorLog.txt'* file is generated, try running the GUI from the command prompt (as described above) so you can see any error message generated.
 
 ## Board does not show up in GUI.
 
@@ -23,7 +29,7 @@ If the GUI status says 'Connection Failed' when you try to connect to the board,
 
 ## Can't transfer files to pyboard
 
-If you get a message saying *Error: Unable to transfer file.* this usually means that the filesystem on the pyboard has got corrupted. To fix this problem, reset the filesystem by following the instructions [here](https://docs.micropython.org/en/latest/pyboard/tutorial/reset.html#factory-reset-the-filesystem).  
+If you get a message saying `Error: Unable to transfer file` this usually means that the filesystem on the pyboard has got corrupted. To fix this problem, reset the filesystem by following the instructions [here](https://docs.micropython.org/en/latest/pyboard/tutorial/reset.html#factory-reset-the-filesystem).  
 
 The instructions say to use the *Reset* and *USR* buttons and LEDs on the MicroPython board for the file system reset.  Depending on how the pyControl breakout board is mounted it may be hard to access these.  However, the *Reset* and *USR* buttons on the front of pyControl breakout board 1.2 have identical functionality to those on the pyboard, and indicator LEDs 3 and 4 from the left on the breakout board have the same behaviour as the orange and green LEDs on the pyboard, so the filesystem can be reset with access only to the front of the breakout board.  
 
@@ -31,7 +37,14 @@ After the filesystem reset has finished, reset the board again using the *Reset*
 
 To reduce the likelihood of filesystem corruption, it is strongly recommended to disable the pyboards filesystem from acting as a USB flash drive before loading the framework.  This can be done using the *'Disable USB flash drive'* option in the board config menu.
 
-## Board acting funny / reliability problems
+## Out of memory
+
+If you get a message saying `MemoryError: memory allocation failed` either when you upload a task or while a task is running, this indicates that the pyboard has run out RAM memory.  You may be able to free up a bit more memory by reloading the pyControl framework using the board config menu, as this will delete any device driver files than are not currently being used.  If that is not sufficient you will need to edit your task file to reduce the memory it needs.  Some things to check for are:
+
+- Are you storing information on the pyboard that you do not need to keep there (e.g. by appending data to a list on each trial)?  If so, modify your task code so that only information needed by the task is retained on the pyboard, and information needed only for later analysis is output to the computer using print statements.
+- Does you task file combine multiple different training stages in a single file?  This can lead to long and complex task files in which only a fraction of the code is actually used in any given session.  Splitting different training stages into different task files can shorten and simplify the code to avoid memory issues.
+
+## Board acting funny
 
 If a board is acting strangely, e.g. giving error messages like *PyboardError('could not exec command')* or *pyControl Framework:Import error* try the following steps to fix the problem:
 
@@ -57,11 +70,11 @@ The MicroPython USB driver is stored on the pyboards flash drive, so if you have
 
 ## Unable to setup state machine
 
-If you get a message saying *Error: Unable to setup state machine* when you upload a task, this usually means that there is a problem with the task definition file which gives an error when it is imported.  The error message will be followed by a traceback saying the line in the task file where the error occurred and what the error was.  Task definition files are renamed *task_file.py* when they are transferred to the pyboard, so the traceback will refer to errors in the task definition file using this name.
+If you get a message saying `Error: Unable to setup state machine` when you upload a task, this usually means that there is a problem with the task definition file which gives an error when it is imported.  The error message will be followed by a traceback saying the line in the task file where the error occurred and what the error was.  Task definition files are renamed *task_file.py* when they are transferred to the pyboard, so the traceback will refer to errors in the task definition file using this name.
 
 ## Error during framework run
 
-If you get a message saying *Error during framework run* while the framework is running, this usually indicates there is a problem with the task file that does not prevent the file being imported but only occurs while the task is running.  This is often due to errors in state behaviour functions which only occur when the function is called.  The error message will include a traceback indicating the line number in the task file where the error occurred and what the error was.
+If you get a message saying `Error during framework run` while the framework is running, this usually indicates there is a problem with the task file that does not prevent the file being imported but only occurs while the task is running.  This is often due to errors in state behaviour functions which only occur when the function is called.  The error message will include a traceback indicating the line number in the task file where the error occurred and what the error was.
 
 ## Updating MicroPython
 
