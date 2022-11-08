@@ -38,16 +38,17 @@ Either way you obtain the code, you will have the following folder structure:
 
 ```
 - pyControl
-    - gui          # Graphical user interface
-    - com          # Serial communication and data logging
-    - config       # Configuration files
-    - data         # Behavioural data.
-    - experiments  # Experiment definition files.
-    - devices      # pyControl hardware classes (uploaded to pyboard).
-    - pyControl    # pyControl framework        (uploaded to pyboard).
-    - tasks        # Task definition files
-    - tools        # Tools for importing and visualising pycontrol data
-    - pyControl_GUI.pyw # Python script to launch the GUI.
+    gui                 # Graphical user interface
+    com                 # Serial communication and data logging
+    config              # Configuration files
+    data                # Behavioural data
+    experiments         # Experiment definition files
+    devices             # Hardware device classes
+    pyControl           # pyControl framework
+    tasks               # User task definition files
+    hardware_defintions # User hardware definition files
+    tools               # Tools for importing and visualising pycontrol data
+    pyControl_GUI.py    # Python script to launch the GUI
 ```
 
 ### Dependencies

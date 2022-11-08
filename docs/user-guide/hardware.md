@@ -337,7 +337,7 @@ Once you have written a file containing the class representing the device, put t
 
 ## Devices
 
-The following Python classes define devices which plug into behaviour ports.  Device classes are defined in files in the [devices](https://github.com/pyControl/code/tree/master/devices) folder, which are automatically transferred to the pyboard as needed when a task file or hardware definition file is uploaded.
+The following Python classes define devices which plug into behaviour ports.  Device classes are defined in files in the [devices](https://github.com/pyControl/code/tree/master/devices) folder, which are automatically transferred to the pyboard as needed when a task or hardware definition file is uploaded.
 
 ### Poke
 

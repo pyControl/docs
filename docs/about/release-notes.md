@@ -1,9 +1,7 @@
 # Release Notes
 [Releases on GitHub](https://github.com/pyControl/code/releases)
 
-## Version 1.8rc1 (2022-10-07)
-
-Release candidate for pyControl version 1.8.
+## Version 1.8 (2022-11-08)
 
 GUI:
 
@@ -13,13 +11,17 @@ GUI:
 
 - Required device driver files are now automatically transferred to the pyboard when a task or hardware definition is uploaded.
 
+- Pyboards can how be hidden so they do not show up in board select GUI menus by naming them *\_hidden\_* in the setups tab.
+
+- Hardware definition files are now stored in a hardware_definitions folder not the generic config folder.
+
 - Various small improvements and bug fixes.
 
 Framework:
 
 - Major refactoring of framework code to make it simpler and more readable.
 
-- Analog inputs now stream data to the computer continously while the framework is running rather than having record() and stop() methods to start and stop data streaming.  
+- Analog inputs now stream data to the computer continously while the framework is running rather than having `record` and `stop` methods to start and stop data streaming.  
 
 - Events triggered by timers are now output to the data log by default.
 
@@ -29,9 +31,12 @@ Framework:
 
 - Added uRFID device class for controlling Priority 1 Designs RFID module.
 
+- Added `print_variables` function for printing variable values to the data log as a json formatted string.
+
+
 Data import:
 
-- Added session_dataframe function for generating a pandas dataframe from a pyControl data file.
+- Added `session_dataframe` function for generating a pandas dataframe from a pyControl data file and `experiment_dataframe` for generating a pandas dataframe from an experiment data folder.
 
 ---
 

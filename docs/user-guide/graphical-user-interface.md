@@ -18,11 +18,8 @@ The **Task** control box is used to select and upload a task and configure task 
 !!! tip "Task subfolders"
     Tasks can be organised into subfolders within the *tasks* folder, creating a nested list in the GUI drop down menu. This can be useful if you have a lot of tasks, e.g. to organise them by user.
 
-The *Variables* button opens a dialog for setting or getting the value of task variables.  It can be used either before a run starts or while a task is running.  Variables must be defined in the task definition file using the `v.my_variable` syntax (see [programming tasks](programming-tasks.md#variables)).  Variables can be set to numbers, or to Python objects including strings, lists and dictionaries.  The constants `ms`, `second`, `minute` and `hour` can be used, e.g. a variable can be set to `30*minute`.  
+The *Variables* button opens a dialog for setting or getting the value of task variables.  It can be used either before a run starts or while a task is running.  Variables must be defined in the task definition file using the `v.my_variable` syntax (see [programming tasks](programming-tasks.md#variables)).  Variables can be set to numbers, or to Python objects including strings, lists and dictionaries.  The constants `ms`, `second`, `minute` and `hour` can be used, e.g. a variable can be set to `30*minute`.   You can make task variables invisible to the GUI by ending their name in three underscores (e.g. `v.my_private_variable___`).  Such 'private' variables work as normal in the task file but do not show up in the GUI.  This can be useful if you have a lot of task variables, making it hard to find the ones you need to change in the GUI. 
 
-!!! tip "Private variables"
-    You can make task variables invisible to the GUI by ending their name in three underscores (e.g. `v.my_private_variable___`).  Such 'private' variables work as normal in the task file but do not show up in the GUI.  This can be useful if you have a lot of task variables, making it hard to find the ones you need to change in the GUI. 
-    
 !!! tip "Variables dialog customization"
     The variables dialog can be customized by adding a `v.custom_variables_dialog` variable to your task file. 
     When a task with this variable is first uploaded, a prompt will ask if you want to create a new custom variable dialog. 
@@ -88,7 +85,7 @@ The configure button next to each setup bring up a menu of configuration options
 
 The board configuration menu has the following options to configure pyboards.
 
-- *Load framework:* Reload the pyControl framework and pyControl device driver files onto the pyboard.
+- *Load framework:* Reload the pyControl framework onto the board. If you are using a hardware definition you will need to reload it after loading the framework.
 - *Load hardware definition:* Load a [hardware definition](hardware.md#hardware-definition) file onto the pyboard.  The selected file is renamed *hardware_definition.py* on the pyboard filesystem irrespective of it's name on the computer, so the hardware definition is always imported into the task file with:
 
 ```python
