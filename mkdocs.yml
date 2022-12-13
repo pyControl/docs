@@ -30,8 +30,8 @@ nav:
     - License: about/license.md
 
 - Quick Links:
-    - Google group: https://groups.google.com/forum/#!forum/pycontrol
-    - GitHub repositories: https://github.com/pycontrol
+    - Help and Discussions: https://github.com/orgs/pyControl/discussions
+    - Repositories: https://github.com/pycontrol
     - Manuscript:  https://elifesciences.org/articles/67846
 
 copyright: Copyright &copy; 2016 - 2022 Thomas Akam
