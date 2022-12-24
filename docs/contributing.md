@@ -1,16 +1,18 @@
 # Contributing to pyControl
 
-The pyControl project welcomes contributions from users and developers in the open source community. Contributions can be made in a number of ways, including:
+The pyControl project welcomes contributions from users and developers in the open source community.
+Contributions can be made in a number of ways, including:
 
-- Sharing the project
-- Asking questions or making suggestions in the [Discussions](link)
-- Documentation improvements
-- Bug reports and patch reviews
-- Code patches via pull requests
+- sharing the project
+- asking/answering questions or sharing ideas/suggestions on the pyControl [discussions](https://github.com/orgs/pyControl/discussions) board
+- improving documentation
+- reporting bugs and reviewing code patches
+- submitting code patches via pull requests
 
 ## Reporting an Issue
 
-Please include as much detail as you can. Let us know your platform and pyControl version, and ideally include a screenshot of the error message.
+Please include as much detail as you can.
+Let us know your platform and pyControl version, and ideally include a screenshot of the error message.
 
 - [code issues](https://github.com/pyControl/code/issues)
 - [hardware issues](https://github.com/pyControl/hardware/issues)
@@ -26,8 +28,8 @@ If you have found pyControl useful, consider starring the [code repository on Gi
 
 To get started developing for pyControl, fork the relevant pyControl repository on [GitHub](https://github.https://github.com/pyControl/code/pyControl).
 
-The default branch of the repository contains the last numbered release.
-The dev branch contains the latest version which typically has more features but may be more buggy.
+The [master](https://github.com/pyControl/code/tree/master) branch of the repository contains the last numbered release.
+The [dev](https://github.com/pyControl/code/tree/dev) branch contains the latest version which typically has more features but may be more buggy.
 pyControl development should build on the latest commit in the dev branch to facilitate integrating it back into the codebase.
 
 Once you are happy with your changes, or you are ready for some feedback, push it to your fork and send a pull request.

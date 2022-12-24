@@ -1,6 +1,6 @@
 # Troubleshooting
 
-The page details how to fix common problems that can occur when using pyControl.  If you encounter a problem that is not covered on this page, please contact the [google group](https://groups.google.com/forum/#!forum/pycontrol).
+The page details how to fix common problems that can occur when using pyControl.  If you encounter a problem that is not covered on this page, please post in the [discussions](https://github.com/orgs/pyControl/discussions).
 
 ## The docs are wrong
 
