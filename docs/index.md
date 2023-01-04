@@ -18,9 +18,7 @@ pyControl has a [Graphical User Interface](user-guide/graphical-user-interface.m
 
 Tools for importing pyControl data into Python for analysis are provided in the [data_import](user-guide/pycontrol-data.md) module.
 
-The pyControl [google group](https://groups.google.com/forum/#!forum/pycontrol) is an email list for pyControl users.
-
-pyControl hardware, software and documentation repositories are on [GitHub](https://github.com/pyControl).
+pyControl hardware, software and documentation repositories are hosted on [GitHub](https://github.com/pyControl), with a [discussion board](https://github.com/orgs/pyControl/discussions) for user discussions and support.
 
 The pyControl [manuscript](https://elifesciences.org/articles/67846) gives a high level overview of the system design and it's rationale and has validation experiments and example use cases.  If you use pyControl in a publication, please cite it.
 
@@ -84,7 +82,7 @@ Alternatively, you can download the latest version from the download page, unzip
 
 Either way, after updating pyControl reload the framework onto your pyboards using the GUI's board config menu.
 
-Get notified of new [releases](about/release-notes.md) by either joining/subscribing to the [pyControl google group](https://groups.google.com/g/pycontrol) or going to the [pyControl code repository](https://github.com/pyControl/code)  and in the upper right corner choosing Watch->Custom->Releases->Apply.
+Get notified of new [releases](about/release-notes.md) by going to the [pyControl code repository](https://github.com/pyControl/code) and in the upper right corner choosing Watch->Custom->Releases->Apply.
 
 ### Running a task
 
@@ -106,8 +104,8 @@ See the [GUI](user-guide/graphical-user-interface.md) user guide for information
 
 ## Troubleshooting
 
-If you encounter problems take a look at the [troubleshooting](user-guide/troubleshooting.md) page or contact the [google group](https://groups.google.com/forum/#!forum/pycontrol).
+If you encounter problems take a look at the [troubleshooting](user-guide/troubleshooting.md) page or post a message on the [discussion board](https://github.com/orgs/pyControl/discussions).
 
 ## Developer's guide
 
-Do you want to contribute for the pyControl project? You can find more information [here](contributing.md).
+Do you want to contribute to the pyControl project? You can find more information [here](contributing.md).
