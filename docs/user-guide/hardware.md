@@ -220,6 +220,7 @@ pushbutton = Digital_input(pin=board.button, falling_event='button', pull='up')
 
 ### Behaviour ports
 
+#### Pinout
 Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 or 6 network cables), with the following set of lines:
 
 | Function                     | RJ45 connector pin # |
@@ -240,8 +241,10 @@ Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 o
     - The ICs which control the driver (POW) lines (see below) can only sink a certain amount of current without overheating.  The maximum safe current depends on the number of driver lines on a single IC that are on at the same time.  Currents up to 200mA are OK irrespective of the number of driver lines on.  The maximum current with 4 lines on continuously is 300mA, and with a single line 400mA. One IC controls the driver lines for ports 1-3 and annother for ports 4-6. For more information see this [application note](https://toshiba.semicon-storage.com/info/docget.jsp?did=30610).
     - The voltage regulator on the breakout board that powers the behaviour port 5V lines can source aproximately 300mA of current, which is shared by the 5V lines on all behaviour ports.  
 
+#### DIO
 The behaviour port digital input/output (DIO) lines connect directly to pins on the microcontroller.  All DIO lines can be used as either digital inputs or outputs. These lines use 3.3V logic but can generally be interfaced directly with 5V logic systems and are 5V tolerant.  Some of the microcontroller pins on DIO lines have additional analog input/output or serial communication capability (see above).
 
+#### POW
 The power driver lines are for controlling loads that need higher currents or voltages than can be provided directly from a microcontroller pin.  These lines are connected to low side driver ICs ([datasheet](https://toshiba.semicon-storage.com/info/docget.jsp?did=29893)) on the breakout board, which are in turn controlled by pins on the microcontroller. Low side drivers connect the negative side of the load to ground when turned on:
 
 ![Driver diagram](../media/hardware/driver-diagram.jpg)
@@ -252,10 +255,15 @@ The driver lines can be used as digital outputs by connecting them to a positive
 
 ![POW as digital diagram](../media/hardware/POW_as_digital_out_diagram.png)
 
-When the driver line (POW) is off the output will be pulled up to 5V, when the driver line is on it will pull the output down to 0V.  This can be useful if you need to control devices that require a digital logic signal with a voltage higher than 3.3V (though many 5V logic devices work fine with 3.3V inputs), or if you just need more digital outputs.  
-
+This can be useful if you need to control devices that require a digital logic signal with a voltage higher than 3.3V (though many 5V logic devices work fine with 3.3V inputs), or if you just need more digital outputs.
+!!! hint "Inverted output"
+    When the driver line (POW) is off the output will be pulled up to 5V, when the driver line is on it will pull the output down to 0V. 
+    In your task code, to have the more conventional association of "on" meaning high voltage and "off" 0V, you can set the [digital output](hardware.md#digital-output) `inverted` property to `True`. 
+    This change is particularly relevant if you want the POW pin's output voltage to be 0V when the task in not running, as all digital outputs automatically begin "off" when a task is uploaded and are turned "off" when a task is stopped.
+#### Special
 The special function pin has different functions on different ports, for example it may be an extra driver line or a pin with digital to analog (DAC) functionality, see above for more information.
 
+#### Usage
 Typically devices which plug into a behaviour port have several inputs and outputs, for example the [Poke](#poke) device comprises an IR beam, stimulus LED and solenoid. Rather than having to specify each input and output on a hardware device separately, each device has its own Python class which takes a behaviour port as an argument, allowing it to be instantiated with a single command. For example the hardware definition below specifies that 3 nose pokes are plugged into ports 1-3 of Breakout board 1.2.
 
 ```python
