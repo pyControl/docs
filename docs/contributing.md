@@ -26,7 +26,7 @@ If you have found pyControl useful, consider starring the [code repository on Gi
 
 ## Submitting Pull Requests
 
-To get started developing for pyControl, fork the relevant pyControl repository on [GitHub](https://github.https://github.com/pyControl/code/pyControl).
+To get started developing for pyControl, fork the relevant pyControl repository on [GitHub](https://github.com/pyControl).
 
 The [master](https://github.com/pyControl/code/tree/master) branch of the repository contains the last numbered release.
 The [dev](https://github.com/pyControl/code/tree/dev) branch contains the latest version which typically has more features but may be more buggy.
