@@ -34,7 +34,7 @@ nav:
     - Repositories: https://github.com/pycontrol
     - Manuscript:  https://elifesciences.org/articles/67846
 
-copyright: Copyright &copy; 2016 - 2022 Thomas Akam
+copyright: Copyright &copy; 2016 - 2023 Thomas Akam
 
 # Uncomment to generate PDF version of docs using mkdocs-with-pdf
 # plugins: 
