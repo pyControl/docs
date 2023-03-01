@@ -60,6 +60,10 @@ These two steps will solve the great majority of board misbehavior.  If you cont
 
 - If the version of MicroPython running on the pyboard is <1.9 (version number is printed when the GUI connects to the board), [update MicroPython](#updating-micropython).
 
+## Devices not working
+
+If you are able to connect to the board and run example tasks that do not use external devices (e.g. button.py or blinker.py), but tasks that use external devices connected to the breakout board do not work, a possible reason is that the breakout board is not powered correctly and hence is not providing power to the devices.  The breakout board needs to be powered using a 12V DC power supply plugged into the barrel socket.  For suitable power supplies see the [useful parts](https://github.com/pyControl/hardware/blob/master/useful-parts-list.md) list.
+
 ## Installing MicroPython USB drivers
 
 By default windows will use generic USB serial device drivers for connected pyboards.  Normally this works fine, but if you are having reliability problems, or the GUI is not recognising connected pyboards due the computers operating system language being set to something other than English (see above), it is recommended to use the MicroPython USB drivers.  
