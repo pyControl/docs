@@ -1,6 +1,14 @@
 # Release Notes
 [Releases on GitHub](https://github.com/pyControl/code/releases)
 
+## Version 1.8.1 (2023-02-21)
+
+Framework:
+
+- Fixed bug where audio output and rotary encoder could not be used together.
+
+---
+
 ## Version 1.8 (2022-11-08)
 
 GUI:
