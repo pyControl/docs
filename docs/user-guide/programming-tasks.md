@@ -107,7 +107,7 @@ Calling `goto_state` in response to an `'entry'` or `'exit'` event will cause an
 
 It is strongly **not recommended** to put any code in a state behaviour function that executes after a `goto_state` because it will be executed following the state transition when the task is in the subsequent state, potentially causing hard to identify bugs.
 
-## Time dependent behaviour.
+## Time dependent behaviour
 
 The simplest way to implement time dependent behaviour is using the `timed_goto_state` function.  This tells the state machine to transition to a specified state after a specified interval has elapsed.
 
