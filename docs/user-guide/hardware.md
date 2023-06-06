@@ -6,7 +6,7 @@
 
 A typical pyControl hardware setup consists of one or more breakout boards connected to a computer by USB, each of which runs a single behavioural setup.  The breakout board connects to a set of devices such as nosepokes, audio boards and LED drivers which make up the setup. USB hubs can be used between the computer and breakout boards such that many setups can be controlled from a single computer.
 
-All pyControl hardware is open source, design files are in the [hardware repository](https://github.com/pyControl/hardware) on Github.  In addition to pyControl electronics, the repository has designs for a [behaviour box](https://github.com/pyControl/hardware/tree/master/Behaviour_box_small) and [sound attenuating chamber](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small), and a list of [useful parts](https://github.com/pyControl/hardware/blob/master/useful-parts-list.md) such as cables, solenoids, mounting hardware etc for building setups.  Assembled pyControl hardware is available from the [OpenEphys store](http://www.open-ephys.org/pycontrol).
+All pyControl hardware is open source, design files are in the [hardware repository](https://github.com/pyControl/hardware) on Github.  In addition to pyControl electronics, the repository has designs for a [behaviour box](https://github.com/pyControl/hardware/tree/master/Behaviour_box_small) and [sound attenuating chamber](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small), and a list of [useful parts](https://github.com/pyControl/hardware/blob/master/useful-parts-list.md) such as cables, solenoids, mounting hardware etc for building setups.  Assembled pyControl hardware is available from the [Open Ephys store](http://www.open-ephys.org/pycontrol) and [LabMaker](https://www.labmaker.org/collections/neuroscience/products/pycontrol-mouse-behaviour-box_set_no1).
 
 For information about synchronising pyControl with other hardware such as electrophysiology or video cameras see the [synchronisation](synchronisation.md) user guide.
 
@@ -170,11 +170,11 @@ The current version 1.2 of the pyControl Breakout board has 6 RJ45 behaviour por
 
 The BNC connectors connect directly to pins on the microcontroller.  All 4 BNC connectors can be used as digital inputs or outputs.  When used as digital outputs they have a 3.3V high logic level, which can typically be used directly as an input for systems with 5V logic.  When used as digital inputs, BNC-1 and BNC-2 work with 5V  or 3.3V logic level input signals, but DAC-1 and DAC-2 are not 5V tolerant and should not be used with signals >3.3V.   All 4 BNC connectors can also be used as analog inputs, but when used in this mode the input signal should not exceed 3.3V.  Connectors DAC-1 and DAC-2 can also be used as analog ouputs.
 
-See below for information about pinout and function of lines on the behaviour ports.  On breakout board 1.2, all six behaviour ports have the standard 2 digital input/output (DIO) lines, 2 POW driver lines, and 5V, 12V and ground lines.  Ports 1 & 2 have an additional driver line *POW_C*.  Ports 3 and 4 have an additional DIO line *DIO_C* which also supports analog output (DAC).  Ports 3 and 4 support I2C and ports 1,3 & 4 support UART serial communication over their DIO lines.  Useful resources for understanding the additional functionallity of the lines on each port are the [Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf) and [device definition file](https://github.com/pyControl/code/blob/master/devices/_breakout_1_2.py) for the breakout board and the [pyboard quick reference](https://docs.micropython.org/en/latest/pyboard/quickref.html).
+See below for information about pinout and function of lines on the behaviour ports.  On breakout board 1.2, all six behaviour ports have the standard 2 digital input/output (DIO) lines, 2 POW driver lines, and 5V, 12V and ground lines.  Ports 1 & 2 have an additional driver line *POW_C*.  Ports 3 and 4 have an additional DIO line *DIO_C* which also supports analog output (DAC).  Ports 3 and 4 support I2C and ports 1,3 & 4 support UART serial communication over their DIO lines.  Useful resources for understanding the additional functionallity of the lines on each port are the [Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf) and [device definition file](https://github.com/pyControl/code/blob/master/devices/breakout_1_2.py) for the breakout board and the [pyboard quick reference](https://docs.micropython.org/en/latest/pyboard/quickref.html).
 
 The hardware repository has designs for [enclosures and brackets](https://github.com/pyControl/hardware/tree/master/Breakout_board/enclosures%20and%20brackets) for mounting the breakout board PCB.
 
-[Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf)     [Github](https://github.com/pyControl/hardware/tree/master/Breakout_board)
+[Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf) [GitHub](https://github.com/pyControl/hardware/tree/master/Breakout_board), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol), [LabMaker](https://www.labmaker.org/products/pycontrol-breakout-board)
 
 **Breakout 1.2 front:**
 ![Breakout 1.2 front](../media/hardware/breakout-1-2-front.jpg)
@@ -296,7 +296,7 @@ sync_input = Digital_input(pin=board.port_5.DIO_B, rising_event='sync_pulse')
 ```
 The easiest way to make an electrical connection to pins on a behavioural port is to plug in a *port adapter* board.  This breaks out all the pins of the port to a screw terminal, and the power driver lines along with +5 and +12V to a set of female headers that can be used to connect loads such as solenoids or LEDs.
 
-**Port adapter:**  [Github](https://github.com/pyControl/hardware/tree/master/Port_adapter)
+**Port adapter:** [GitHub](https://github.com/pyControl/hardware/tree/master/Port_adapter), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker]([link](https://www.labmaker.org/products/pycontrol-port-adapter))
 
 ![Port adapter](../media/hardware/port_adapter.png)
 
@@ -351,7 +351,7 @@ The following Python classes define devices which plug into behaviour ports.  De
 
 Nosepoke port with infra-red beam, stimulus LED and socket to connect solenoid valve.
 
-[Github](https://github.com/pyControl/hardware/tree/master/Nose_poke)
+[GitHub](https://github.com/pyControl/hardware/tree/master/Nose_poke), [Opeh Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-nose-poke-with-led)
 
 |**Front**|**Side - solenoid attached**|
 |---|---|
@@ -405,7 +405,7 @@ Audio amplifier board for driving a speaker to produce auditory stimuli.  The bo
 
 In addition to the digital volume control there is a manual volume control knob (the small blue potentiometer on the board) that can be used to calibrate the audio volume.
 
-[Github](https://github.com/pyControl/hardware/tree/master/Audio_board)
+[GitHub](https://github.com/pyControl/hardware/tree/master/Audio_board), [Opeh Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-audio-board)
 
 ![Audio board](../media/hardware/audio-board.jpg)
 
@@ -467,7 +467,7 @@ speaker.off() # Turn off sound output.
 
 A constant current LED driver for optogenetic stimulation.
 
-[Github](https://github.com/pyControl/hardware/tree/master/LED_driver)
+[GitHub](https://github.com/pyControl/hardware/tree/master/LED_driver), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-led-driver)
 
 ![LED driver](../media/hardware/LED-driver.jpg)
 
@@ -509,7 +509,7 @@ The stepper motor adaptor board connects an Easydriver to a pyControl behaviour 
     The stepper motor driver can draw power either from the 12V line on the behaviour port or from a 12V power supply connected to the stepper motor board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If your stepper motor requires more current, connect a 12V power supply directly to the stepper motor driver.  The current requirements for some common stepper motors are detailed in the EasyDriver documentation.
 
 
-[Github](https://github.com/pyControl/hardware/tree/master/Stepper_driver)
+[GitHub](https://github.com/pyControl/hardware/tree/master/Stepper_driver), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-stepper-driver-board)
 
 ![Stepper driver](../media/hardware/stepper_driver.jpg)
 
@@ -552,7 +552,7 @@ For an example task using a rotary encoder to measure running speed and trigger 
 
 Decoding the quadrature signal from the encoder is handled by dedicated low level routines on the pyboard microcontroller, so load on the microcontrollers is not affected by the rate of edges generated by the encoder.  The maximum rate at which edges can be registered is not specified but given the dedicated processing hardware is unlikely to be limiting in behavioural applications.   As with the `Analog_input` a maximum sampling rate of 1KHz is recommended as data is saved with ms resolution timestamps.
 
-[Github](https://github.com/pyControl/hardware/tree/master/Rotary_encoder)
+[GitHub](https://github.com/pyControl/hardware/tree/master/Rotary_encoder), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-rotary-encoder)
 
 ![Stepper driver](../media/hardware/rotary_encoder.jpg)
 
@@ -621,7 +621,7 @@ Each port on the port expander works like a standard behaviour port, with 2 DIO 
 !!! note "Maximum current"
     The port expander can draw power either from the behaviour port or from a 12V power supply connected to the expander board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If the devices plugged into the port expander may draw more than 0.6A current in total, connect a power supply directly to the port expander board.
 
-[Github](https://github.com/pyControl/hardware/tree/master/Port_expander)
+[GitHub](https://github.com/pyControl/hardware/tree/master/Port_expander), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-port-expander)
 
 ![Stepper driver](../media/hardware/port_expander_photo.jpg)
 
@@ -648,7 +648,7 @@ button = Digital_input(pin=port_exp.port_3.DIO_B, rising_event='button_press') #
 
 The Five Poke board is a set of five nose pokes on a single PCB, each with an IR beam and stimulus LED.  The Five Poke connects to 2 behaviour ports on the breakout board.  Port 1 on the Five Poke must be connected to a behaviour port with 3 driver lines (port 1 or 2 on Breakout board 1.2). Port 2 on the Five Poke must be connected to a behaviour port with 3 DIO lines (port 3 or 4 on Breakout board 1.2).  The events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc. by default, and the events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` by default.  Different event names can be specified when the Five poke is instantiated.
 
-[Github](https://github.com/pyControl/hardware/tree/master/Five_poke)
+[GitHub](https://github.com/pyControl/hardware/tree/master/Five_poke)
 
 **Five poke mounted**
 ![Five_poke mounted](../media/hardware/five-poke-mounted.jpg)
@@ -685,7 +685,7 @@ The nine poke board is a set of nine nose pokes on a single PCB, each with an IR
 
 An optional solenoid driver daughter board can be connected to the nine poke board to control up to 8 solenoids.  If the solenoid driver board is not connected, the *solenoid_driver* argument must be set to False when the *Nine_poke* is instantiated.
 
-[Github](https://github.com/pyControl/hardware/tree/master/Nine_poke)
+[GitHub](https://github.com/pyControl/hardware/tree/master/Nine_poke)
 
 **Nine poke PCB**
 ![Nine_poke pcb](../media/hardware/nine-poke-pcb.jpg)
@@ -731,7 +731,7 @@ nine_poke.poke_4.SOL.on()              # Turn on the solenoid that has been assi
 
 An electrical lickometer board which has two lick detection circuits and two solenoid ports.  The outputs LCK 1 and LCK 2 should be connected to the reward delivery tubes and the GND output should be connected to the (conductive) floor of the setup.  The lick detection circuits detect when the reward delivery tube is electrically connected to ground by the subject licking.  The maximum current through the lick detection circuit is 1uA.  The default event names generated by licking are 'lick_1' and 'lick_2' when the contact is made, and 'lick_1_off' and 'lick_2_off' when the contact is broken.  Different event names can be specified when the Lickometer is instantiated.  By default, debouncing is used on lick events with a 5ms debounce window.
 
-[Github](https://github.com/pyControl/hardware/tree/master/Lickometer)
+[GitHub](https://github.com/pyControl/hardware/tree/master/Lickometer), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-lickometer)
 
 ![Five_poke mounted](../media/hardware/lickometer_photo.jpg)
 
@@ -776,7 +776,7 @@ An audio board which uses the [DFPlayer](https://www.dfrobot.com/wiki/index.php/
 
 Sending multiple commands to the audio player without any delay in between (e.g. setting the volume and then playing a sound on subsequent lines of the task) may crash or fail because the audio player has not finished processing the first command when the second arrives.  
 
-[Github](https://github.com/pyControl/hardware/tree/master/Audio_player)
+[GitHub](https://github.com/pyControl/hardware/tree/master/Audio_player), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-audio-player)
 
 ![Audio board](../media/hardware/audio-player.jpg)
 
