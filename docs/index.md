@@ -20,7 +20,7 @@ Tools for importing pyControl data into Python for analysis are provided in the 
 
 pyControl hardware, software and documentation repositories are hosted on [GitHub](https://github.com/pyControl), with a [discussion board](https://github.com/orgs/pyControl/discussions) for user discussions and support.
 
-The pyControl [manuscript](https://elifesciences.org/articles/67846) gives a high level overview of the system design and it's rationale and has validation experiments and example use cases.  If you use pyControl in a publication, please cite it.
+The pyControl [manuscript](https://elifesciences.org/articles/67846) gives a high level overview of the system design and its rationale and has validation experiments and example use cases.  If you use pyControl in a publication, please cite it.
 
 If you do fiber photometry experiments, you may be interested in pyControl's sister project [pyPhotometry](https://pyphotometry.readthedocs.io).
 

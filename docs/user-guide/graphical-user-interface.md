@@ -14,11 +14,11 @@ The **Setup** control box is used to select a pyboard, connect and disconnect fr
 
 The **Data file** control box is used to select the directory where data files will be stored and to specify the ID of the subject.  The filename is given by the subject ID and session start date and time.
 
-The **Task** control box is used to select and upload a task and configure task variables.  The tasks available in the drop down menu are those in the folder *pyControl/tasks*.  The tasks folder can be changed using the *Settings* menu.  The *upload* button transfers the task file to the pyboard and sets up the task state machine.  Once a task is uploaded the button changes to *reset*.  Resetting the task returns it to its initial state as defined in the task definition file.  
+The **Task** control box is used to select and upload a task and configure task variables.  The tasks available in the drop-down menu are those in the folder *pyControl/tasks*.  The tasks folder can be changed using the *Settings* menu.  The *upload* button transfers the task file to the pyboard and sets up the task state machine.  Once a task is uploaded the button changes to *reset*.  Resetting the task returns it to its initial state as defined in the task definition file.  
 !!! tip "Task subfolders"
     Tasks can be organised into subfolders within the *tasks* folder, creating a nested list in the GUI drop down menu. This can be useful if you have a lot of tasks, e.g. to organise them by user.
 
-The *Variables* button opens a dialog for setting or getting the value of task variables.  It can be used either before a run starts or while a task is running.  Variables must be defined in the task definition file using the `v.my_variable` syntax (see [programming tasks](programming-tasks.md#variables)).  Variables can be set to numbers, or to Python objects including strings, lists and dictionaries.  The constants `ms`, `second`, `minute` and `hour` can be used, e.g. a variable can be set to `30*minute`.   You can make task variables invisible to the GUI by ending their name in three underscores (e.g. `v.my_private_variable___`).  Such 'private' variables work as normal in the task file but do not show up in the GUI.  This can be useful if you have a lot of task variables, making it hard to find the ones you need to change in the GUI. 
+The *Variables* button opens a dialog for setting or getting the value of task variables.  It can be used either before a run starts or while a task is running.  Variables must be defined in the task definition file using the `v.my_variable` syntax (see [programming tasks](programming-tasks.md#variables)).  Variables can be set to numbers, or to Python objects including strings, lists and dictionaries.  The constants `ms`, `second`, `minute` and `hour` can be used, e.g. a variable can be set to `30*minute`. You can make task variables invisible to the GUI by ending their name in three underscores (e.g. `v.my_private_variable___`).  Such 'private' variables work as normal in the task file but do not show up in the GUI.  This can be useful if you have a lot of task variables, making it hard to find the ones you need to change in the GUI. 
 
 !!! tip "Variables dialog customization"
     The variables dialog can be customized by adding a `v.custom_variables_dialog` variable to your task file. 
@@ -31,7 +31,6 @@ The *Variables* button opens a dialog for setting or getting the value of task v
     This feature can be useful for tasks that have many variables that you would otherwise have to scroll/search through and type in edits for. The included [*example/custom_variables_dialog.py*](https://github.com/pyControl/code/blob/master/tasks/example/custom_variables_dialog.py) task is a good reference for this feature that can be viewed and run on any setup.
     
     ![custom variable dialog](../media/GUI/custom_variable_dialog.png)
-
 
 ## Experiments tab
 
@@ -49,11 +48,11 @@ The *Subjects* table is used to specify which subjects will run in which hardwar
 
 The *Variables* table is used to set the value of variables before the task starts.  Variables can be set to the same value for all subjects or to different values for different subjects. Variables can be set to numbers, or Python objects including strings, lists and dictionaries.  The constants `ms`, `second`, `minute` and `hour` can be used, e.g. a variable can be set to `5*second`.  
 
-A variable can be set as persistent by ticking the *persistent* check-box. If a variable is persistent it's value is saved at the end of the session. The next time the experiment is run, if the variable is still set as persistent, its value will be set to the previously stored value.  Persistent variables are saved as a [JSON](https://www.json.org/) object in a file *persistent_variables.json* in the experiments data folder. JSON is a human-readable format so the stored values can be inspected and edited using a text editor.
+A variable can be set as persistent by ticking the *persistent* checkbox. If a variable is persistent it's value is saved at the end of the session. The next time the experiment is run, if the variable is still set as persistent, its value will be set to the previously stored value.  Persistent variables are saved as a [JSON](https://www.json.org/) object in a file *persistent_variables.json* in the experiments data folder. JSON is a human-readable format so the stored values can be inspected and edited using a text editor.
 
 Summary variables can be specified by ticking the *summary* check-box. The values of summary variables are displayed for each subject at the end of the session and copied to the clipboard in a format that can be pasted directly into spreadsheets or text editors. The values of each subject's summary variables at the end of the session are also written to that subjects data file.
 
-The *save* button saves the current experiment configuration.  Saved experiments can be loaded by selecting them with the drop down menu. Saved experiments can be deleted with the delete button.  Each experiment is saved as a separate file in the folder *pyControl/experiments*.  Experiment configurations are saved as JSON objects in text files with a *.pcx* file extension.
+The *save* button saves the current experiment configuration.  Saved experiments can be loaded by selecting them with the drop-down menu. Saved experiments can be deleted with the delete button.  Each experiment is saved as a separate file in the folder *pyControl/experiments*.  Experiment configurations are saved as JSON objects in text files with a *.pcx* file extension.
 
 ### Running experiments
 
@@ -81,15 +80,17 @@ If a name is specified for a setup, the name will appear instead of the setup's 
 
 The configure button next to each setup bring up a menu of configuration options for that board.  Alternatively multiple boards can be selected with the checkboxes and configured with the *configure selected* buttons.
 
+## Hardware variables
+
 ## Board configuration
 
 The board configuration menu has the following options to configure pyboards.
 
 - *Load framework:* Reload the pyControl framework onto the board. If you are using a hardware definition you will need to reload it after loading the framework.
-- *Load hardware definition:* Load a [hardware definition](hardware.md#hardware-definition) file onto the pyboard.  The selected file is renamed *hardware_definition.py* on the pyboard filesystem irrespective of it's name on the computer, so the hardware definition is always imported into the task file with:
+- *Load hardware definition:* Load a [hardware definition](hardware.md#hardware-definition) file onto the pyboard.  The selected file is renamed *hardware_definition.py* on the pyboard filesystem irrespective of its name on the computer, so the hardware definition is always imported into the task file with:
 
 ```python
 import hardware_definition as hw
 ```
 - *Device Firmware Update (DFU) mode:* Put the pyboard into DFU mode used for upgrading the version of MicroPython running on the board.  For more information on upgrading MicroPython see [here](http://micropython.org/download).
-- *Enable/disable USB flash drive:*  Disabling the USB flash drive prevents the pyboard from showing up on the computer's filesystem as a USB storage device. This can be useful if you are connecting a large number of pyboards to a computer and run out of space on the USB bus. With the flashdrive enabled each pyboard shows up as two USB devices - a flash drive and a USB serial port.
+- *Enable/disable USB flash drive:* Disabling the USB flash drive prevents the pyboard from showing up on the computer's filesystem as a USB storage device. This can be useful if you are connecting a large number of pyboards to a computer and run out of space on the USB bus. With the flashdrive enabled each pyboard shows up as two USB devices - a flash drive and a USB serial port.

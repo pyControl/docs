@@ -26,7 +26,6 @@ Hardware objects can be instantiated directly in a state machine definition file
 
 The hardware definition tells the pyControl system what inputs and outputs are available for use by state machines.  A simple hardware definition file might read:
 
-
 ```python
 from devices import *   
 
@@ -35,7 +34,6 @@ LED    = Digital_output(pin='X2')
 ```
 
 This specifies that there is a digital input called `button` connected to pin X1 on the pyboard, and a digital output called `LED` connected to pin X2.  Each time a rising edge occurs on pin X1, a framework event named `'button_press'` will be generated, you can also specify events to be generated when falling edges occur on digital inputs:
-
 
 ```python
 button = Digital_input(pin='X1', rising_event='button_press', falling_event='button_release')
@@ -49,7 +47,6 @@ import hardware_definition as hw
 
 such that hardware objects are accessed in the state machine definition as in the examples below:
 
-
 ```python
 hw.button.value() # Read the state of the button.
 
@@ -59,7 +56,6 @@ hw.LED.off()     # Turn the LED off
 ```
 
 You can turn off all outputs (for example at the end of a session) using the command:
-
 
 ```python
 hw.off()  # Turn off all outputs.
@@ -75,7 +71,7 @@ The following hardware classes control the behaviour of a single pin on the Micr
 
 The digital input class generates pyControl framework events when a specified pin on the MicroPython board changes state. Seperate events can be specified for rising and/or falling edges. 
 
-By defalt debouncing is used to prevent multiple events being triggered very close together in time if the edges are not clean.  The debouncing method used ensures that transient inputs shorter than the debounce duration still generate rising and falling edges.  Debouncing incurs some overheads so should be turned off for inputs with clean edges and high event rates.
+By default debouncing is used to prevent multiple events being triggered very close together in time if the edges are not clean.  The debouncing method used ensures that transient inputs shorter than the debounce duration still generate rising and falling edges.  Debouncing incurs some overheads so should be turned off for inputs with clean edges and high event rates.
 
 ```python
 class Digital_input(pin, rising_event=None, falling_event=None, debounce=5, pull=None)
@@ -131,8 +127,7 @@ The analog input class measures the voltage on a pin at a specified sampling rat
 
 The input voltage is measured with 12 bit resolution giving a number between 0 and 4095, corresponding to the voltage range 0 to 3.3V relative to the pyboard ground.
 
-Acquiring analog data and streaming it to the host computer uses pyboard processor and communication resources, so attempting to acquire at too high sampling rates, or from too many inputs simultaneously, will overload the board.   The maximum achievable sample rates have not been extensively tested, though six analog inputs acquiring at 1KHz each appears to work.  The current format for saving analog data records timestamps at ms resolution, so a maximum sample rate for individual inputs of 1KHz is recommended.
-
+Acquiring analog data and streaming it to the host computer uses pyboard processor and communication resources, so attempting to acquire at too high sampling rates, or from too many inputs simultaneously, will overload the board. The maximum achievable sample rates have not been extensively tested, though six analog inputs acquiring at 1KHz each appears to work.  The current format for saving analog data records timestamps at ms resolution, so a maximum sample rate for individual inputs of 1KHz is recommended.
 
 ```python
 class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, falling_event=None)
@@ -144,7 +139,7 @@ class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, 
 
 `name` Name of the analog input, used to identify data files generated when input is recorded.
 
-`sampling_rate` The rate at which the pin voltage is sampled (Hz). 
+`sampling_rate` The rate at which the pin voltage is sampled (Hz).
 
 `threshold` Threshold against which voltage samples are compared for generating rising and falling events, must be an integer between 0 and 4095.
 
@@ -164,11 +159,11 @@ Pyboard pins 'X5' and 'X6' support analog output.  On the breakout board they ar
 
 ![Breakout 1.2 bracket](../media/hardware/breakout-1-2-bracket.jpg)
 
-Typically when pyControl is used to run a behavioural experiment, the pyboard microcontroller is mounted on a breakout board, which interfaces it with *behaviour ports*, BNC connectors, indicator LEDs and user pushbuttons. 
+Typically, when pyControl is used to run a behavioural experiment, the pyboard microcontroller is mounted on a breakout board, which interfaces it with *behaviour ports*, BNC connectors, indicator LEDs and user pushbuttons.
 
 The current version 1.2 of the pyControl Breakout board has 6 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and user pushbuttons.  
 
-The BNC connectors connect directly to pins on the microcontroller.  All 4 BNC connectors can be used as digital inputs or outputs.  When used as digital outputs they have a 3.3V high logic level, which can typically be used directly as an input for systems with 5V logic.  When used as digital inputs, BNC-1 and BNC-2 work with 5V  or 3.3V logic level input signals, but DAC-1 and DAC-2 are not 5V tolerant and should not be used with signals >3.3V.   All 4 BNC connectors can also be used as analog inputs, but when used in this mode the input signal should not exceed 3.3V.  Connectors DAC-1 and DAC-2 can also be used as analog ouputs.
+The BNC connectors connect directly to pins on the microcontroller.  All 4 BNC connectors can be used as digital inputs or outputs.  When used as digital outputs they have a 3.3V high logic level, which can typically be used directly as an input for systems with 5V logic.  When used as digital inputs, BNC-1 and BNC-2 work with 5V  or 3.3V logic level input signals, but DAC-1 and DAC-2 are not 5V tolerant and should not be used with signals >3.3V. All 4 BNC connectors can also be used as analog inputs, but when used in this mode the input signal should not exceed 3.3V.  Connectors DAC-1 and DAC-2 can also be used as analog ouputs.
 
 See below for information about pinout and function of lines on the behaviour ports.  On breakout board 1.2, all six behaviour ports have the standard 2 digital input/output (DIO) lines, 2 POW driver lines, and 5V, 12V and ground lines.  Ports 1 & 2 have an additional driver line *POW_C*.  Ports 3 and 4 have an additional DIO line *DIO_C* which also supports analog output (DAC).  Ports 3 and 4 support I2C and ports 1,3 & 4 support UART serial communication over their DIO lines.  Useful resources for understanding the additional functionallity of the lines on each port are the [Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf) and [device definition file](https://github.com/pyControl/code/blob/master/devices/breakout_1_2.py) for the breakout board and the [pyboard quick reference](https://docs.micropython.org/en/latest/pyboard/quickref.html).
 
@@ -257,7 +252,7 @@ The driver lines can be used as digital outputs by connecting them to a positive
 
 This can be useful if you need to control devices that require a digital logic signal with a voltage higher than 3.3V (though many 5V logic devices work fine with 3.3V inputs), or if you just need more digital outputs.
 !!! hint "Inverted output"
-    When the driver line (POW) is off the output will be pulled up to 5V, when the driver line is on it will pull the output down to 0V. 
+    When the driver line (POW) is off the output will be pulled up to 5V, when the driver line is on it will pull the output down to 0V.
     In your task code, to have the more conventional association of "on" meaning high voltage and "off" 0V, you can set the [digital output](hardware.md#digital-output) `inverted` property to `True`. 
     This change is particularly relevant if you want the POW pin's output voltage to be 0V when the task in not running, as all digital outputs automatically begin "off" when a task is uploaded and are turned "off" when a task is stopped.
 #### Special
@@ -310,11 +305,11 @@ Options for creating an electrical connection are:
 
 - The BNC connectors on the breakout board, which can be used for analog or digital input or output (see above).  Each connector carries one signal line and one ground connection.  They are often used for triggering external devices from pyControl or triggering pyControl events from external devices.  They can also be used to output sync pulses for synchronising  pyControl data with video or physiology data, as detailed in the [synchronisation](synchronisation.md) user guide.
 - Connect to one or more lines on a behaviour port.  The easiest way to do this is usually using the screw terminal connector on the port adapter board (see above).  This is a good option if you need to connect multiple signals, and the 5V or 12V lines can be used to power small external devices.  For example, we typically mount a port adapter board on the inside of the setup's sound attenuating chamber to control the house light, power the fan and send sync pulses to the camera, as shown [here](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small).
-- Design a custom printed circuit board (PCB) with an RJ45 connector to connect to a breakout board behaviour port.   This requires more work initially, but may make sense if you need to implement custom circuitry and want to scale to multiple setups.   Complete design files for all the pyControl devices are in the hardware repository and provide a good starting point for thinking about your own designs.  They were created in [Eagle](https://www.autodesk.co.uk/products/eagle/overview) PCB, which is available as a freeware version (with a restriction on board size, but still sufficient for many applications) and also is free for academic use.
+- Design a custom printed circuit board (PCB) with an RJ45 connector to connect to a breakout board behaviour port. This requires more work initially, but may make sense if you need to implement custom circuitry and want to scale to multiple setups. Complete design files for all the pyControl devices are in the hardware repository and provide a good starting point for thinking about your own designs.  They were created in [Eagle](https://www.autodesk.co.uk/products/eagle/overview) PCB, which is available as a freeware version (with a restriction on board size, but still sufficient for many applications) and also is free for academic use.
 
 To define custom external hardware in your hardware definition or task file there are two options.  The simplest is to instantiate the individual inputs and/or outputs directly in the hardware definition.  These may be pyControl `Digital_input`, `Analog_input` or `Digital_output` objects (see above), or MicroPython objects; [pyb.DAC](https://docs.micropython.org/en/latest/library/pyb.DAC.html)  for analog output, and [pyb.I2C](https://docs.micropython.org/en/latest/library/pyb.I2C.html) or [pyb.UART](https://docs.micropython.org/en/latest/library/pyb.UART.html) for serial communication.  
 
-Alternatively, if an external hardware device comprises several inputs and/or outputs, or if there is additional code needed to control it, it may be worthwhile writing a Python class representing it.  For example, the nose-poke device comprises an IR beam,  a stimulus LED and a solenoid, all connected to a single behaviour port.  You could instantiate and use the individual inputs and outputs like this:
+Alternatively, if an external hardware device comprises several inputs and/or outputs, or if there is additional code needed to control it, it may be worthwhile writing a Python class representing it.  For example, the nose-poke device comprises an IR beam, a stimulus LED and a solenoid, all connected to a single behaviour port.  You could instantiate and use the individual inputs and outputs like this:
 
 ```python
 # Instantiate inputs and outputs comprising a poke connected to behaviour port 1.
@@ -339,7 +334,7 @@ poke.SOL.off() # Turn off the SOL
 
 ```
 
-In addition to instantiating inputs or outputs, device classes can also contain code needed to control the hardware.   For example the `Audio_player` class, defined in [audio_player.py](https://github.com/pyControl/code/blob/master/devices/audio_player.py), instantiates a UART for serial communication with the module, but also has methods to send the serial commands needed to control the module.  
+In addition to instantiating inputs or outputs, device classes can also contain code needed to control the hardware. For example the `Audio_player` class, defined in [audio_player.py](https://github.com/pyControl/code/blob/master/devices/audio_player.py), instantiates a UART for serial communication with the module, but also has methods to send the serial commands needed to control the module.  
 
 Once you have written a file containing the class representing the device, put the file in the devices folder, then load your task or hardware definition to the board and the device driver file will be transferred automatically.
 
@@ -409,7 +404,7 @@ In addition to the digital volume control there is a manual volume control knob 
 
 ![Audio board](../media/hardware/audio-board.jpg)
 
-```python 
+```python
 class Audio_board(port)
 ```
 
@@ -429,7 +424,7 @@ class Audio_board(port)
 
 `Audio_board.clicks(rate)` Play clicks at specified rate.
 
-`Audio_board.pulsed_sine(freq, pulse_rate)` 
+`Audio_board.pulsed_sine(freq, pulse_rate)`
 
 Play a sine wave of the specified frequency pulsed with a 50% duty cycle at the specified rate.
 
@@ -437,7 +432,7 @@ Play a sine wave of the specified frequency pulsed with a 50% duty cycle at the 
 
 Play a square wave of the specified frequency pulsed with a 50% duty cycle at the specified rate.
 
-`Audio_board.pulsed_noise(freq, pulse_rate)` 
+`Audio_board.pulsed_noise(freq, pulse_rate)`
 
 Play white(ish) noise with specified maximum frequency pulsed with a 50% duty cycle at the specified rate.
 
@@ -471,7 +466,7 @@ A constant current LED driver for optogenetic stimulation.
 
 ![LED driver](../media/hardware/LED-driver.jpg)
 
-```python 
+```python
 class LED_driver(port)
 ```
 
@@ -504,16 +499,14 @@ Class for controlling an EasyDriver stepper motor driver or any driver which tak
 
 The stepper motor adaptor board connects an Easydriver to a pyControl behaviour port.  It can drive bipolar stepper motors with up to 750mA per phase.  The maximum current can be adjusted from 150mA to 750mA using the potentiometer on the easy driver board.  The stepper motor driver is powered with a 12V supply, but as it is a controlled current driver it can safely be used with lower voltage stepper motors as long as the motors maximum current is not exceeded.  For more information see the Questions and Answers section of the [EasyDriver](http://www.schmalzhaus.com/EasyDriver/) documentation.
 
-
 !!! note "Maximum current"
-    The stepper motor driver can draw power either from the 12V line on the behaviour port or from a 12V power supply connected to the stepper motor board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If your stepper motor requires more current, connect a 12V power supply directly to the stepper motor driver.  The current requirements for some common stepper motors are detailed in the EasyDriver documentation.
-
+    The stepper motor driver can draw power either from the 12V line on the behaviour port or from a 12V power supply connected to the stepper motor board using the 2.1 mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If your stepper motor requires more current, connect a 12V power supply directly to the stepper motor driver.  The current requirements for some common stepper motors are detailed in the EasyDriver documentation.
 
 [GitHub](https://github.com/pyControl/hardware/tree/master/Stepper_driver), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-stepper-driver-board)
 
 ![Stepper driver](../media/hardware/stepper_driver.jpg)
 
-```python 
+```python
 class Stepper_motor(port=None, direction_pin=None, step_pin=None)
 ```
 
@@ -550,12 +543,11 @@ The rotary encoder adaptor board connects an Avago HEDM-55xx series rotary encod
 
 For an example task using a rotary encoder to measure running speed and trigger framework events when running starts and stops see [*running_wheel*](https://github.com/pyControl/code/blob/master/tasks/example/running_wheel.py).
 
-Decoding the quadrature signal from the encoder is handled by dedicated low level routines on the pyboard microcontroller, so load on the microcontrollers is not affected by the rate of edges generated by the encoder.  The maximum rate at which edges can be registered is not specified but given the dedicated processing hardware is unlikely to be limiting in behavioural applications.   As with the `Analog_input` a maximum sampling rate of 1KHz is recommended as data is saved with ms resolution timestamps.
+Decoding the quadrature signal from the encoder is handled by dedicated low level routines on the pyboard microcontroller, so load on the microcontrollers is not affected by the rate of edges generated by the encoder.  The maximum rate at which edges can be registered is not specified but given the dedicated processing hardware is unlikely to be limiting in behavioural applications. As with the `Analog_input` a maximum sampling rate of 1KHz is recommended as data is saved with ms resolution timestamps.
 
 [GitHub](https://github.com/pyControl/hardware/tree/master/Rotary_encoder), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-rotary-encoder)
 
 ![Stepper driver](../media/hardware/rotary_encoder.jpg)
-
 
 ```python 
 class Rotary_encoder(name, sampling_rate, output='velocity', threshold=None,
@@ -585,7 +577,7 @@ class Rotary_encoder(name, sampling_rate, output='velocity', threshold=None,
 
 `Rotary_encoder.record()` Start streaming position/velocity measurements to computer. Data is saved in the same file format as data generated by [analog inputs](#analog-input).
 
-`Rotary_encoder.stop()` Stop streaming data to computer. If rising or falling events are specified for the rotary en position of the encoder.coder these will be generated regardless of whether or not the encoder is streaming data to the computer.
+`Rotary_encoder.stop()` Stop streaming data to computer. If rising or falling events are specified for the position of the encoder these will be generated regardless of whether or not the encoder is streaming data to the computer.
 
 *Attributes:*
 
@@ -619,11 +611,11 @@ The port expander board uses serial to parallel IO expander ICs ([datasheet](htt
 Each port on the port expander works like a standard behaviour port, with 2 DIO lines, 2 driver lines for high current loads, as well as ground, 5V and 12V lines.  Digital outputs on the port expander do not support the `Digital_output.pulse()` method.
 
 !!! note "Maximum current"
-    The port expander can draw power either from the behaviour port or from a 12V power supply connected to the expander board using the 2.1mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If the devices plugged into the port expander may draw more than 0.6A current in total, connect a power supply directly to the port expander board.
+    The port expander can draw power either from the behaviour port or from a 12V power supply connected to the expander board using the 2.1 mm barrel plug.  The maximum current that can safely be drawn from the behaviour port is 0.6A (the maximum rated current per conductor on Cat5 network cables).  If the devices plugged into the port expander may draw more than 0.6A current in total, connect a power supply directly to the port expander board.
 
 [GitHub](https://github.com/pyControl/hardware/tree/master/Port_expander), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-port-expander)
 
-![Stepper driver](../media/hardware/port_expander_photo.jpg)
+![Port expander](../media/hardware/port_expander_photo.jpg)
 
 ```python 
 class Port_expander(port=None)
@@ -722,8 +714,6 @@ nine_poke.SOL_1.on() # Turn on the solenoid 1 output on the solenoid driver daug
 # Solenoids connected to the daughter board can be assigned to pokes:
 nine_poke.poke_4.SOL = nine_poke.SOL_1 # Assign SOL_1 on the daughter board to poke 4.
 nine_poke.poke_4.SOL.on()              # Turn on the solenoid that has been assigned to poke 4.
-
-
 ```
 
 ---
@@ -735,7 +725,7 @@ An electrical lickometer board which has two lick detection circuits and two sol
 
 ![Five_poke mounted](../media/hardware/lickometer_photo.jpg)
 
-```python 
+```python
 class Lickometer(port, rising_event_A='lick_1', falling_event_A='lick_1_off',
                        rising_event_B='lick_2', falling_event_B='lick_2_off', debounce=5)
 ```
@@ -755,7 +745,7 @@ Lickometer.SOL_2.off() # Turn off solenoid 2.
 
 An LED driver board with analog control of the LED current from 1 - 400mA using the MicroPython DAC.  The Analog LED driver needs to be connected to a behaviour port that has a DAC output (ports 3 and 4 on breakout board 1.2).
 
-```python 
+```python
 class Analog_LED(port)
 ```
 
@@ -818,7 +808,7 @@ rfid.read_tag() # Return the ID of the most recent tag read, if no tag has been 
 
 ---
 
-### MCP23017 
+### MCP23017
 
 The MCP23017 is a serial to parallel IO expander IC ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) which can be used to add additional digital input/output lines to the MicroPython microcontroller. The IC must be connected to the MicroPython via an I2C serial connection, which are available on the DIO pins of ports 3 and 4 of breakout board 1.2.  If you plan to use MCP23017 pins as pyControl digital inputs the INTA interrupt pin on the MCP23017 must be connected to a DIO pin on the MicroPython. The pins on the MCP23017 can be used as standard pyControl Digital_input and Digital_output objects as shown in the usage example below.
 
@@ -838,6 +828,6 @@ mcp_input = Digital_input(pin=mcp.Pin('A1'), rising_event='event_A') # Instantia
 
 The MCP23008 IC is also supported using the same syntax.  The MCP23017 has 16 DIO lines and the MCP23008 has 8 DIO lines. 
 
-```python 
+```python
 class  MCP23008(I2C_bus=1, interrupt_pin='X5', addr=0x20)
 ```
