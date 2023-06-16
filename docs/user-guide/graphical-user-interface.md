@@ -80,8 +80,6 @@ If a name is specified for a setup, the name will appear instead of the setup's 
 
 The configure button next to each setup bring up a menu of configuration options for that board.  Alternatively multiple boards can be selected with the checkboxes and configured with the *configure selected* buttons.
 
-## Hardware variables
-
 ## Board configuration
 
 The board configuration menu has the following options to configure pyboards.
