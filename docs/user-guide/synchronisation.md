@@ -2,9 +2,9 @@
 
 ![sync diagram](../media/hardware/sync-diagram.jpg)
 
-Experiments often require synchronising behavioural data with other systems such as video cameras or physiology recordings.  pyControl provides tools for data synchronisation that work by sending synchronisation pulses from pyControl to the other systems which need to be synchronised with it. 
+Experiments often require synchronising behavioural data with other systems such as video cameras or physiology recordings.  pyControl provides tools for data synchronisation that work by sending synchronisation pulses from pyControl to the other systems which need to be synchronised with it.
 
-The recommended tool for synchronisation is called `Rsync` and works by outputting sync pulse trains with  random inter-pulse intervals.   The times when sync pulses occurred are recorded by each system in their own time reference frame and can then be used to convert times from one system into the reference frame of another using code provided in the [tools](https://github.com/pyControl/code/tree/master/tools) folder.  The random inter-pulse intervals ensure there is a unique match between the inter-pulse-interval sequences recorded on each system, so it is always possible to identify which pulse corresponds to which even if some pulses are missing, e.g. due to forgetting to turn a system on till after the start of a session.  This also makes it unambiguous whether two files come from the same session in the event of a file name mix-up.
+The recommended tool for synchronisation is called `Rsync` and works by outputting sync pulse trains with random inter-pulse intervals. The times when sync pulses occurred are recorded by each system in their own time reference frame and can then be used to convert times from one system into the reference frame of another using code provided in the [tools](https://github.com/pyControl/code/tree/master/tools) folder.  The random inter-pulse intervals ensure there is a unique match between the inter-pulse-interval sequences recorded on each system, so it is always possible to identify which pulse corresponds to which even if some pulses are missing, e.g. due to forgetting to turn a system on till after the start of a session.  This also makes it unambiguous whether two files come from the same session in the event of a file name mix-up.
 
 The only functionality a system needs to be synchronised in this way is the ability to record when digital input pulses occurred.  This can be by explicitly storing timestamps, or implicitly, such as camera recording once each frame the state of an input pin (or whether an LED in the field of view is on or off).
 
@@ -14,10 +14,9 @@ Regular sync pulses can also be generated using the `Frame_trigger` class.  This
 
 ### Rsync
 
- The `Rsync` object is used to generate sync pulse trains with random inter-pulse intervals.  A single `Rsync` should be used to synchronise all external systems, so that they all receive the same sync pulse train.  This can be achieved physically by outputting the signal on one of the breakout board BNC connectors and using BNC T-junction adapters (e.g. [this](https://cpc.farnell.com/pro-signal/psg08505/connector-bnc-t-50ohm/dp/CN21058)) to split the signal to the different systems.   Sync pulse times are recorded in the main pyControl data file using the specified event name.
+ The `Rsync` object is used to generate sync pulse trains with random inter-pulse intervals.  A single `Rsync` should be used to synchronise all external systems, so that they all receive the same sync pulse train.  This can be achieved physically by outputting the signal on one of the breakout board BNC connectors and using BNC T-junction adapters (e.g. [this](https://cpc.farnell.com/pro-signal/psg08505/connector-bnc-t-50ohm/dp/CN21058)) to split the signal to the different systems. Sync pulse times are recorded in the main pyControl data file using the specified event name.
 
-
-```python 
+```python
 class Rsync(pin, event_name='rsync', mean_IPI=5000, pulse_dur=50)
 ```
 
@@ -43,8 +42,7 @@ Once an `Rsync` object is instantiated, sync pulses will automatically be genera
 
 The `Frame_trigger` object is used to generate regular pulse trains at a specified frequency, and is designed for triggering camera frame acquisition or similar applications.  The pulse train is a square wave with a 50% duty cycle and is output continuously while the framework is running.  The time of pulse rising edges and corresponding pulse numbers are saved as a seperate pyControl [analog data](pycontrol-data.md#analog-data) file (.pca file).
 
-
-```python 
+```python
 class Frame_trigger(pin, pulse_rate, name='frame_trigger')
 ```
 
@@ -62,8 +60,6 @@ Arguments:
 frame_trigger = Frame_trigger(pin=board.BNC_2, pulse_rate=60) # Instantiate Frame_trigger on breakout board BNC_2
 ```
 
-
-
 ## Synchronising data
 
 The [rsync](https://github.com/pyControl/code/blob/master/tools/rsync.py) module in the tools folder can be used in Python to convert event times from one hardware system's reference frame that of another system by using sync pulse times generated by the `Rsync` object recorded on both systems.  To illustrate this, assume we have an array of sync pulse times recorded by pyControl called `pulse_times_pycontrol` and an array of sync pulse times recorded by an ephys system called `pulse_times_ephys`.  We also have an array of spike times recorded by the ephys system called `spike_times_ephys` which we want to convert into the reference frame of the pyControl data.  We first instantiate an *Rsync_aligner* object using the pulse times recorded by both systems:
@@ -71,8 +67,10 @@ The [rsync](https://github.com/pyControl/code/blob/master/tools/rsync.py) module
 ```python
 from rsync import Rsync_aligner
 
-ephys_aligner = Rsync_aligner(pulse_times_A=pulse_times_pycontrol, 
-	                          pulse_times_B=pulse_times_ephys)
+ephys_aligner = Rsync_aligner(
+    pulse_times_A=pulse_times_pycontrol,
+    pulse_times_B=pulse_times_ephys,
+)
 ```
 
 We can then convert the spike times recorded by the ephys system into the pyControl data's time reference frame using:
@@ -87,12 +85,15 @@ We could also convert an array of pyControl event times into the reference frame
 event_times_ephys = ephys_aligner.A_to_B(event_times_pycontrol)
 ```
 
-To work out which pulses correspond to which in the two sequences, the alignment code needs to know the relative units the two sets of pulse times are recorded in.   For example, imagine we want to synchronise a camera which acquires frames at 60Hz with pyControl data, using an array called `pulse_frame_numbers` specifying the frame numbers when sync pulses occurred.  The pyControl pulse times are in units of ms whereas the `pulse_frame_numbers` are in units of 1000/60 = 16.67ms.  By default the alignment code will automatically estimate the relative units from the pulse trains themselves.  Alternatively you can explicitly specify the units for each pulse sequence in ms:
+To work out which pulses correspond to which in the two sequences, the alignment code needs to know the relative units the two sets of pulse times are recorded in.   For example, imagine we want to synchronise a camera which acquires frames at 60Hz with pyControl data, using an array called `pulse_frame_numbers` specifying the frame numbers when sync pulses occurred.  The pyControl pulse times are in units of ms whereas the `pulse_frame_numbers` are in units of 1000/60 = 16.67ms.  By default, the alignment code will automatically estimate the relative units from the pulse trains themselves.  Alternatively you can explicitly specify the units for each pulse sequence in ms:
 
 ```python
-camera_aligner = Rsync_aligner(pulse_times_A=pulse_times_pycontrol, 
-	                           pulse_times_B=pulse_frame_numbers, 
-                               units_A=1, units_B=1000/60)
+camera_aligner = Rsync_aligner(
+    pulse_times_A=pulse_times_pycontrol,
+    pulse_times_B=pulse_frame_numbers,
+    units_A=1,
+    units_B=1000 / 60,
+)
 ```
 
 Automatic detection of the units convenient but may fail to find a match between the pulse sequences if you have too few sync pulses to accurately estimate the mean inter-pulse interval. Specifying the units manually can also be a good sanity check to make sure the data are as expected, for example if the camera was actually acquiring frames at 100Hz rather than 60Hz, the error would be detected when specifying units manually because the sync code would not find a match between the pulse sequences.
@@ -109,7 +110,7 @@ We can also convert the times when a pyControl event occurred into the correspon
 event_frame_numbers = camera_aligner.A_to_B(event_times_pycontrol)
 ```
 
-An example analysis showing how to synchronise pyControl behavioural data with neural activity recorded using [pyPhotometry](https://pyphotometry.readthedocs.io/en/latest/) is provided in this [data synchronisation](https://github.com/ThomasAkam/data_synchronisation/blob/master/data_synchronisation.ipynb) jupyter notebook. 
+An example analysis showing how to synchronise pyControl behavioural data with neural activity recorded using [pyPhotometry](https://pyphotometry.readthedocs.io/en/latest/) is provided in this [data synchronisation](https://github.com/ThomasAkam/data_synchronisation/blob/master/data_synchronisation.ipynb) jupyter notebook.
 
 ---
 

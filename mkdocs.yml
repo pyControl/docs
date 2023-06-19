@@ -34,8 +34,8 @@ nav:
     - License: about/license.md
 
 - Quick Links:
-    - Help and Discussions: https://github.com/orgs/pyControl/discussions
-    - Repositories: https://github.com/pycontrol
+    - Help and discussions: https://github.com/orgs/pyControl/discussions
+    - GitHub repositories: https://github.com/pycontrol
     - Manuscript:  https://elifesciences.org/articles/67846
 
 copyright: Copyright &copy; 2016 - 2023 Thomas Akam

@@ -54,7 +54,7 @@ initial_state = 'state_A'
 
 ## Events
 
-Events cause the state machine to do things, they may be generated externally by hardware inputs or internally by setting timers.  The user specifies the events used by the state machine by creating a variable called `events` which is a list of event names.
+Events cause the state machine to do things, they may be generated externally by hardware inputs or internally by [setting timers](#time-dependent-behaviour) or [publishing an event](#publish_event).  The user specifies the events used by the state machine by creating a variable called `events` which is a list of event names.
 
 ```python
 events = ['event_A, event_B'] 
@@ -86,7 +86,7 @@ Any valid MicroPython code can be put in state behaviour functions, though the c
 
 ## Changing state
 
-The function `goto_state` tells the state machine to transition to the state who's name is provided as an argument.
+The function `goto_state` tells the state machine to transition to the state whose name is provided as an argument.
 
 ```python
 goto_state('state_B')
@@ -115,7 +115,7 @@ The simplest way to implement time dependent behaviour is using the `timed_goto_
 timed_goto_state('state_C', 10*second) # Transition to state 'state_C' after 10 seconds.
 ```
 
-If a state transition occurs for any reason before the `timed_goto_state` triggers, the  `timed_goto_state` is cancelled and will have no effect.
+If a state transition occurs for any reason before the `timed_goto_state` triggers, the `timed_goto_state` is cancelled and will have no effect.
 
 Timers provide a more flexible way of implementing time dependent behaviour by allowing a specified event to be triggered after a specified time has elapsed.
 
@@ -210,7 +210,7 @@ def all_states(event):
 
 ## Variables
 
-Variable names should start with `v.` , for example:
+Variable names should start with `v.`, for example:
 
 ```python
 v.variable_A = 0.5
@@ -233,7 +233,7 @@ You can make task variables invisible to the GUI by ending their name in three u
 
 ## Data output
 
-Whenever an external event occurs it is output to the data log along with a timestamp. Whenever a state transition occurs the state that is entered is output with a timestamp.  Events triggered by timers are output to the data log by default, but you can prevent this by setting the  `output_event` argument to `False` when setting the timer:
+Whenever an external event occurs it is output to the data log along with a timestamp. Whenever a state transition occurs the state that is entered is output with a timestamp.  Events triggered by timers are output to the data log by default, but you can prevent this by setting the `output_event` argument to `False` when setting the timer:
 
 ```python
 set_timer('event_A', 3*second, output_event=False) 
@@ -241,7 +241,7 @@ set_timer('event_A', 3*second, output_event=False)
 reset_timer('event_B', 3*second, output_event=False)
 ```
 
-The `print()` function can be used in task definition files to printed a string to the data output along with a timestamp.  
+The `print()` function can be used in task definition files to print a string to the data output along with a timestamp.  
 
 ```python
 print('Hello world')
@@ -255,7 +255,7 @@ print_variables() # Print the value of all task variables.
 print_variables(['n_trials', 'n_rewards']) # Print the value of task variables v.n_trials and v.n_rewards.
 ```
 
-Variables are printed as a [JSON](https://www.json.org/json-en.html) formatted string as this both human readable and easy to parse in most programming languages, e.g. in python using the [JSON module](https://docs.python.org/3/library/json.html).   In decision making tasks it is often sensible to print the value of task variables once each trial, as done in the [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/example/reversal_learning.py) example.  
+Variables are printed as a [JSON](https://www.json.org/json-en.html) formatted string as this both human-readable and easy to parse in most programming languages, e.g. in python using the [JSON module](https://docs.python.org/3/library/json.html). In decision making tasks it is often sensible to print the value of task variables once each trial, as done in the [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/example/reversal_learning.py) example.  
 
 ## Structuring task files
 
@@ -265,9 +265,9 @@ As pyControl task definition files are just Python modules, you can define arbit
 
 The following do's and don'ts are good practice for ensuring that tasks run stably and respond to input with low latency:
 
-- **Avoid polling:** Polling is the process of regularly checking the state of an input to detect when to do something.  It is rarely the right thing to do in pyControl tasks, as polling an input at high frequency ties up processor time which could affect framework performance.  For digital inputs it is always preferably to detect changes in the state of the input using framework events generated on rising and/or falling edges by the [Digital_input](hardware.md#digital-input) class, as no resources are used except when the change actually occurs.  For analog inputs,  where possible use the [Analog_input](hardware.md#analog-input)'s ability to generate framework events when a specified threshold is crossed rather than polling the value of the input.  Polling may be necessary if you need to respond to events send over a serial connection (e.g. from an external device that communicates via UART).  In this case either poll at the lowest frequency necessary to ensure an acceptable response latency to the serial input, or if possible trigger the serial read using a separate digital input from the external device.
+- **Avoid polling:** Polling is the process of regularly checking the state of an input to detect when to do something.  It is rarely the right thing to do in pyControl tasks, as polling an input at high frequency ties up processor time which could affect framework performance.  For digital inputs it is always preferably to detect changes in the state of the input using framework events generated on rising and/or falling edges by the [Digital_input](hardware.md#digital-input) class, as no resources are used except when the change actually occurs.  For analog inputs, where possible use the [Analog_input](hardware.md#analog-input)'s ability to generate framework events when a specified threshold is crossed rather than polling the value of the input.  Polling may be necessary if you need to respond to events send over a serial connection (e.g. from an external device that communicates via UART).  In this case either poll at the lowest frequency necessary to ensure an acceptable response latency to the serial input, or if possible trigger the serial read using a separate digital input from the external device.
 - **Input debouncing:** By default, pyControl digital inputs implement debouncing which prevents edges occurring closer together than a specified threshold (default 5ms) from generating multiple framework events.  For inputs generated by sensing physical processes (e.g. a switch closing or IR beam break), this is usually what you want, as the edges generated may be ragged, causing multiple logic level threshold crossings on a single physical event.  However debouncing incurs some additional processing cost when edges occur, so should be turned off on digital inputs that will receive events at high rates with clean edges (e.g. from a camera on each frame of a video), by using the argument `debounce=False` when the digital input is instantiated.
-- **Garbage collection** MicroPython has a garbage collector which runs when needed to free up memory by removing variables that are no longer in use.  Garbage collection takes several ms to run and events generated by external inputs or expiring timers that occur during garbage collection will be processed once it has finished.  If an occasional delay of a couple of ms would be an issue in your task, it is possible to manually trigger garbage collection at a time when it will not cause problems (e.g in the inter-trial interval).  To do this, import the garbage collection module into the task file with `import gc` and call garbage collection with `gc.collect()`.
+- **Garbage collection** MicroPython has a garbage collector which runs when needed to free up memory by removing variables that are no longer in use.  Garbage collection takes several ms to run and events generated by external inputs or expiring timers that occur during garbage collection will be processed once it has finished.  If an occasional delay of a couple of ms would be an issue in your task, it is possible to manually trigger garbage collection at a time when it will not cause problems (e.g. in the inter-trial interval).  To do this, import the garbage collection module into the task file with `import gc` and call garbage collection with `gc.collect()`.
 
 ## Function reference
 
@@ -528,7 +528,7 @@ Class for randomly sampling elements from list `items` without replacement.  Whe
 
 *Methods:*
 
-`sample_without_replacement.next()`      Get the next sample.
+`sample_without_replacement.next()` Get the next sample.
 
 *Example usage:*
 
@@ -583,7 +583,7 @@ Class for calculating exponential moving average with specified time constant `t
 
 *Atributes:*
 
-`exp_mov_ave.value`     The current value of the moving average.
+`exp_mov_ave.value` The current value of the moving average.
 
 *Example usage:*
 

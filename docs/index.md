@@ -12,7 +12,7 @@ pyControl makes it easy to program complex behavioural tasks using a clean, intu
 
 ![Hardware overview](media/hardware/hardware-overview.png)
 
-pyControl [hardware](user-guide/hardware.md) consists of a breakout board and a set of devices such as nose-pokes, audio boards, LED drivers, rotary encoders and stepper motor controllers that are connected to the breakout board to create behavioural setups.  Assembled pyControl hardware is available from the [OpenEphys store](http://www.open-ephys.org/pycontrol) and [Labmaker](https://www.labmaker.org/collections/neuroscience/products/pycontrol-mouse-behaviour-box_set_no1).
+pyControl [hardware](user-guide/hardware.md) consists of a breakout board and a set of devices such as nose-pokes, audio boards, LED drivers, rotary encoders and stepper motor controllers that are connected to the breakout board to create behavioural setups.  Assembled pyControl hardware is available from the [Open Ephys store](http://www.open-ephys.org/pycontrol) and [LabMaker](https://www.labmaker.org/collections/neuroscience/products/pycontrol-mouse-behaviour-box_set_no1).
 
 pyControl has a [Graphical User Interface](user-guide/graphical-user-interface.md) for controlling experiments and visualing behaviour.
 
@@ -20,7 +20,7 @@ Tools for importing pyControl data into Python for analysis are provided in the 
 
 pyControl hardware, software and documentation repositories are hosted on [GitHub](https://github.com/pyControl), with a [discussion board](https://github.com/orgs/pyControl/discussions) for user discussions and support.
 
-The pyControl [manuscript](https://elifesciences.org/articles/67846) gives a high level overview of the system design and it's rationale and has validation experiments and example use cases.  If you use pyControl in a publication, please cite it.
+The pyControl [manuscript](https://elifesciences.org/articles/67846) gives a high level overview of the system design and its rationale and has validation experiments and example use cases.  If you use pyControl in a publication, please cite it.
 
 If you do fiber photometry experiments, you may be interested in pyControl's sister project [pyPhotometry](https://pyphotometry.readthedocs.io).
 
