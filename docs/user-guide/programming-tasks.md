@@ -229,7 +229,25 @@ def state_A(event):
 
 Starting all variable names with `v.` makes all variables attributes of a single object called `v` (imported from `pyControl.utility`).  This avoids problems that could otherwise occur when variables are accessed or set in state behaviour functions due to these functions having their own [namespaces](https://docs.python.org/3/tutorial/classes.html).  It also allows the GUI to access the variables to set or get their values.
 
-You can make task variables invisible to the GUI by ending their name in three underscores (e.g. `v.my_private_variable___`).  Such 'private' variables work as normal in the task file but do not show up in the GUI.  This can be useful if you have a lot of task variables, making it hard to find the ones you need to change in the GUI.
+### Special variables
+
+You can make task variables invisible to the GUI by ending their name in three underscores, for example `v.my_private_variable___`.  Such 'private' variables work as normal in the task file but do not show up in the GUI.  This can be useful if you have a lot of task variables, making it hard to find the ones you need to change in the GUI.
+
+A custom controls dialog can be specified by adding a `v.custom_controls_dialog` variable. See [controls dialog customization](graphical-user-interface.md#controls-dialog) for more details.
+
+Variables associated with hardware setups (e.g. calibration data for solenoid valves) can be used within a task by including a variable that begins with "hw_" for example `v.hw_my_hardware_variable`. 
+Once a hardware variable (any variable beginning with "v.hw_") has been established in a task file, the hardware specific value can be assigned to a hardware setup by going to the [Setups tab](graphical-user-interface.md#setups-tab), checking the named hardware setups that you want to assign values to, and then clicking the *Variables* button. 
+An "Edit Hardware Variables" dialog will appear. 
+From the hardware variable dropdown, select a variable and fill in the setup-value table below and finish by clicking the *save* button in the bottom right corner. 
+The included [*example/hardware_setup_level_variable.py*](https://github.com/pyControl/code/blob/master/tasks/example/hardware_setup_level_variable.py) task is a good reference for this feature that can be viewed and run on any setup.
+
+Adding `v.api_class` will provide a two-way application programming interface (API) between the task running on the microntroller and a custom Python script running on the PC.  See [API](#api) for more details
+
+## API
+An interface between the microcontroller task logic and the desktop computer during a running task can extend the capabilities of pyControl.
+For instance, it can be useful to offload intensive computations onto the more capable PC and then send the results back down to the microcontroller.
+Or you may want pyControl to connect to and communicate with external programs such as [Bonsai](https://www.bonsai-rx.org) or [PsychoPy](https://www.psychopy.org).
+The included [*example/api.py*](https://github.com/pyControl/code/blob/master/tasks/example/api.py) task is a good reference for this feature that can be viewed and run on any setup.
 
 ## Data output
 

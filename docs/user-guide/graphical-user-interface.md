@@ -1,6 +1,6 @@
 # pyControl GUI
 
-The pyControl GUI is a graphical interface for running experiments, configuring setups and visualising behaviour. The GUI is a tabbed window with *Run task*, *Experiments* and *Setups* tabs.  The *Run task* tab controls one hardware setup at a time i.e. one pyboard and its connected hardware.  It is designed for quickly prototyping tasks and testing hardware setups, but can also be used to acquire data from one setup.  The *Experiments* tab is used to configure and run experiments on many setups in parallel.  The *Setups* tab is used to name and configure the hardware setups connected to the computer.
+The pyControl GUI is a graphical interface for running experiments, configuring setups and visualising behaviour. The GUI is a tabbed window with *Run task*, *Experiments* and *Setups* tabs.  The [Run task tab](#run-task-tab) controls one hardware setup at a time i.e. one pyboard and its connected hardware.  It is designed for quickly prototyping tasks and testing hardware setups, but can also be used to acquire data from a single setup.  The [Experiments tab](#experiments-tab) is used to configure and run experiments on multiple setups in parallel.  The [Setups tab](#setups-tab) is used to name and configure the hardware setups connected to the computer.
 
 To run the GUI, run the file *pyControl_GUI.pyw* in the pyControl root directory.
 
@@ -18,19 +18,20 @@ The **Task** control box is used to select and upload a task and configure task 
 !!! tip "Task subfolders"
     Tasks can be organised into subfolders within the *tasks* folder, creating a nested list in the GUI drop down menu. This can be useful if you have a lot of tasks, e.g. to organise them by user.
 
-The *Variables* button opens a dialog for setting or getting the value of task variables.  It can be used either before a run starts or while a task is running.  Variables must be defined in the task definition file using the `v.my_variable` syntax (see [programming tasks](programming-tasks.md#variables)).  Variables can be set to numbers, or to Python objects including strings, lists and dictionaries.  The constants `ms`, `second`, `minute` and `hour` can be used, e.g. a variable can be set to `30*minute`. You can make task variables invisible to the GUI by ending their name in three underscores (e.g. `v.my_private_variable___`).  Such 'private' variables work as normal in the task file but do not show up in the GUI.  This can be useful if you have a lot of task variables, making it hard to find the ones you need to change in the GUI. 
+The *Controls* button opens a dialog for setting/getting the value of task variables, adding notes, and manually triggering task events.  It can be used either before a run starts or while a task is running.  Variables must be defined in the task definition file using the `v.my_variable` syntax (see [programming tasks](programming-tasks.md#variables)).  Variables can be set to numbers, or to Python objects including strings, lists and dictionaries.  The constants `ms`, `second`, `minute` and `hour` can be used, e.g. a variable can be set to `30*minute`. You can make task variables invisible to the GUI by ending their name in three underscores (e.g. `v.my_private_variable___`).  Such 'private' variables work as normal in the task file but do not show up in the GUI.  This can be useful if you have a lot of task variables, making it hard to find the ones you need to change in the GUI. 
 
-!!! tip "Variables dialog customization"
-    The variables dialog can be customized by adding a `v.custom_variables_dialog` variable to your task file. 
+<a name="controls-dialog"></a>
+!!! tip "Controls dialog customization" 
+    The controls dialog can be customized by adding a `v.custom_controls_dialog` variable to your task file. 
     When a task with this variable is first uploaded, a prompt will ask if you want to create a new custom variable dialog. 
     An editor will appear that allows you to add and customize interactive controls (checkboxes, sliders, spinboxes etc.) for your task's variables.
     The controls can be rearranged and organized into separate tabs, can have custom labels added, and can include hints that will appear when hovering over the control. 
     Any remaining variables that don't get assigned a custom control will automatically be placed in an extra "..." tab.
-    Future edits can be made by opening the variables dialog in the Run task tab when the task is not running and pressing the *edit* button.
+    Future edits can be made by opening the controls dialog in the Run task tab when the task is not running and pressing the *edit* button.
 
-    This feature can be useful for tasks that have many variables that you would otherwise have to scroll/search through and type in edits for. The included [*example/custom_variables_dialog.py*](https://github.com/pyControl/code/blob/master/tasks/example/custom_variables_dialog.py) task is a good reference for this feature that can be viewed and run on any setup.
+    This feature can be useful for tasks that have many variables that you would otherwise have to scroll/search through and type in edits for. The included [*example/custom_controls_dialog.py*](https://github.com/pyControl/code/blob/master/tasks/example/custom_controls_dialog.py) task is a good reference for this feature that can be viewed and run on any setup.
     
-    ![custom variable dialog](../media/GUI/custom_variable_dialog.png)
+    ![custom controls dialog](../media/GUI/custom_variable_dialog.png)
 
 ## Experiments tab
 
@@ -40,9 +41,12 @@ The experiments tab is used to configure, save, load and run experiments on one 
 
 ![run_task_GUI.jpg](../media/GUI/configure_experiment_tab.png)
 
-When the experiments tab is opened it shows the configure experiment dialog.  To create an experiment, specify the experiment name and select the task.  By default, data generated by the experiment will be saved in a folder *pyControl/data/experiment_name*, but the data folder can be changed using the data dir control.
+When the experiments tab is opened it shows the configure experiment dialog.  To create an experiment, click the *new* button and name a new experiment file within your the experiments folder. Next select a task that will be run for all of the subjects.  By default, data generated by the experiment will be saved in a folder *pyControl/data/experiment_name*, but the data folder can be changed using the data directory control.
 
-Optionally a hardware test can be specified for the experiment.  The hardware test is a task that is run before the main task, allowing the user to check whether the hardware is working as intended.  The hardware test can be the same task as that used for the experiment, or another task designed specifically to test the hardware.  No data is saved during the hardware test.
+!!! tip "Experiment subfolders"
+    Experiments can be organised into subfolders within the *experiments* folder, creating a nested list in the GUI drop down menu. This can be useful if you have a lot of experiments, e.g. to organise them by user.
+
+An optional hardware test can be specified for the experiment.  The hardware test is a task that is run before the main task, allowing the user to check whether the hardware is working as intended.  The hardware test can be the same task as that used for the experiment, or another task designed specifically to test the hardware.  No data is saved during the hardware test.
 
 The *Subjects* table is used to specify which subjects will run in which hardware setups.  To add a subject to the experiment, press the *add* button, select the setup and enter a name for the subject.  The *Run* checkbox determines whether on not a particular subject will be run when the experiment is run.  You can assign multiple subjects to the same setup in the variables table but can only run a single subject on a given setup at a time.
 
@@ -85,10 +89,10 @@ The configure button next to each setup bring up a menu of configuration options
 The board configuration menu has the following options to configure pyboards.
 
 - *Load framework:* Reload the pyControl framework onto the board. If you are using a hardware definition you will need to reload it after loading the framework.
-- *Load hardware definition:* Load a [hardware definition](hardware.md#hardware-definition) file onto the pyboard.  The selected file is renamed *hardware_definition.py* on the pyboard filesystem irrespective of its name on the computer, so the hardware definition is always imported into the task file with:
-
-```python
-import hardware_definition as hw
-```
+- *Load hardware definition:* Load a [hardware definition](hardware.md#hardware-definitions) file onto the pyboard.
 - *Device Firmware Update (DFU) mode:* Put the pyboard into DFU mode used for upgrading the version of MicroPython running on the board.  For more information on upgrading MicroPython see [here](http://micropython.org/download).
 - *Enable/disable USB flash drive:* Disabling the USB flash drive prevents the pyboard from showing up on the computer's filesystem as a USB storage device. This can be useful if you are connecting a large number of pyboards to a computer and run out of space on the USB bus. With the flashdrive enabled each pyboard shows up as two USB devices - a flash drive and a USB serial port.
+
+## GUI settings
+
+Settings can be adjusted by going to Settings->Edit settings or pressing <kbd> Ctrl</kbd> + <kbd> , </kbd>

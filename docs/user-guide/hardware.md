@@ -117,7 +117,7 @@ class Digital_output(pin, inverted=False)
 
 `Digital_output.toggle()` Toggle output.
 
-`Digital_output.pulse(freq, duty_cycle=50, n_pulses=False)` Turn on a pulse train with specified frequency (Hz). The duty cycle (percentage of the period for which the signal is high) can be specified as 10, 25, 50 or 75.  If the n_pulses argument is set to an integer the pulse train will stop after this number of pulses has been delivered.
+`Digital_output.pulse(freq, duty_cycle=50, n_pulses=False)` Turn on a pulse train with specified frequency (Hz). The duty cycle (percentage of the period for which the signal is high) can be specified as any multiple of 5 betweeen 5 and 95.  If the n_pulses argument is set to an integer the pulse train will stop after this number of pulses has been delivered.
 
 ---
 
