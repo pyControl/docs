@@ -1,4 +1,4 @@
-# Release Notes
+# Release notes
 [Releases on GitHub](https://github.com/pyControl/code/releases)
 
 ## Version 1.8.1 (2023-02-21)

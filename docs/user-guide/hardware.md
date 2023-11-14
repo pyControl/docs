@@ -291,7 +291,7 @@ sync_input = Digital_input(pin=board.port_5.DIO_B, rising_event='sync_pulse')
 ```
 The easiest way to make an electrical connection to pins on a behavioural port is to plug in a *port adapter* board.  This breaks out all the pins of the port to a screw terminal, and the power driver lines along with +5 and +12V to a set of female headers that can be used to connect loads such as solenoids or LEDs.
 
-**Port adapter:** [GitHub](https://github.com/pyControl/hardware/tree/master/Port_adapter), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker]([link](https://www.labmaker.org/products/pycontrol-port-adapter))
+**Port adapter:** [GitHub](https://github.com/pyControl/hardware/tree/master/Port_adapter), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-port-adapter)
 
 ![Port adapter](../media/hardware/port_adapter.png)
 

@@ -170,7 +170,7 @@ Code can be executed when the framework starts or stops running by defining the 
 
 
 ```python
-def  run_start():
+def run_start():
     # Code here is executed when the framework starts running.
 
 def run_end():

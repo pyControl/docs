@@ -50,7 +50,7 @@ If a board is acting strangely, e.g. giving error messages like *PyboardError('c
 
 - Disconnect from the board using the GUI and reset it using the *Reset* button either on the pyboard or on the pyControl breakout board.
 
-- If resetting the board does not solve the problem, it is possible the pyboard's filesystem has got corrupted.  Follow the instructions above under *Can' transfer files to pyboard* to reset the pyboard filesystem.
+- If resetting the board does not solve the problem, it is possible the pyboard's filesystem has got corrupted.  Follow the instructions above under [Can't transfer files to pyboard](#cant-transfer-files-to-pyboard) to reset the pyboard filesystem.
 
 These two steps will solve the great majority of board misbehavior.  If you continue to have reliability problems:
 
