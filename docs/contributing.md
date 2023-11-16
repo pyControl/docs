@@ -9,7 +9,7 @@ Contributions can be made in a number of ways, including:
 - reporting bugs and reviewing code patches
 - submitting code patches via pull requests
 
-## Reporting an Issue
+## Reporting an issue
 
 Please include as much detail as you can.
 Let us know your platform and pyControl version, and ideally include a screenshot of the error message.
@@ -24,7 +24,7 @@ Spreading the word about pyControl helps maximize the number of people that bene
 Additionally, increasing users should lead to more feedback, suggestions, and code contributions that will ultimately improve the software for everyone.
 If you have found pyControl useful, consider starring the [code repository on GitHub](https://github.com/pyControl/code) and/or sharing your experience with others.
 
-## Submitting Pull Requests
+## Submitting pull requests
 
 To get started developing for pyControl, fork the relevant pyControl repository on [GitHub](https://github.com/pyControl).
 

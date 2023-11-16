@@ -2,6 +2,9 @@
 
 The page details how to fix common problems that can occur when using pyControl.  If you encounter a problem that is not covered on this page, please post in the [discussions](https://github.com/orgs/pyControl/discussions).
 
+!!! tip "Viewing logged errors" 
+    Relevant information to your problem may have been logged to an 'ErrorLog.txt' file in the pyControl root folder. You can view the errors by opening the 'ErrorLog.txt' file with a text editor. Alternatively you can view the errors from within the pyControl GUI by pressing <kbd>Ctrl</kbd> + <kbd>e</kbd> or selecting View->Error log from the menu bar.
+
 ## The docs are wrong
 
 If the docs (hosted here on readthedocs) don't seem to match your experience with pyControl, it may be that you are using a different version of pyControl from the one shown by default in the docs.  You can select a different version of the docs using the dropdown menu in the bottom right.  By default, the docs show the latest official release.  You can get the documentation for the development branch (where new features are developed prior to being officially released) by selecting the *dev* version of the docs, or select versions for older numbered releases of pyControl.
@@ -50,7 +53,7 @@ If a board is acting strangely, e.g. giving error messages like *PyboardError('c
 
 - Disconnect from the board using the GUI and reset it using the *Reset* button either on the pyboard or on the pyControl breakout board.
 
-- If resetting the board does not solve the problem, it is possible the pyboard's filesystem has got corrupted.  Follow the instructions above under *Can' transfer files to pyboard* to reset the pyboard filesystem.
+- If resetting the board does not solve the problem, it is possible the pyboard's filesystem has got corrupted.  Follow the instructions above under [Can't transfer files to pyboard](#cant-transfer-files-to-pyboard) to reset the pyboard filesystem.
 
 These two steps will solve the great majority of board misbehavior.  If you continue to have reliability problems:
 

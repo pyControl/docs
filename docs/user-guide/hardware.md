@@ -117,7 +117,7 @@ class Digital_output(pin, inverted=False)
 
 `Digital_output.toggle()` Toggle output.
 
-`Digital_output.pulse(freq, duty_cycle=50, n_pulses=False)` Turn on a pulse train with specified frequency (Hz). The duty cycle (percentage of the period for which the signal is high) can be specified as 10, 25, 50 or 75.  If the n_pulses argument is set to an integer the pulse train will stop after this number of pulses has been delivered.
+`Digital_output.pulse(freq, duty_cycle=50, n_pulses=False)` Turn on a pulse train with specified frequency (Hz). The duty cycle (percentage of the period for which the signal is high) can be specified as any multiple of 5 betweeen 5 and 95.  If the n_pulses argument is set to an integer the pulse train will stop after this number of pulses has been delivered.
 
 ---
 
@@ -291,7 +291,7 @@ sync_input = Digital_input(pin=board.port_5.DIO_B, rising_event='sync_pulse')
 ```
 The easiest way to make an electrical connection to pins on a behavioural port is to plug in a *port adapter* board.  This breaks out all the pins of the port to a screw terminal, and the power driver lines along with +5 and +12V to a set of female headers that can be used to connect loads such as solenoids or LEDs.
 
-**Port adapter:** [GitHub](https://github.com/pyControl/hardware/tree/master/Port_adapter), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker]([link](https://www.labmaker.org/products/pycontrol-port-adapter))
+**Port adapter:** [GitHub](https://github.com/pyControl/hardware/tree/master/Port_adapter), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-port-adapter)
 
 ![Port adapter](../media/hardware/port_adapter.png)
 
