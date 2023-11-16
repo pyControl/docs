@@ -1,6 +1,34 @@
 # Release notes
 [Releases on GitHub](https://github.com/pyControl/code/releases)
 
+## Version 2.0
+
+GUI:
+
+- New and improved data file format.
+
+- Framework events can now be triggered from the GUI 'Controls' dialog.
+
+- Notes can be written to data files using GUI 'Controls' dialog.
+
+- New API allows pyControl tasks to interact with Python code running on computer.
+
+- New functionality to set variable values for individual hardware setups, which can be used across different tasks and experiments.
+
+- Setups Tab now does operations on multiple boards in parallel rather than serially.
+
+- UI layout improvements.
+
+Framework:
+
+- Added Frame_logger device to provide low overhead method of recording times of events that do not otherwise need to be processed.
+
+Data_import:
+
+- Rsync_aligner can now extrapolate times before first and after last sync pulse when converting times between reference frames.
+
+---
+
 ## Version 1.8.1 (2023-02-21)
 
 Framework:
