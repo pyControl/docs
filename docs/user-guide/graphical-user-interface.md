@@ -31,7 +31,9 @@ The *Controls* button opens a dialog for setting/getting the value of task varia
 
     This feature can be useful for tasks that have many variables that you would otherwise have to scroll/search through and type in edits for. The included [*example/custom_controls_dialog.py*](https://github.com/pyControl/code/blob/master/tasks/example/custom_controls_dialog.py) task is a good reference for this feature that can be viewed and run on any setup.
     
-    ![custom controls dialog](../media/GUI/custom_variable_dialog.png)
+    <a href="../../media/GUI/custom_controls_dialog.png">
+        <img src="../../media/GUI/custom_controls_dialog.png"></img>
+    </a>
 
 ## Experiments tab
 
