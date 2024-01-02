@@ -159,7 +159,7 @@ Pyboard pins 'X5' and 'X6' support analog output.  On the breakout board they ar
 
 ![Breakout 1.2 bracket](../media/hardware/breakout-1-2-bracket.jpg)
 
-Typically, when pyControl is used to run a behavioural experiment, the pyboard microcontroller is mounted on a breakout board, which interfaces it with *behaviour ports*, BNC connectors, indicator LEDs and user pushbuttons.
+Typically, when pyControl is used to run a behavioural experiment, the pyboard microcontroller is mounted on a breakout board, which interfaces it with [behaviour ports](#behaviour-ports), BNC connectors, indicator LEDs and user pushbuttons.
 
 The current version 1.2 of the pyControl Breakout board has 6 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and user pushbuttons.  
 
@@ -252,7 +252,7 @@ The driver lines can be used as digital outputs by connecting them to a positive
 
 This can be useful if you need to control devices that require a digital logic signal with a voltage higher than 3.3V (though many 5V logic devices work fine with 3.3V inputs), or if you just need more digital outputs.
 !!! hint "Inverted output"
-    When the driver line (POW) is off the output will be pulled up to 5V, when the driver line is on it will pull the output down to 0V.
+    When the driver line (POW) is off, the output will be pulled up to 5V. When the driver line is on, it will pull the output down to 0V.
     In your task code, to have the more conventional association of "on" meaning high voltage and "off" 0V, you can set the [digital output](hardware.md#digital-output) `inverted` property to `True`. 
     This change is particularly relevant if you want the POW pin's output voltage to be 0V when the task in not running, as all digital outputs automatically begin "off" when a task is uploaded and are turned "off" when a task is stopped.
 #### Special
