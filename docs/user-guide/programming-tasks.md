@@ -2,9 +2,55 @@
 
 ## Overview
 
-Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a *task definition file* written in Python.  Example task definition files are provided in the [tasks/example](https://github.com/pyControl/code/tree/master/tasks/example) folder.
+Behavioural tasks in pyControl are implemented as state machines, the basic elements of which are states and events.  To implement a task the user creates a *task definition file* written in Python.
 
 Task definition files run directly on the MicroPython microcontroller, not on the computer. Python modules such as *Numpy* that are installed on the computer will therefore not be available in the task definition.  For a list of the modules available in MicroPython see the [MicroPython docs](https://docs.micropython.org/en/latest/library/index.html).
+
+Example task definition files are provided in the [tasks/example](https://github.com/pyControl/code/tree/master/tasks/example) folder.  To give a flavour for what task files look like, this is the code for the [button](https://github.com/pyControl/code/blob/master/tasks/example/button.py) example task:
+
+```python
+from pyControl.utility import * 
+from devices import * 
+  
+# Define hardware (usually done in a seperate hardware definition file).
+  
+button = Digital_input('X17', rising_event='button_press', pull='up') # pyboard usr button.
+LED    = Digital_output('B4') # pyboard blue LED.
+  
+# States and events. 
+  
+states = ['LED_on', 
+          'LED_off'] 
+  
+events = ['button_press'] 
+  
+initial_state = 'LED_off' 
+  
+# Variables 
+  
+v.press_n = 0 
+  
+# State behaviour functions. 
+  
+def LED_off(event): 
+    if event == 'button_press': 
+        v.press_n = v.press_n + 1
+        print('Press number {}'.format(v.press_n))
+        if v.press_n == 3: 
+            goto_state('LED_on') 
+  
+def LED_on(event): 
+    if event == 'entry': 
+        LED.on() 
+        timed_goto_state('LED_off', 1*second) 
+        v.press_n = 0 
+    elif event == 'exit': 
+        LED.off() 
+```
+
+The above code implements the state machine shown in the diagram below.  The task starts in an `LED_off` state. Each time the pyboard *usr* button is pressed the variable `v.press_n` is incremented by 1.  When the button has been pressed 3 times the task transitions to an `LED_on` state, on entering this state the pyboard blue LED is turned on, the `v.press_n` variable is set to 0, and a timer is set to trigger a transition back to the `LED_off` state after 1 second. On exiting the state the LED is turned off.
+
+![run_task_GUI.jpg](../media/GUI/button_task_diagram.png)
 
 ## Imports
 
