@@ -9,7 +9,7 @@ GUI:
 
 - Framework events can now be triggered from the GUI 'Controls' dialog.
 
-- Notes can be written to data files using GUI 'Controls' dialog.
+- Notes can be written to data log using GUI 'Controls' dialog.
 
 - New API allows pyControl tasks to interact with Python code running on computer.
 
@@ -17,7 +17,7 @@ GUI:
 
 - Setups Tab now does operations on multiple boards in parallel rather than serially.
 
-- UI layout improvements.
+- UI improvements.
 
 Framework:
 

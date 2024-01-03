@@ -319,7 +319,7 @@ print_variables() # Print the value of all task variables.
 print_variables(['n_trials', 'n_rewards']) # Print the value of task variables v.n_trials and v.n_rewards.
 ```
 
-Variables are printed as a [JSON](https://www.json.org/json-en.html) formatted string as this both human-readable and easy to parse in most programming languages, e.g. in python using the [JSON module](https://docs.python.org/3/library/json.html). In decision making tasks it is often sensible to print the value of task variables once each trial, as done in the [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/example/reversal_learning.py) example.  
+Variables are written to the data file as a [JSON](https://www.json.org/json-en.html) formatted string as this both human-readable and easy to parse in most programming languages, e.g. in python using the [JSON module](https://docs.python.org/3/library/json.html). In decision making tasks it is often sensible to print the value of task variables once each trial, as done in the [reversal_learning](https://github.com/pyControl/code/blob/master/tasks/example/reversal_learning.py) example.  
 
 ## Structuring task files
 
@@ -582,25 +582,25 @@ Return a random number drawn from a gaussian distribution with mean `m` and stan
 ---
 
 
-#### sample_without_replacement
+#### Sample_without_replacement
 
 ```python
-class sample_without_replacement(items)
+class Sample_without_replacement(items)
 ```
 
 Class for randomly sampling elements from list `items` without replacement.  When all items have been sampled the sampling begins again with the full list.
 
 *Methods:*
 
-`sample_without_replacement.next()` Get the next sample.
+`Sample_without_replacement.next()` Get the next sample.
 
 *Example usage:*
 
 ```python
 
-x = sample_without_replacement(['a','b','c']) # Instantiate with list ['a','b','c']
+my_sampler = Sample_without_replacement(['a','b','c']) # Instantiate with list ['a','b','c']
 
-next_sample = x.next() # Get the next sample.
+next_sample = my_sampler.next() # Get the next sample.
 ```
 
 ---
@@ -633,29 +633,29 @@ Return the mean value of x.
 
 ---
 
-#### exp_mov_ave
+#### Exp_mov_ave
 
 ```python
-class exp_mov_ave(tau, init_value=0)
+class Exp_mov_ave(tau, init_value=0)
 ```
 
 Class for calculating exponential moving average with specified time constant `tau` and initial value `init_value`.
 
 *Methods:*
 
-`exp_mov_ave.update(sample)` Update the moving average with a new sample.
+`Exp_mov_ave.update(sample)` Update the moving average with a new sample.
 
 *Atributes:*
 
-`exp_mov_ave.value` The current value of the moving average.
+`Exp_mov_ave.value` The current value of the moving average.
 
 *Example usage:*
 
 ```python
-y = exp_mov_ave(tau=8, init_value=0.5) # Initiaise a moving average object with
-                                       # time constant of 8 samples and initial value of 0.5
+# Initiaise a moving average object with time constant of 8 samples and initial value of 0.5
+my_average = Exp_mov_ave(tau=8, init_value=0.5)
 
-y.update(sample)  # Update the value of the moving average with a new sample.
+my_average.update(sample)  # Update the average with a new sample.
 
-current_value = y.value  # Get the current value of the moving average.
+current_value = my_average.value  # Get the current value.
 ```

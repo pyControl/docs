@@ -127,7 +127,7 @@ The analog input class measures the voltage on a pin at a specified sampling rat
 
 The input voltage is measured with 12 bit resolution giving a number between 0 and 4095, corresponding to the voltage range 0 to 3.3V relative to the pyboard ground.
 
-Acquiring analog data and streaming it to the host computer uses pyboard processor and communication resources, so attempting to acquire at too high sampling rates, or from too many inputs simultaneously, will overload the board. The maximum achievable sample rates have not been extensively tested, though six analog inputs acquiring at 1KHz each appears to work.  The current format for saving analog data records timestamps at ms resolution, so a maximum sample rate for individual inputs of 1KHz is recommended.
+Acquiring analog data and streaming it to the host computer uses pyboard processor and communication resources, so attempting to acquire at too high sampling rates, or from too many inputs simultaneously, will overload the board. The maximum achievable sample rates have not been extensively tested, though six analog inputs acquiring at 1KHz each appears to work.
 
 ```python
 class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, falling_event=None)
@@ -252,9 +252,7 @@ The driver lines can be used as digital outputs by connecting them to a positive
 
 This can be useful if you need to control devices that require a digital logic signal with a voltage higher than 3.3V (though many 5V logic devices work fine with 3.3V inputs), or if you just need more digital outputs.
 !!! hint "Inverted output"
-    When the driver line (POW) is off, the output will be pulled up to 5V. When the driver line is on, it will pull the output down to 0V.
-    In your task code, to have the more conventional association of "on" meaning high voltage and "off" 0V, you can set the [digital output](hardware.md#digital-output) `inverted` property to `True`. 
-    This change is particularly relevant if you want the POW pin's output voltage to be 0V when the task in not running, as all digital outputs automatically begin "off" when a task is uploaded and are turned "off" when a task is stopped.
+    When using a POW line as a digital output using the circuit above, with the driver line (POW) off, the output will be pulled up to 5V. When the driver line is on, it will pull the output down to 0V.  In your task code, to have the more conventional association of "on" meaning high voltage and "off" 0V, you can set the [digital output](hardware.md#digital-output) `inverted` property to `True`. This change is particularly relevant if you want the POW pin's output voltage to be 0V when the task in not running, as all digital outputs automatically begin "off" when a task is uploaded and are turned "off" when a task is stopped.
 #### Special
 The special function pin has different functions on different ports, for example it may be an extra driver line or a pin with digital to analog (DAC) functionality, see above for more information.
 
