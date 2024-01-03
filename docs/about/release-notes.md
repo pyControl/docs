@@ -17,6 +17,8 @@ GUI:
 
 - Setups Tab now does operations on multiple boards in parallel rather than serially.
 
+- Experiments can now be organised into subfolders within the experiments folder, to create a nested experiment select menu in the GUI.
+
 - UI improvements.
 
 Framework:
@@ -47,7 +49,7 @@ GUI:
 
 - Required device driver files are now automatically transferred to the pyboard when a task or hardware definition is uploaded.
 
-- Pyboards can how be hidden so they do not show up in board select GUI menus by naming them *\_hidden\_* in the setups tab.
+- Pyboards can now be hidden so they do not show up in board select GUI menus by naming them *\_hidden\_* in the setups tab.
 
 - Hardware definition files are now stored in a hardware_definitions folder not the generic config folder.
 

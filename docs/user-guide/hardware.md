@@ -6,7 +6,7 @@
 
 A typical pyControl hardware setup consists of one or more breakout boards connected to a computer by USB, each of which runs a single behavioural setup.  The breakout board connects to a set of devices such as nosepokes, audio boards and LED drivers which make up the setup. USB hubs can be used between the computer and breakout boards such that many setups can be controlled from a single computer.
 
-All pyControl hardware is open source, design files are in the [hardware repository](https://github.com/pyControl/hardware) on Github.  In addition to pyControl electronics, the repository has designs for a [behaviour box](https://github.com/pyControl/hardware/tree/master/Behaviour_box_small) and [sound attenuating chamber](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small), and a list of [useful parts](https://github.com/pyControl/hardware/blob/master/useful-parts-list.md) such as cables, solenoids, mounting hardware etc for building setups.  Assembled pyControl hardware is available from the [Open Ephys store](http://www.open-ephys.org/pycontrol) and [LabMaker](https://www.labmaker.org/collections/neuroscience/products/pycontrol-mouse-behaviour-box_set_no1).
+All pyControl hardware is open source, design files are in the [hardware repository](https://github.com/pyControl/hardware) on GitHub.  In addition to pyControl electronics, the repository has designs for a [behaviour box](https://github.com/pyControl/hardware/tree/master/Behaviour_box_small) and [sound attenuating chamber](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small), and a list of [useful parts](https://github.com/pyControl/hardware/blob/master/useful-parts-list.md) such as cables, solenoids, mounting hardware etc. for building setups.  Assembled pyControl hardware is available from the [Open Ephys store](http://www.open-ephys.org/pycontrol) and [LabMaker](https://www.labmaker.org/collections/neuroscience/products/pycontrol-mouse-behaviour-box_set_no1).
 
 For information about synchronising pyControl with other hardware such as electrophysiology or video cameras see the [synchronisation](synchronisation.md) user guide.
 
@@ -71,7 +71,7 @@ The following hardware classes control the behaviour of a single pin on the Micr
 
 The digital input class generates pyControl framework events when a specified pin on the MicroPython board changes state. Seperate events can be specified for rising and/or falling edges. 
 
-By default debouncing is used to prevent multiple events being triggered very close together in time if the edges are not clean.  The debouncing method used ensures that transient inputs shorter than the debounce duration still generate rising and falling edges.  Debouncing incurs some overheads so should be turned off for inputs with clean edges and high event rates.
+By default, debouncing is used to prevent multiple events being triggered very close together in time if the edges are not clean.  The debouncing method used ensures that transient inputs shorter than the debounce duration still generate rising and falling edges.  Debouncing incurs some overheads so should be turned off for inputs with clean edges and high event rates.
 
 ```python
 class Digital_input(pin, rising_event=None, falling_event=None, debounce=5, pull=None)
@@ -163,13 +163,13 @@ Typically, when pyControl is used to run a behavioural experiment, the pyboard m
 
 The current version 1.2 of the pyControl Breakout board has 6 RJ45 behaviour ports, 4 BNC connectors, indicator LEDs and user pushbuttons.  
 
-The BNC connectors connect directly to pins on the microcontroller.  All 4 BNC connectors can be used as digital inputs or outputs.  When used as digital outputs they have a 3.3V high logic level, which can typically be used directly as an input for systems with 5V logic.  When used as digital inputs, BNC-1 and BNC-2 work with 5V  or 3.3V logic level input signals, but DAC-1 and DAC-2 are not 5V tolerant and should not be used with signals >3.3V. All 4 BNC connectors can also be used as analog inputs, but when used in this mode the input signal should not exceed 3.3V.  Connectors DAC-1 and DAC-2 can also be used as analog ouputs.
+The BNC connectors connect directly to pins on the microcontroller.  All 4 BNC connectors can be used as digital inputs or outputs.  When used as digital outputs they have a 3.3V high logic level, which can typically be used directly as an input for systems with 5V logic.  When used as digital inputs, BNC-1 and BNC-2 work with 5V or 3.3V logic level input signals, but DAC-1 and DAC-2 are not 5V tolerant and should not be used with signals >3.3V. All 4 BNC connectors can also be used as analog inputs, but when used in this mode the input signal should not exceed 3.3V.  Connectors DAC-1 and DAC-2 can also be used as analog ouputs.
 
-See below for information about pinout and function of lines on the behaviour ports.  On breakout board 1.2, all six behaviour ports have the standard 2 digital input/output (DIO) lines, 2 POW driver lines, and 5V, 12V and ground lines.  Ports 1 & 2 have an additional driver line *POW_C*.  Ports 3 and 4 have an additional DIO line *DIO_C* which also supports analog output (DAC).  Ports 3 and 4 support I2C and ports 1,3 & 4 support UART serial communication over their DIO lines.  Useful resources for understanding the additional functionallity of the lines on each port are the [Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf) and [device definition file](https://github.com/pyControl/code/blob/master/devices/breakout_1_2.py) for the breakout board and the [pyboard quick reference](https://docs.micropython.org/en/latest/pyboard/quickref.html).
+See below for information about pinout and function of lines on the behaviour ports.  On breakout board 1.2, all six behaviour ports have the standard 2 digital input/output (DIO) lines, 2 POW driver lines, and 5V, 12V and ground lines.  Ports 1 & 2 have an additional driver line *POW_C*.  Ports 3 and 4 have an additional DIO line *DIO_C* which also supports analog output (DAC).  Ports 3 and 4 support I2C and ports 1,3 & 4 support UART serial communication over their DIO lines.  Useful resources for understanding the additional functionallity of the lines on each port are the [Schematic (PDF)](../media/hardware/breakout-1-2-sch.pdf) and [device definition file](https://github.com/pyControl/code/blob/master/devices/breakout_1_2.py) for the breakout board and the [pyboard quick reference](https://docs.micropython.org/en/latest/pyboard/quickref.html).
 
 The hardware repository has designs for [enclosures and brackets](https://github.com/pyControl/hardware/tree/master/Breakout_board/enclosures%20and%20brackets) for mounting the breakout board PCB.
 
-[Schematic (pdf)](../media/hardware/breakout-1-2-sch.pdf) [GitHub](https://github.com/pyControl/hardware/tree/master/Breakout_board), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol), [LabMaker](https://www.labmaker.org/products/pycontrol-breakout-board)
+[Schematic (PDF)](../media/hardware/breakout-1-2-sch.pdf) [GitHub](https://github.com/pyControl/hardware/tree/master/Breakout_board), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol), [LabMaker](https://www.labmaker.org/products/pycontrol-breakout-board)
 
 **Breakout 1.2 front:**
 ![Breakout 1.2 front](../media/hardware/breakout-1-2-front.jpg)
@@ -301,7 +301,7 @@ Behavioural setups often comprise a mixture of pyControl hardware devices (see b
 
 Options for creating an electrical connection are:
 
-- The BNC connectors on the breakout board, which can be used for analog or digital input or output (see above).  Each connector carries one signal line and one ground connection.  They are often used for triggering external devices from pyControl or triggering pyControl events from external devices.  They can also be used to output sync pulses for synchronising  pyControl data with video or physiology data, as detailed in the [synchronisation](synchronisation.md) user guide.
+- The BNC connectors on the breakout board, which can be used for analog or digital input or output (see above).  Each connector carries one signal line and one ground connection.  They are often used for triggering external devices from pyControl or triggering pyControl events from external devices.  They can also be used to output sync pulses for synchronising pyControl data with video or physiology data, as detailed in the [synchronisation](synchronisation.md) user guide.
 - Connect to one or more lines on a behaviour port.  The easiest way to do this is usually using the screw terminal connector on the port adapter board (see above).  This is a good option if you need to connect multiple signals, and the 5V or 12V lines can be used to power small external devices.  For example, we typically mount a port adapter board on the inside of the setup's sound attenuating chamber to control the house light, power the fan and send sync pulses to the camera, as shown [here](https://github.com/pyControl/hardware/tree/master/Sound_attenuating_chamber_small).
 - Design a custom printed circuit board (PCB) with an RJ45 connector to connect to a breakout board behaviour port. This requires more work initially, but may make sense if you need to implement custom circuitry and want to scale to multiple setups. Complete design files for all the pyControl devices are in the hardware repository and provide a good starting point for thinking about your own designs.  They were created in [Eagle](https://www.autodesk.co.uk/products/eagle/overview) PCB, which is available as a freeware version (with a restriction on board size, but still sufficient for many applications) and also is free for academic use.
 
@@ -634,7 +634,7 @@ button = Digital_input(pin=port_exp.port_3.DIO_B, rising_event='button_press') #
 
 ---
 
-### Five Poke
+### Five poke
 
 The Five Poke board is a set of five nose pokes on a single PCB, each with an IR beam and stimulus LED.  The Five Poke connects to 2 behaviour ports on the breakout board.  Port 1 on the Five Poke must be connected to a behaviour port with 3 driver lines (port 1 or 2 on Breakout board 1.2). Port 2 on the Five Poke must be connected to a behaviour port with 3 DIO lines (port 3 or 4 on Breakout board 1.2).  The events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc. by default, and the events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` by default.  Different event names can be specified when the Five poke is instantiated.
 
@@ -669,7 +669,7 @@ five_poke.poke_1.LED.on() # Turn on poke 1's LED.
 
 ---
 
-### Nine Poke
+### Nine poke
 
 The nine poke board is a set of nine nose pokes on a single PCB, each with an IR beam and stimulus LED.  The pokes are controlled from a single behaviour port using i2c serial communication (supported by ports 3 & 4 on breakout board 1.2). Events generated by the IR beam breaks are called `'poke_1'`, `'poke_2'` etc. by default, and events generated by the IR beam makes are called `'poke_1_out'`, `'poke_2_out'` etc. by default.
 

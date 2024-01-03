@@ -92,8 +92,8 @@ To configure setups, select the setups to be configured using the *Select* check
 - **Load hardware definition:** Load a [hardware definition](hardware.md#hardware-definitions) file onto the pyboard.
 - **Device Firmware Update (DFU) mode:** Put the pyboard into DFU mode used for upgrading the version of MicroPython running on the board.  For more information on upgrading MicroPython see [here](http://micropython.org/download).
 - **Enable/disable USB flash drive:** Disabling the USB flash drive prevents the pyboard from showing up on the computer's filesystem as a USB storage device. It is recommended to disable the flashdrive on pyboards used for pyControl as this improves the reliability of file transfers to the board using the GUI.
-- **Variables:**  The variables button opens a dialog for setting the value of [hardware variables](programming-tasks.md#variables).  These are variables defined in task files with names that start with `hw_` (e.g. `v.hw_my_hardware_variable`) which are typically used for hardware calibration variables such as solenoid valve opening times.  If you have any such variables defined in your task files they will be available for selection in the hardware variables dialog where you can enter values for each setup.
+- **Variables:** The variables button opens a dialog for setting the value of [hardware variables](programming-tasks.md#variables).  These are variables defined in task files with names that start with `hw_` (e.g. `v.hw_my_hardware_variable`) which are typically used for hardware calibration variables such as solenoid valve opening times.  If you have any such variables defined in your task files they will be available for selection in the hardware variables dialog where you can enter values for each setup.
 
 ## GUI settings
 
-Settings can be adjusted by going to Settings->Edit settings or pressing <kbd> Ctrl</kbd> + <kbd> , </kbd>
+Settings can be adjusted by going to Settings→Edit settings or pressing <kbd>Ctrl</kbd> + <kbd> , </kbd>
