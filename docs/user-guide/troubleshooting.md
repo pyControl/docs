@@ -3,7 +3,7 @@
 The page details how to fix common problems that can occur when using pyControl.  If you encounter a problem that is not covered on this page, please post in the [discussions](https://github.com/orgs/pyControl/discussions).
 
 !!! tip "Viewing logged errors" 
-    Relevant information to your problem may have been logged to an 'ErrorLog.txt' file in the pyControl root folder. You can view the errors by opening the 'ErrorLog.txt' file with a text editor. Alternatively you can view the errors from within the pyControl GUI by pressing <kbd>Ctrl</kbd> + <kbd>e</kbd> or selecting View->Error log from the menu bar.
+    Relevant information to your problem may have been logged to an 'ErrorLog.txt' file in the pyControl root folder. You can view the errors by opening the 'ErrorLog.txt' file with a text editor. Alternatively you can view the errors from within the pyControl GUI by pressing <kbd>Ctrl</kbd> + <kbd>e</kbd> or selecting View→Error log from the menu bar.
 
 ## The docs are wrong
 
@@ -36,7 +36,7 @@ If you get a message saying `Error: Unable to transfer file` this usually means 
 
 The instructions say to use the *Reset* and *USR* buttons and LEDs on the MicroPython board for the file system reset.  Depending on how the pyControl breakout board is mounted it may be hard to access these.  However, the *Reset* and *USR* buttons on the front of pyControl breakout board 1.2 have identical functionality to those on the pyboard, and indicator LEDs 3 and 4 from the left on the breakout board have the same behaviour as the orange and green LEDs on the pyboard, so the filesystem can be reset with access only to the front of the breakout board.  
 
-After the filesystem reset has finished, reset the board again using the *Reset* button, then connect to the board with the GUI.  The filesystem reset removes both the pyControl framework and any hardware definition from the pyboard so you will have to reload them using the board config menu.  
+After the filesystem reset has finished, reset the board again using the *Reset* button, then connect to the board with the GUI.  The filesystem reset removes both the pyControl framework and any hardware definition from the pyboard, so you will have to reload them using the board config menu.  
 
 To reduce the likelihood of filesystem corruption, it is strongly recommended to disable the pyboards filesystem from acting as a USB flash drive before loading the framework.  This can be done using the *'Disable USB flash drive'* option in the board config menu.
 
