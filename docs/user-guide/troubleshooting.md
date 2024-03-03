@@ -2,7 +2,7 @@
 
 The page details how to fix common problems that can occur when using pyControl.  If you encounter a problem that is not covered on this page, please post in the [discussions](https://github.com/orgs/pyControl/discussions).
 
-!!! tip "Viewing logged errors" 
+!!! tip "Viewing logged errors"
     Relevant information to your problem may have been logged to an 'ErrorLog.txt' file in the pyControl root folder. You can view the errors by opening the 'ErrorLog.txt' file with a text editor. Alternatively you can view the errors from within the pyControl GUI by pressing <kbd>Ctrl</kbd> + <kbd>e</kbd> or selecting View→Error log from the menu bar.
 
 ## The docs are wrong
@@ -94,4 +94,4 @@ MicroPython boards (pyboards) need to be running MicroPython version 1.9 (releas
 5. Press *Upgrade* and then *Yes* in the dialog box.  *DfuSe demo* will upload the new firmware to the board. When you see a message saying *Upgrade successful*, quit *DfuSe demo*.
 6. Press the reset button on the pyboard to exit DFU mode.  Connect to the board using the pyControl GUI and the MicroPython version should be updated.
 
-For information about updating MicroPython on Linux/Mac see [here](https://github.com/micropython/micropython/wiki/Pyboard-Firmware-Update). 
+For information about updating MicroPython on Linux/Mac see [here](https://github.com/micropython/micropython/wiki/Pyboard-Firmware-Update).
