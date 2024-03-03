@@ -10,7 +10,7 @@ To run the GUI, run the file *pyControl_GUI.pyw* in the pyControl root directory
 
 The run task tab consists of controls, a log text box and plot panels.  See the [Running a task](../index.md#running-a-task) section of the home page for a step-by-step guide to running a task.  When a task is run, the output is printed to the log and the behaviour is plotted.  If a valid data directory and a subject ID are provided, the *Start* button changes to *Record* and the GUI will save the data generated when the task is run.
 
-The **Setup** control box is used to select a pyboard, connect and disconnect from the board, and configure the board.  Pressing the *config* button brings up a menu with options detailed below in the [Board configuration](#board-configuration) section.
+The **Setup** control box is used to select a pyboard, connect and disconnect from the board, and configure the board.  Pressing the *config* button brings up a menu with options detailed below in the [board configuration](#board-configuration-options) section.
 
 The **Data file** control box is used to select the directory where data files will be stored and to specify the ID of the subject.  The filename is given by the subject ID and session start date and time.
 

@@ -1,7 +1,15 @@
 # Release notes
+
 [Releases on GitHub](https://github.com/pyControl/code/releases)
 
-## Version 2.0
+## Version 2.0.1 (2024-01-12)
+
+- Fixed bug where variables data output could overwrite date row generated
+  immediately before.
+
+---
+
+## Version 2.0 (2024-01-11)
 
 GUI:
 
