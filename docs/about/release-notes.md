@@ -79,7 +79,6 @@ Framework:
 
 - Added `print_variables` function for printing variable values to the data log as a json formatted string.
 
-
 Data import:
 
 - Added `session_dataframe` function for generating a pandas dataframe from a pyControl data file and `experiment_dataframe` for generating a pandas dataframe from an experiment data folder.
@@ -159,7 +158,8 @@ GUI:
 ---
 
 ## Version 1.6 (2020-11-25)
-GUI: 
+
+GUI:
 
 - Experiments that use multiple setups now load the task in parallel on all the setups at once, rather than serially on one setup after annother, giving a large speedup when many setups are used.
 
@@ -174,7 +174,8 @@ GUI:
 ---
 
 ## Version 1.5 (2020-02-11)
-GUI: 
+
+GUI:
 
 - Task files used in an experiment are now automatically saved in the experiments data folder with a file hash appended to the task file name to uniquely identify the file version.  Whenever a task file used in the experiment is modified the new version will be saved to the data folder when the experiment is run.  The task file hash used for each session is recorded in the session's data file so the exact task file used to run each session can be identified.
 
@@ -188,7 +189,7 @@ GUI:
 
 - A meaningful error message is now shown on failure to import dependencies.
 
-- Persistent variables implementation now allows running different subjects on different sessions in same experiment data folder without overwriting the persistent variables. 
+- Persistent variables implementation now allows running different subjects on different sessions in same experiment data folder without overwriting the persistent variables.
 
 - Improved reliability of file transfer to pyboard.
 
@@ -208,18 +209,17 @@ CLI:
 
 ## Version 1.4 (2019-02-03)
 
-GUI: 
+GUI:
 
-  - Support for running experiments on multiple setups in parallel.
+- Support for running experiments on multiple setups in parallel.
 
 Tools:
 
-  - Added session_plot module for visualing sessions offline.
+- Added session_plot module for visualing sessions offline.
 
 ---
 
 ## Version 1.3.3 (2018-12-12)
-
 
 GUI:
 
@@ -255,7 +255,7 @@ Tools:
 
 ## Version 1.3.1 (2018-05-16)
 
-GUI: 
+GUI:
 
 - UI improvements and bug fixes.
 
@@ -267,22 +267,19 @@ Framework:
 
 ## Version 1.3 (2018-04-16)
 
-GUI: 
+GUI:
 
-- New graphical interface run_task_gui.py for running tasks, supports online
-  visualisation of task behaviour and setting of variables during run.
+- New graphical interface run_task_gui.py for running tasks, supports online visualisation of task behaviour and setting of variables during run.
 
 CLI:
 
 - Summary variables now written to data file at end of run_experiment.py
-- Event and state names rather than IDs now displayed during run_task and 
-  run_experiment.
+- Event and state names rather than IDs now displayed during run_task and run_experiment.
 
 Framework:
 
 - Added Port_expander hardware device driver.
-- All data now transmitted from pyboard to computer as binary rather than printed 
-  strings.
+- All data now transmitted from pyboard to computer as binary rather than printed strings.
 - Data logging moved to separate Data_logger class.
 - Setting / getting variables modified to work while framework running.
 
@@ -310,8 +307,7 @@ CLI:
 
 Framework:
 
-- Digital_output.pulse() now allows duty cycle and number of pulses to be 
-  specified.
+- Digital_output.pulse() now allows duty cycle and number of pulses to be specified.
 - Added Analog_input class.
 - Added Rotatory_encoder device driver.
 - Added Stepper_motor device driver.
@@ -330,16 +326,13 @@ Bug fixes:
 - Fixed various bugs that caused problems using CLI on Linux.
 - Fixed bug that could cause CLI to crash during transfer of large files to
   pyboard.
-- Fixed bug which caused negative timestamps if pyb.millis rolled over during 
-  session.
-
+- Fixed bug which caused negative timestamps if pyb.millis rolled over during session.
 
 ---
 
 ## Version 1.1.3 (2017-07-28)
 
-- Added data_import.py, a module for importing pyControl sessions and experiments
-   into Python for analysis. 
+- Added data_import.py, a module for importing pyControl sessions and experiments into Python for analysis.
 
 CLI:
 
@@ -362,9 +355,8 @@ Bug fixes:
 Framework:
 
 - Added six_poke hardware device.
-- removed .wav playback for audio outputs.
-- Moved rarely used device drivers to separate 'more devices' folder for 
-  faster framework upload.
+- Removed .wav playback for audio outputs.
+- Moved rarely used device drivers to separate 'more devices' folder for faster framework upload.
 
 CLI:
 
@@ -380,14 +372,12 @@ CLI:
 
 Bug fixes:
 
-- Fixed bug which meant that run_experiment stopped when the
-  last numbered box stopped rather than when all boxes had stopped. 
+- Fixed bug which meant that run_experiment stopped when the last numbered box stopped rather than when all boxes had stopped.
 - Print output from run_end() now saved by run experiment.
 
 ---
 
 ## Version 1.1 (2017-02-06)
-
 
 Framework:
 
@@ -396,8 +386,7 @@ Framework:
 
 CLI:
 
-- Added run_task.py, a script for configuring and running tasks on 
-  individual pyboards.
+- Added run_task.py, a script for configuring and running tasks on individual pyboards.
 
 ---
 

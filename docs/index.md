@@ -30,11 +30,11 @@ If you do fiber photometry experiments, you may be interested in pyControl's sis
 
 ### Installation
 
-Get the latest version of the pyControl GUI, either by downloading it at a zip file from the [releases](https://github.com/pyControl/code/releases) page or by cloning the [code repository](https://github.com/pyControl/code) to your computer with Git.  pyControl is in active development with new versions released from time to time.   The default documentation is for the latest release, but the dropdown menu in the bottom right corner of the docs lets you access documentation for earlier versions, and for the *dev* branch of the code repository where new features are developed.  Cloning the repository is recommended as it makes it easier to update pyControl in the future.
+Get the latest version of the pyControl GUI, either by downloading it at a zip file from the [releases](https://github.com/pyControl/code/releases) page or by cloning the [code repository](https://github.com/pyControl/code) to your computer with Git.  pyControl is in active development with new versions released from time to time. The default documentation is for the latest release, but the dropdown menu in the bottom right corner of the docs lets you access documentation for earlier versions, and for the *dev* branch of the code repository where new features are developed.  Cloning the repository is recommended as it makes it easier to update pyControl in the future.
 
 Either way you obtain the code, you will have the following folder structure:
 
-```
+```text
 pyControl
 ├── pyControl_GUI.py    # Script to launch the GUI
 ├── api_classes         # API classes
@@ -66,7 +66,7 @@ pyControl has the following dependencies:
 
 Once you have a working Python 3 installation on the computer, run the windows command prompt (cmd.exe) as an administrator and enter the following commands to install the required packages:
 
-```
+``` shell
 python -m pip install numpy
 python -m pip install pyserial
 python -m pip install PyQt6
@@ -75,7 +75,7 @@ python -m pip install pyqtgraph
 
 You should then be able to launch the GUI by double-clicking the file *pyControl_GUI.pyw* in the pyControl root directory.  
 
-pyControl has been tested primarily on Windows 10 but in principle should be cross-platform and has been used on Mac and Linux. 
+pyControl has been tested primarily on Windows 10 but in principle should be cross-platform and has been used on Mac and Linux.
 
 ### Running a task
 
