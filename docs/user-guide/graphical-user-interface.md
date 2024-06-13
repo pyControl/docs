@@ -10,7 +10,7 @@ To run the GUI, run the file *pyControl_GUI.pyw* in the pyControl root directory
 
 The run task tab consists of controls, a log text box and plot panels.  See the [Running a task](../index.md#running-a-task) section of the home page for a step-by-step guide to running a task.  When a task is run, the output is printed to the log and the behaviour is plotted.  If a valid data directory and a subject ID are provided, the *Start* button changes to *Record* and the GUI will save the data generated when the task is run.
 
-The **Setup** control box is used to select a pyboard, connect and disconnect from the board, and configure the board.  Pressing the *config* button brings up a menu with options detailed below in the [Board configuration](#board-configuration) section.
+The **Setup** control box is used to select a pyboard, connect and disconnect from the board, and configure the board.  Pressing the *config* button brings up a menu with options detailed below in the [board configuration](#board-configuration-options) section.
 
 The **Data file** control box is used to select the directory where data files will be stored and to specify the ID of the subject.  The filename is given by the subject ID and session start date and time.
 
@@ -21,11 +21,11 @@ The **Task** control box is used to select and upload a task and configure task 
 The *Controls* button opens a dialog for setting/getting the value of task variables, adding notes to the data log, and manually triggering task events.  It can be used either before a run starts or while a task is running.  Variables must be defined in the task definition file using the `v.my_variable` syntax (see [programming tasks](programming-tasks.md#variables)).  Variables can be set to numbers, or to Python objects including strings, lists and dictionaries.  The constants `ms`, `second`, `minute` and `hour` can be used, e.g. a variable can be set to `30*minute`. You can make task variables invisible to the GUI by ending their name in three underscores (e.g. `v.my_private_variable___`).  Such 'private' variables work as normal in the task file but do not show up in the GUI.  This can be useful if you have a lot of task variables, making it hard to find the ones you need to change in the GUI. 
 
 <a name="controls-dialog"></a>
-!!! tip "Controls dialog customization" 
-    The controls dialog can be customized by adding a `v.custom_controls_dialog` variable to your task file. 
-    When a task with this variable is first uploaded, a prompt will ask if you want to create a new custom variable dialog. 
+!!! tip "Controls dialog customization"
+    The controls dialog can be customized by adding a `v.custom_controls_dialog` variable to your task file.
+    When a task with this variable is first uploaded, a prompt will ask if you want to create a new custom variable dialog.
     An editor will appear that allows you to add and customize interactive controls (checkboxes, sliders, spinboxes etc.) for your task's variables.
-    The controls can be rearranged and organized into separate tabs, can have custom labels added, and can include hints that will appear when hovering over the control. 
+    The controls can be rearranged and organized into separate tabs, can have custom labels added, and can include hints that will appear when hovering over the control.
     Any remaining variables that don't get assigned a custom control will automatically be placed in an extra "..." tab.
     Custom controls dialogs can be modified by opening the controls dialog in the Run task tab when the task is not running and pressing the *edit* button.
 
