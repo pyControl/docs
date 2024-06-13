@@ -10,8 +10,8 @@ All pyControl hardware is open source, design files are in the [hardware reposit
 
 For information about synchronising pyControl with other hardware such as electrophysiology or video cameras see the [synchronisation](synchronisation.md) user guide.
 
-
 ## Safety
+
 !!! danger "Attention"
 
     As electronic devices, pyControl hardware could pose a fire risk if used inappropriately.
@@ -69,7 +69,7 @@ The following hardware classes control the behaviour of a single pin on the Micr
 
 ### Digital input
 
-The digital input class generates pyControl framework events when a specified pin on the MicroPython board changes state. Seperate events can be specified for rising and/or falling edges. 
+The digital input class generates pyControl framework events when a specified pin on the MicroPython board changes state. Seperate events can be specified for rising and/or falling edges.
 
 By default, debouncing is used to prevent multiple events being triggered very close together in time if the edges are not clean.  The debouncing method used ensures that transient inputs shorter than the debounce duration still generate rising and falling edges.  Debouncing incurs some overheads so should be turned off for inputs with clean edges and high event rates.
 
@@ -212,10 +212,10 @@ analog_input  = Analog_input(pin=board.DAC_1, name='Analog 1', sampling_rate=100
 pushbutton = Digital_input(pin=board.button, falling_event='button', pull='up') 
 ```
 
-
 ### Behaviour ports
 
 #### Pinout
+
 Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 or 6 network cables), with the following set of lines:
 
 | Function                     | RJ45 connector pin # |
@@ -230,16 +230,18 @@ Each behaviour port is an 8 pin RJ45 connector (compatible with standard Cat 5 o
 | Special function             | 5                    |
 
 !!! note "Current draw"
-    When connecting custom devices to behaviour ports it is important to consider the amount of current they will draw.  Several factors limit the maximum current that can safely be drawn: 
+    When connecting custom devices to behaviour ports it is important to consider the amount of current they will draw.  Several factors limit the maximum current that can safely be drawn:
 
     - Cat 5 network cable (used to connect devices to behaviour ports) uses 24AWG wires for each conductor.  600mA is a conservative estimate for the maximum safe current per conductor (see [here](https://www.powerstream.com/Wire_Size.htm)).  
     - The ICs which control the driver (POW) lines (see below) can only sink a certain amount of current without overheating.  The maximum safe current depends on the number of driver lines on a single IC that are on at the same time.  Currents up to 200mA are OK irrespective of the number of driver lines on.  The maximum current with 4 lines on continuously is 300mA, and with a single line 400mA. One IC controls the driver lines for ports 1-3 and annother for ports 4-6. For more information see this [application note](https://toshiba.semicon-storage.com/info/docget.jsp?did=30610).
     - The voltage regulator on the breakout board that powers the behaviour port 5V lines can source aproximately 300mA of current, which is shared by the 5V lines on all behaviour ports.  
 
 #### DIO
+
 The behaviour port digital input/output (DIO) lines connect directly to pins on the microcontroller.  All DIO lines can be used as either digital inputs or outputs. These lines use 3.3V logic but can generally be interfaced directly with 5V logic systems and are 5V tolerant.  Some of the microcontroller pins on DIO lines have additional analog input/output or serial communication capability (see above).
 
 #### POW
+
 The power driver lines are for controlling loads that need higher currents or voltages than can be provided directly from a microcontroller pin.  These lines are connected to low side driver ICs ([datasheet](https://toshiba.semicon-storage.com/info/docget.jsp?did=29893)) on the breakout board, which are in turn controlled by pins on the microcontroller. Low side drivers connect the negative side of the load to ground when turned on:
 
 ![Driver diagram](../media/hardware/driver-diagram.jpg)
@@ -253,10 +255,13 @@ The driver lines can be used as digital outputs by connecting them to a positive
 This can be useful if you need to control devices that require a digital logic signal with a voltage higher than 3.3V (though many 5V logic devices work fine with 3.3V inputs), or if you just need more digital outputs.
 !!! hint "Inverted output"
     When using a POW line as a digital output using the circuit above, with the driver line (POW) off, the output will be pulled up to 5V. When the driver line is on, it will pull the output down to 0V.  In your task code, to have the more conventional association of "on" meaning high voltage and "off" 0V, you can set the [digital output](hardware.md#digital-output) `inverted` property to `True`. This change is particularly relevant if you want the POW pin's output voltage to be 0V when the task in not running, as all digital outputs automatically begin "off" when a task is uploaded and are turned "off" when a task is stopped.
+
 #### Special
+
 The special function pin has different functions on different ports, for example it may be an extra driver line or a pin with digital to analog (DAC) functionality, see above for more information.
 
 #### Usage
+
 Typically devices which plug into a behaviour port have several inputs and outputs, for example the [Poke](#poke) device comprises an IR beam, stimulus LED and solenoid. Rather than having to specify each input and output on a hardware device separately, each device has its own Python class which takes a behaviour port as an argument, allowing it to be instantiated with a single command. For example the hardware definition below specifies that 3 nose pokes are plugged into ports 1-3 of Breakout board 1.2.
 
 ```python
@@ -287,6 +292,7 @@ house_light = Digital_output(pin=board.port_4.POW_A)
 # Instantiate line DIO_B on port 5 as a digital input.
 sync_input = Digital_input(pin=board.port_5.DIO_B, rising_event='sync_pulse') 
 ```
+
 The easiest way to make an electrical connection to pins on a behavioural port is to plug in a *port adapter* board.  This breaks out all the pins of the port to a screw terminal, and the power driver lines along with +5 and +12V to a set of female headers that can be used to connect loads such as solenoids or LEDs.
 
 **Port adapter:** [GitHub](https://github.com/pyControl/hardware/tree/master/Port_adapter), [Open Ephys](https://open-ephys.org/pycontrol/pycontrol-peripherals), [LabMaker](https://www.labmaker.org/products/pycontrol-port-adapter)
@@ -297,7 +303,7 @@ The easiest way to make an electrical connection to pins on a behavioural port i
 
 ## Interfacing with external hardware
 
-Behavioural setups often comprise a mixture of pyControl hardware devices (see below) and external user-created or commercial hardware.  Interfacing pyControl with external hardware requires both creating a physical electrical connection between the devices, and instantiating Python objects representing the device in the hardware definition or task file. 
+Behavioural setups often comprise a mixture of pyControl hardware devices (see below) and external user-created or commercial hardware.  Interfacing pyControl with external hardware requires both creating a physical electrical connection between the devices, and instantiating Python objects representing the device in the hardware definition or task file.
 
 Options for creating an electrical connection are:
 
@@ -322,7 +328,7 @@ poke_SOL.off() # Turn off the Solenoid.
 
 However the device has a `Poke` class representing it, defined in the file [poke.py](https://github.com/pyControl/code/blob/master/devices/poke.py) in the [devices](https://github.com/pyControl/code/tree/master/devices) folder, which instantiates all the individual inputs and outputs as attributes, simplifying instantiating and using the device:
 
-```python 
+```python
 # Instantiate Poke object connected to behaviour port 1.
 poke = Poke(port=board.port_1, rising_event='poke_in')
 
@@ -476,7 +482,6 @@ class LED_driver(port)
 
 `LED_driver.pulse(freq, duty_cycle=50, n_pulses=False)` Turn on a pulse train with specified frequency (Hz). The duty cycle (percentage of the period for which the signal is high) can be specified as 10, 25, 50 or 75.  If the n_pulses argument is set to an integer the pulse train will stop after this number of pulses has been delivered.
 
-
 *Example usage:*
 
 ```python
@@ -547,7 +552,7 @@ Decoding the quadrature signal from the encoder is handled by dedicated low leve
 
 ![Stepper driver](../media/hardware/rotary_encoder.jpg)
 
-```python 
+```python
 class Rotary_encoder(name, sampling_rate, output='velocity', threshold=None,
                      rising_event=None, falling_event=None, bytes_per_sample=2,
                      reverse=False)
@@ -607,7 +612,7 @@ Each port on the port expander works like a standard behaviour port, with 2 DIO 
 
 ![Port expander](../media/hardware/port_expander_photo.jpg)
 
-```python 
+```python
 class Port_expander(port=None)
 ```
 
@@ -638,9 +643,9 @@ The Five Poke board is a set of five nose pokes on a single PCB, each with an IR
 **Five poke PCB**
 ![Five_poke pcb](../media/hardware/five-poke-pcb.jpg)
 
-```python 
+```python
 class Five_poke(ports, 
-	rising_event_1='poke_1',falling_event_1='poke_1_out',
+    rising_event_1='poke_1',falling_event_1='poke_1_out',
     rising_event_2='poke_2', falling_event_2='poke_2_out', 
     rising_event_3='poke_3', falling_event_3='poke_3_out', 
     rising_event_4='poke_4', falling_event_4='poke_4_out',
@@ -678,7 +683,7 @@ An optional solenoid driver daughter board can be connected to the nine poke boa
 **Back view showing solenoid driver board**
 ![Nine_poke mounted back](../media/hardware/nine-poke-mounted-back.jpg)
 
-```python 
+```python
 class Nine_poke(port, rising_event_1 = 'poke_1', falling_event_1 = 'poke_1_out',
                       rising_event_2 = 'poke_2', falling_event_2 = 'poke_2_out', 
                       rising_event_3 = 'poke_3', falling_event_3 = 'poke_3_out', 
@@ -707,6 +712,7 @@ nine_poke.poke_4.SOL.on()              # Turn on the solenoid that has been assi
 ```
 
 ---
+
 ### Lickometer
 
 An electrical lickometer board which has two lick detection circuits and two solenoid ports.  The outputs LCK 1 and LCK 2 should be connected to the reward delivery tubes and the GND output should be connected to the (conductive) floor of the setup.  The lick detection circuits detect when the reward delivery tube is electrically connected to ground by the subject licking.  The maximum current through the lick detection circuit is 1uA.  The default event names generated by licking are 'lick_1' and 'lick_2' when the contact is made, and 'lick_1_off' and 'lick_2_off' when the contact is broken.  Different event names can be specified when the Lickometer is instantiated.  By default, debouncing is used on lick events with a 5ms debounce window.
@@ -760,7 +766,7 @@ Sending multiple commands to the audio player without any delay in between (e.g.
 
 ![Audio board](../media/hardware/audio-player.jpg)
 
-```python 
+```python
 class Audio_player(port)
 ```
 
@@ -783,7 +789,7 @@ player.set_enabled(left=True, right=False) # Enable left speaker output, disable
 
 Class for using the Priority 1 Design [Micro RFID module](http://www.priority1design.com.au/rfid_reader_modules.html) to read FDX-B tags.  The UART serial connection on the module should be connected to the DIO A and B pins on a port that supports UART (ports 1,3 and 4 on breakout board 1.2).
 
-```python 
+```python
 class uRFID(port)
 ```
 
@@ -802,7 +808,7 @@ rfid.read_tag() # Return the ID of the most recent tag read, if no tag has been 
 
 The MCP23017 is a serial to parallel IO expander IC ([datasheet](http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf)) which can be used to add additional digital input/output lines to the MicroPython microcontroller. The IC must be connected to the MicroPython via an I2C serial connection, which are available on the DIO pins of ports 3 and 4 of breakout board 1.2.  If you plan to use MCP23017 pins as pyControl digital inputs the INTA interrupt pin on the MCP23017 must be connected to a DIO pin on the MicroPython. The pins on the MCP23017 can be used as standard pyControl Digital_input and Digital_output objects as shown in the usage example below.
 
-```python 
+```python
 class  MCP23017(I2C_bus=1, interrupt_pin='X5', addr=0x20)
 ```
 
@@ -816,7 +822,7 @@ mcp_output = Digital_output(pin=mcp.Pin('A0')) # Instantiate a Digital_output us
 mcp_input = Digital_input(pin=mcp.Pin('A1'), rising_event='event_A') # Instantiate a Digital_input using pin A1 on the MCP23017.
 ```
 
-The MCP23008 IC is also supported using the same syntax.  The MCP23017 has 16 DIO lines and the MCP23008 has 8 DIO lines. 
+The MCP23008 IC is also supported using the same syntax.  The MCP23017 has 16 DIO lines and the MCP23008 has 8 DIO lines.
 
 ```python
 class  MCP23008(I2C_bus=1, interrupt_pin='X5', addr=0x20)
