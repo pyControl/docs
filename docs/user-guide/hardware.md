@@ -785,6 +785,38 @@ player.set_enabled(left=True, right=False) # Enable left speaker output, disable
 
 ```
 
+---
+
+### Load cell
+
+A load cell amplifier based on the NAU7802 IC that can be used to take accurate weight or force measurements.
+
+Note:  The driver code for this device uses softI2C which requires a recent  version of Micropython to work.
+
+![Load cell](../media/hardware/load_cell.jpg)
+
+[GitHub](https://github.com/pyControl/hardware/tree/master/Load_cell)
+
+```python
+class Load_cell(port, offset=0, scale=1)
+```
+
+*Example usage:*
+
+```python
+load_cell = Load_cell(port=board.port_3) # Instantiate the load cell.
+
+load_cell.tare() # Set the zero point of the weight measurement.
+
+load_cell.calibrate(weight=7.5) # Calibrate the load cell with a known weight.
+
+weight = load_cell.weigh() # Take a weight measurement.
+```
+
+
+
+---
+
 ### uRFID
 
 Class for using the Priority 1 Design [Micro RFID module](http://www.priority1design.com.au/rfid_reader_modules.html) to read FDX-B tags.  The UART serial connection on the module should be connected to the DIO A and B pins on a port that supports UART (ports 1,3 and 4 on breakout board 1.2).
