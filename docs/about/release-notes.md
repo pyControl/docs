@@ -2,6 +2,20 @@
 
 [Releases on GitHub](https://github.com/pyControl/code/releases)
 
+## Version 2.0.2 (2024-06-13)
+
+GUI:
+
+- Various bug fixes.
+
+- Specified UTF-8 encoding of data files to allow for non ASCII characters in variable names.
+
+Devices:
+
+- Added load cell class.
+
+---
+
 ## Version 2.0.1 (2024-01-12)
 
 - Fixed bug where variables data output could overwrite date row generated
