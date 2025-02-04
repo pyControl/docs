@@ -39,7 +39,7 @@ nav:
     - Manuscript:  https://elifesciences.org/articles/67846
     - pyPhotometry: https://pyphotometry.readthedocs.io/
 
-copyright: Copyright &copy; 2016 - 2024 Thomas Akam
+copyright: Copyright &copy; 2016 - 2025 Thomas Akam
 
 # Uncomment to generate PDF version of docs using mkdocs-with-pdf
 # plugins: 

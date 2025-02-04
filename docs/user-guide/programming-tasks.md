@@ -478,7 +478,7 @@ Trigger the specified event.  The principal use case is to generate an event in 
 print(print_string)
 ```
 
-Print `print_string` to the data output.  Printed strings are given a time-stamp so that the time the print statement was executed is recorded in the data file.
+Print `print_string` to the data output.  Printed strings are given a timestamp so that the time the print statement was executed is recorded in the data file.
 
 ---
 

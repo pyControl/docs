@@ -30,6 +30,12 @@ If no pyboards that you connect to the computer show up in the GUI's board selec
 
 If the GUI status says 'Connection Failed' when you try to connect to the board, reset the board using the *Reset* button on the breakout board or MicroPython microcontroller, then try connecting again.
 
+### Linux serial port permissions
+If you are using Linux, you may need to add read and write permissions to the serial port by running the following command with your particular serial port name (e.g. "ttyACM0"):
+```
+sudo chmod 666 dev/ttyACM0
+```
+
 ## Can't transfer files to pyboard
 
 If you get a message saying `Error: Unable to transfer file` this usually means that the filesystem on the pyboard has got corrupted. To fix this problem, reset the filesystem by following the instructions [here](https://docs.micropython.org/en/latest/pyboard/tutorial/reset.html#factory-reset-the-filesystem).  

@@ -81,7 +81,8 @@ pyControl has been tested primarily on Windows 10 but in principle should be cro
 
 Run the file *pyControl_GUI.py* in the pyControl root directory, you will see a GUI window like that shown above, with the *Run Task* tab selected.
 
-Plug in a pyboard and it will appear in the drop down menu in the *Setup* box.  Select the board and press the *Connect* button.  The GUI will connect to the board.  
+Plug in a pyboard and it will appear in the dropdown menu in the *Setup* box.  Select the board and press the *Connect* button.  The GUI will connect to the board. (Linux users please see [this note](user-guide/troubleshooting.md#cant-connect-to-acquisition-board) if having difficulty connecting.)
+
 
 If the pyControl framework is not already installed on the board, you will see a message saying *Load pyControl framework using 'Config' button.* Press the *Config* button to bring up the config menu and select *Load framework*.  If you see a message prompting you to disable the pyboard filesystem from acting as a USB flash drive, click *Yes*, then reconnect to the board (the serial port may have changed when you disable the flash drive) and load the framework.
 
