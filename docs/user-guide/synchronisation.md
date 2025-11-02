@@ -14,7 +14,7 @@ Some data acquisition systems record timestamps using the computer's clock.  If 
 
 ### Rsync
 
- The `Rsync` class is used to generate sync pulse trains with random inter-pulse intervals.  A single `Rsync` should be used to synchronise all external systems, so that they all receive the same sync pulse train.  This can be achieved physically by outputting the signal on one of the breakout board BNC connectors and using BNC T-junction adapters (e.g. [this](https://cpc.farnell.com/pro-signal/psg08505/connector-bnc-t-50ohm/dp/CN21058)) to split the signal to the different systems. Sync pulse times are recorded in the pyControl data file using the specified event name.  If an `Rsync` object is instantiated in the task or hardware definition, sync pulses will be generated automatically while the task is running as long as the event name is included in the task's `events` list.
+ The `Rsync` class is used to generate sync pulse trains with random inter-pulse intervals.  A single `Rsync` should be used to synchronise all external systems, so that they all receive the same sync pulse train.  This can be achieved by outputting the signal on one of the breakout board BNC connectors and using BNC T-junction adapters (e.g. [this](https://cpc.farnell.com/pro-signal/psg08505/connector-bnc-t-50ohm/dp/CN21058)) to split the signal to the different systems.  It is also possible to output the sync pulses on multiple outputs by passing in a list of pins.  Sync pulse times are recorded in the pyControl data file using the specified event name.  If an `Rsync` object is instantiated in the task or hardware definition, sync pulses will be generated automatically while the task is running as long as the event name is included in the task's `events` list.
 
 ```python
 class Rsync(pin, event_name='rsync', mean_IPI=5000, pulse_dur=50)
@@ -22,7 +22,7 @@ class Rsync(pin, event_name='rsync', mean_IPI=5000, pulse_dur=50)
 
 *Arguments:*
 
-`pin` MicroPython pin to output sync pulses on.
+`pin` MicroPython pin to output sync pulses on, or a list of pins to output sync pulses on more than one output.
 
 `event_name` Name of the sync pulse events in pyControl data output.
 
@@ -34,6 +34,8 @@ class Rsync(pin, event_name='rsync', mean_IPI=5000, pulse_dur=50)
 
 ```python
 sync_output = Rsync(pin=board.BNC_1, mean_IPI=1000) # Instantiate Rsync object on breakout board BNC_1
+
+sync_output = Rsync(pin=[board.BNC_1, board.BNC_2], mean_IPI=1000) # Instantiate Rsync object on breakout board BNC_1 & BNC_2
 ```
 
 ### Frame_trigger
