@@ -123,14 +123,14 @@ class Digital_output(pin, inverted=False)
 
 ### Analog input
 
-The analog input class measures the voltage on a pin at a specified sampling rate, streams these measurements to the host computer to be saved to disk, and can generate pyControl framework events when the voltage rises above or falls below a specified threshold.  
+The analog input class measures the voltage on a pin at a specified sampling rate, streams these measurements to the host computer to be saved to disk, and can optionally generate pyControl framework events when the voltage rises above and/or falls below one or more specified thresholds.  
 
 The input voltage is measured with 12 bit resolution giving a number between 0 and 4095, corresponding to the voltage range 0 to 3.3V relative to the pyboard ground.
 
 Acquiring analog data and streaming it to the host computer uses pyboard processor and communication resources, so attempting to acquire at too high sampling rates, or from too many inputs simultaneously, will overload the board. The maximum achievable sample rates have not been extensively tested, though six analog inputs acquiring at 1KHz each appears to work.
 
 ```python
-class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, falling_event=None)
+class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, falling_event=None, triggers=None)
 ```
 
 *Arguments:*
@@ -146,6 +146,36 @@ class Analog_input(pin, name, sampling_rate, threshold=None, rising_event=None, 
 `rising_event` Name of event triggered when voltage crosses threshold in rising direction.
 
 `falling_event` Name of event triggered when voltage crosses threshold in falling direction.
+
+`triggers` Used to specify multiple thresholds for generating framework events by passing in a list of `Analog_trigger` objects (see below).  If the *triggers* argument is used then the *threshold*, *rising_event* and *falling_event* arguments are ignored. 
+
+*Example usage:*
+
+```python 
+# Instantiate Analog_input on pin X1 with one event generating threshold.
+analog_input_1 = Analog_input(pin='X1', name='Analog_1', sampling_rate=500, threshold=2000,
+                              rising_event='rising_edge' , falling_event='falling_edge')
+```
+
+#### Analog trigger
+
+A list of `Analog_trigger`s can be used with an `Analog_input` to specify multiple thresholds that generate pyControl events when crossed the rising and/or falling direction.  
+
+```python
+class Analog_trigger(threshold=None, rising_event=None, falling_event=None)
+```
+
+Arguments have the same functionality as those for the analog input.  
+
+*Example usage:*
+
+```python
+# Instantiate Analog_input on pin X2 with two event generating thresholds.
+low_trigger  = Analog_trigger(threshold=1000, rising_event='rising_low' , falling_event='falling_low')
+high_trigger = Analog_trigger(threshold=3000, rising_event='rising_high', falling_event='falling_high')
+analog_input_2 = Analog_input(pin='X2', name='Analog_2', sampling_rate=1000,
+                            triggers=[low_trigger, high_trigger])
+```
 
 ---
 
@@ -540,7 +570,7 @@ motor_2 = Stepper_motor(step_pin='X1', direction_pin='X2') # Instantiating drive
 
 ### Rotary encoder
 
-Class for acquiring data from a rotary encoder, used e.g. to measure the speed of a running wheel.  The encoder must be an incremental rotary encoder that outputs a quadrature signal. The rotary encoder class streams the position or velocity of the encoder to the computer at a specified sampling rate, and can generate framework events when the position/velocity goes above/below a specified threshold.  Currently the rotary encoder class expects the two lines carrying the quadrature signal to be connected to MicroPython pins 'X1' and 'X2' (Port 1 DIO_A and DIO_B on breakout board 1.2).
+Class for acquiring data from a rotary encoder, used e.g. to measure the speed of a running wheel.  The encoder must be an incremental rotary encoder that outputs a quadrature signal. The rotary encoder class streams the position or velocity of the encoder to the computer at a specified sampling rate, and can generate framework events when the position/velocity goes above/below one or more specified thresholds.  Currently the rotary encoder class expects the two lines carrying the quadrature signal to be connected to MicroPython pins 'X1' and 'X2' (Port 1 DIO_A and DIO_B on breakout board 1.2).
 
 The rotary encoder adaptor board connects an Avago HEDM-55xx series rotary encoder ([datasheet](https://docs.broadcom.com/docs/AV02-1046EN)) to a pyControl behaviour port.  The rotary encoder adaptor must be plugged into port_1 on breakout board 1.2.
 
@@ -555,7 +585,7 @@ Decoding the quadrature signal from the encoder is handled by dedicated low leve
 ```python
 class Rotary_encoder(name, sampling_rate, output='velocity', threshold=None,
                      rising_event=None, falling_event=None, bytes_per_sample=2,
-                     reverse=False)
+                     reverse=False, triggers=None)
 ```
 
 *Arguments:*
@@ -575,6 +605,8 @@ class Rotary_encoder(name, sampling_rate, output='velocity', threshold=None,
 `bytes_per_sample` Number of bytes used per sample when data is sent to the computer.  Valid values are 2 or 4.  Only set to 4 if your signals are likely to go outside the range covered by 2 byte signed integers (-32748 to 32748).
 
 `reverse` Set to *True* to reverse the direction of rotation which is considered a positive velocity.
+
+`triggers` Used to specify multiple thresholds for generating framework events by passing in a list of `Analog_trigger` objects (see `Analog_input` docs above).  If the *triggers* argument is used then the *threshold*, *rising_event* and *falling_event* arguments are ignored. 
 
 *Attributes:*
 
