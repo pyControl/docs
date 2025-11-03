@@ -2,6 +2,23 @@
 
 [Releases on GitHub](https://github.com/pyControl/code/releases)
 
+## Version 2.1 (2025-11-xx)
+
+GUI:
+
+- Various bug fixes & UI improvements.
+
+Framework:
+
+- Analog_input and Rotary_encoder now support multiple thresholds for generating framework events.
+- Rsync pulses can now be output on multiple pins.
+- Fixed bug where stepped and pulsed sounds started after a short delay.
+
+Devices:
+
+- Added GridMaze device class.
+- Added UART_handler device to generate framework events when UART message received.
+
 ## Version 2.0.2 (2024-06-13)
 
 GUI:
