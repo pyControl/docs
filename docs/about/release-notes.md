@@ -2,7 +2,7 @@
 
 [Releases on GitHub](https://github.com/pyControl/code/releases)
 
-## Version 2.1 (2025-11-xx)
+## Version 2.1 (2025-11-11)
 
 GUI:
 
