@@ -891,3 +891,54 @@ The MCP23008 IC is also supported using the same syntax.  The MCP23017 has 16 DI
 ```python
 class  MCP23008(I2C_bus=1, interrupt_pin='X5', addr=0x20)
 ```
+
+---
+
+### UART Handler
+!!! warning "MicroPython compatibility"
+    The `UART_handler` device requires MicroPython version **1.26** or newer.  
+    If you need to update your MicroPython firmware, see [Updating MicroPython](troubleshooting.md#updating-micropython) for detailed instructions.
+
+The `UART_handler` device generates a framework event whenever a UART message is received.
+This removes the need for periodically polling the UART buffer to check for new messages, reducing latency and overhead.
+After you attach the handler to the UART's RX interrupt, handle the emitted event like any other framework event.
+Handle the event in your state machine's `all_states` function if you want to process all messages, regardless of the current state.
+
+For devices sending UART messages to this handler, it is recommended to end the messages with a newline character (`\n`) and then use the `uart.readline()` method in the receiving code to read the message.
+
+```python
+class UART_handler(event_name)
+```
+
+*Arguments:*
+
+`event_name` The name of the event to generate when a UART message is received.
+
+
+*Example usage:*
+
+```python
+from pyControl.utility import *
+from devices import UART_handler, Breakout_1_2
+from machine import UART
+
+board = Breakout_1_2()
+
+handler = UART_handler(event_name="uart_message_received")
+
+uart = UART(board.port_3.UART)
+uart.init(115200, bits=8, parity=None, stop=1)  # configure the UART
+uart.irq(trigger=UART.IRQ_RXIDLE, handler=handler.ISR)  # attach the handler to the UART
+
+
+states = ["waiting_for_message"]
+events = ["uart_message_received"]
+
+initial_state = "waiting_for_message"
+
+
+def waiting_for_message(event):
+    if event == "uart_message_received":
+        message_from_uart = uart.readline().decode("utf-8").strip("\n") 
+        print("Message from UART: {}".format(message_from_uart))
+```
