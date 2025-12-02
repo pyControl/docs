@@ -892,10 +892,15 @@ The MCP23008 IC is also supported using the same syntax.  The MCP23017 has 16 DI
 class  MCP23008(I2C_bus=1, interrupt_pin='X5', addr=0x20)
 ```
 
+---
+
 ### UART Handler
+!!! warning "MicroPython compatibility"
+    The `UART_handler` device requires MicroPython version **1.26** or newer.  
+    If you need to update your MicroPython firmware, see [Updating MicroPython](troubleshooting.md#updating-micropython) for detailed instructions.
 
 The `UART_handler` device generates a framework event whenever a UART message is received.
-This removes the need for periodic polling the UART buffer to check for new messages, reducing latency and overhead.
+This removes the need for periodically polling the UART buffer to check for new messages, reducing latency and overhead.
 After you attach the handler to the UART's RX interrupt, handle the emitted event like any other framework event.
 Handle the event in your state machine's `all_states` function if you want to process all messages, regardless of the current state.
 
