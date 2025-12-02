@@ -104,7 +104,7 @@ Alternatively, you can download the latest version from the [download page](http
 
 Either way, after updating pyControl reload the framework onto your pyboards using the GUI's board config menu.
 
-Get notified of new [releases](about/release-notes.md) by going to the [pyControl code repository](https://github.com/pyControl/code) and in the upper right corner choosing Watch→Custom→Releases→Apply.
+Get notified of new [releases](about/release-notes.md) by going to the [pyControl code repository](https://github.com/pyControl/code) and in the upper right corner choosing ***Watch→Custom→Releases→Apply***.
 
 ## Troubleshooting
 

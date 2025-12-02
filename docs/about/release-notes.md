@@ -1,6 +1,24 @@
 # Release notes
 
-[Releases on GitHub](https://github.com/pyControl/code/releases)
+Downloadable releases at [https://github.com/pyControl/code/releases](https://github.com/pyControl/code/releases)
+
+!!! tip "Release notifications"
+    Subscribe to new releases notifications by going to the pyControl [code repository](https://github.com/pyControl/code) and in the upper right corner choosing ***Watch→Custom→Releases→Apply***.
+
+
+---
+
+## Version 2.1.1 (2025-12-02)
+
+Tools:
+
+- Improved Rsync_aligner
+
+Devices:
+
+- Simplified UART_handler device; now requires MicroPython >= 1.26.
+
+---
 
 ## Version 2.1 (2025-11-11)
 
@@ -18,6 +36,8 @@ Devices:
 
 - Added GridMaze device class.
 - Added UART_handler device to generate framework events when UART message received.
+
+---
 
 ## Version 2.0.2 (2024-06-13)
 
