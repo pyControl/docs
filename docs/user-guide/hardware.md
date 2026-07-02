@@ -814,7 +814,6 @@ player.stop() # Stop audio.
 player.set_volume(12) # Set the volume (range 1 - 30).
 
 player.set_enabled(left=True, right=False) # Enable left speaker output, disable right speaker output.
-
 ```
 
 ---
@@ -825,9 +824,9 @@ A load cell amplifier based on the NAU7802 IC that can be used to take accurate 
 
 Note:  The driver code for this device uses softI2C which requires a recent  version of Micropython to work.
 
-![Load cell](../media/hardware/load_cell.jpg)
-
 [GitHub](https://github.com/pyControl/hardware/tree/master/Load_cell)
+
+![Load cell](../media/hardware/load_cell.jpg)
 
 ```python
 class Load_cell(port, offset=0, scale=1)
@@ -845,7 +844,44 @@ load_cell.calibrate(weight=7.5) # Calibrate the load cell with a known weight.
 weight = load_cell.weigh() # Take a weight measurement.
 ```
 
+---
 
+### GridMaze
+
+Gridmaze is a behavioural apparatus consisting of a grid of towers connected by removeable walkways to make a reconfigurable elevated maze environment.  Each tower has a reward port with IR beam and solenoid for reward delivery, a speaker for playing auditory cues, and a stimulus LED for visually cueing locations.   Two versions of the hardware have been developed, a small 3x3 grid maze and a large 7x7 grid maze.   The grid maze is instantiated as a single hardware device.  Rather than specifying all the poke in and out events manually in the task file, these are available as an `events` attribute of the gridmaze device which can be appended to the task events list.  The events names are e.g.  `"A1_in"` for a poke-in at tower A1, and `"C2_out"` for a poke-out at tower C2.  The audio output uses the same commands as the Audio_board, e.g. `noise`, `sine` etc,  but with additional commands to enable and disable the speakers on individual towers. 
+
+[GitHub](https://github.com/pyControl/hardware/tree/master/GridMaze) ,  [Labmaker](https://www.labmaker.org/collections/neuroscience/products/pycontrol-gridmaze)
+
+![Load cell](../media/hardware/gridmaze.jpg)
+
+```python
+class GridMaze3x3()
+
+class Gridmaze7x7()
+```
+
+*Example usage:*
+
+```python
+from devices import Gridmaze3x3
+
+maze = Grid_maze_3x3() # Instantiate grid maze device
+
+events = ["user", "task", "events"] + maze.events # Append maze poke events to task events list.
+
+maze.LED_on("A3") # Turn the tower A3 LED on.
+maze.LED_off("A3") # Turn the tower A3 LED off. 
+
+maze.SOL_on("C1") # Turn the tower C1 solenoid on.
+maze.SOL_off("C1") # Turn the tower C1 solenoid off.
+
+maze.audio.set_volume(10) # Set the volume for audio stimuli.
+maze.speaker_on("B2") # Enable the speaker on tower B2.
+maze.audio.noise() # Play white noise from all towers with speakers enabled, see Audio_board for more stimuli.
+maze.audio.off() # Stop audio playing.
+maze.audio.sine(5000) # Play a 5KHz sine wave from all towers with speakers enabled.
+maze.speaker_off("B2") # Disable the speaker on tower B2.
+```
 
 ---
 
@@ -863,7 +899,6 @@ class uRFID(port)
 rfid = uRFID(port=board.port_3) # Instantiate RFID module.
 
 rfid.read_tag() # Return the ID of the most recent tag read, if no tag has been read return None.
-
 ```
 
 ---
